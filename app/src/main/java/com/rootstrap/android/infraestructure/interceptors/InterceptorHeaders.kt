@@ -16,5 +16,4 @@ class InterceptorHeaders : Interceptor {
 
         return chain.proceed(request)
     }
-
 }

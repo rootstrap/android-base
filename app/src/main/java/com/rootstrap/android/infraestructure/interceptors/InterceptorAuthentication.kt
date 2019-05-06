@@ -16,7 +16,7 @@ class InterceptorAuthentication(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val builder = chain.request().newBuilder()
-        val preferences = App.mE.mPreferences
+        val preferences = App.mE.preferences
 
         if (addHeaderValid(preferences!!))
             builder

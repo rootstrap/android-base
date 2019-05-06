@@ -49,8 +49,6 @@ open class OnlineConnection<T> (private val call: Call<T>) {
             expected.onError()
 
         }
-
-
     }
 }
 

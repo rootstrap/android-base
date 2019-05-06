@@ -18,10 +18,10 @@ import kotlin.jvm.*
 
 class App : Application() {
 
-    var mPreferences: TinyDB? = null
-    private var mPreferencesName: String? = null
-    var mSession: Session? = null
-    var mObservableSession : MutableLiveData<Session> = MutableLiveData()
+    var preferences: TinyDB? = null
+    private var preferencesName: String? = null
+    var session: Session? = null
+    var observableSession : MutableLiveData<Session> = MutableLiveData()
     
     companion object {
         lateinit var mE: App
@@ -37,8 +37,8 @@ class App : Application() {
     }
 
     private fun setupPreferences() {
-        mPreferencesName = setupPreferenceName()
-        mPreferences = TinyDB(applicationContext, mPreferencesName!!)
+        preferencesName = setupPreferenceName()
+        preferences = TinyDB(applicationContext, preferencesName!!)
     }
 
     private fun setupPreferenceName(): String {
@@ -49,37 +49,37 @@ class App : Application() {
     }
     
     fun saveHeaderAuthenticationParams(accessToken: String?, client: String?, uid: String?) {
-            mPreferences!!.putString(HeadersKey.ACCESS_TOKEN, accessToken!!)
-            mPreferences!!.putString(HeadersKey.CLIENT, client!!)
-            mPreferences!!.putString(HeadersKey.UID, uid!!)
+            preferences!!.putString(HeadersKey.ACCESS_TOKEN, accessToken!!)
+            preferences!!.putString(HeadersKey.CLIENT, client!!)
+            preferences!!.putString(HeadersKey.UID, uid!!)
     }
 
     fun activeSession() {
-        if (mPreferences!!.contains(PREF_SESSION)) {
-            mSession = mPreferences!!.getObject(PREF_SESSION, Session::class.java) as Session
+        if (preferences!!.contains(PREF_SESSION)) {
+            session = preferences!!.getObject(PREF_SESSION, Session::class.java) as Session
             notifySession()
         }
     }
 
     fun closeSession()  {
-        mSession!!.open = false
+        session!!.open = false
         TinyDB(applicationContext).remove(PREF_KEY)
         setupPreferenceName()
-        mPreferences!!.putObject(PREF_SESSION, mSession!!)
+        preferences!!.putObject(PREF_SESSION, session!!)
         notifySession()
     }
 
     fun saveSession() {
-        mPreferences!!.putObject(PREF_SESSION, mSession!!)
+        preferences!!.putObject(PREF_SESSION, session!!)
         notifySession()
     }
 
     fun openNewSession(user: Profile) {
-        mSession = Session(UUID.randomUUID().toString(), user,true)
-        mPreferences!!.putObject(PREF_SESSION, mSession!!)
+        session = Session(UUID.randomUUID().toString(), user,true)
+        preferences!!.putObject(PREF_SESSION, session!!)
         notifySession()
     }
 
-    fun notifySession() = mObservableSession.postValue(mSession)
+    fun notifySession() = observableSession.postValue(session)
 
 }
