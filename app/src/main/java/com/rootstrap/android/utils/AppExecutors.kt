@@ -16,6 +16,6 @@ import java.util.concurrent.Executor
  *  }
  * */
 
-    var ioThread: Executor = IoThreadExecutor()
-    var mainThread: Executor = MainThreadExecutor()
+var ioThread: Executor = IoThreadExecutor()
+var mainThread: Executor = MainThreadExecutor()
 
