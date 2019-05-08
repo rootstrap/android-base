@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="step" type="com.rootstrap.android.ui.sample.STEPS"/>
+        <variable name="viewModel" type="com.rootstrap.android.ui.sample.SampleViewDeclaration"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+            android:padding="8dp"
+            android:animateLayoutChanges="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:imageUrl="@{viewModel.getIcon()}"/>
+
+        <Button
+                app:layout_constraintStart_toStartOf="parent"
+                android:onClick="@{() -> viewModel.goBack()}"
+                android:text="@string/back"
+                android:layout_width="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/step_login"
+                android:layout_marginBottom="8dp"
+                android:visibility="@{step == STEPS.LOGIN ? View.GONE : View.VISIBLE}"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/process_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                android:text="@{step.title}"
+                android:textSize="25sp"
+                android:layout_marginTop="38dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/process_title"
+                android:id="@+id/step_login"
+                android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/account_email"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:nextFocusDown="@id/account_email"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:hint="@string/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:onFocusChangeListener="@{(view, focus) -> { !focus ? viewModel.checkEmail() : void }}"/>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/account_password"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/account_email"
+                    android:layout_width="match_parent"
+                    android:nextFocusDown="@id/account_repeat_password"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/account_repeat_password"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/account_password"
+                    android:layout_width="match_parent"
+                    android:nextFocusDown="@id/btn_log_in"
+                    android:visibility="@{step == STEPS.LOGIN ? View.GONE : View.VISIBLE}"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:hint="@string/repeat_password"
+                        android:inputType="textPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:onFocusChangeListener="@{(view, focus) -> { !focus ? viewModel.checkRepeatedPassword() : void }}"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                    android:id="@+id/btn_log_in"
+                    android:nextFocusDown="@id/btn_sign_up"
+                    app:layout_constraintTop_toBottomOf="@id/account_repeat_password"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:text="@string/login"
+                    android:visibility="@{step == STEPS.LOGIN ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{() -> viewModel.logIn()}"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/btn_sign_up"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/btn_log_in"
+                    android:layout_width="match_parent"
+                    android:text="@string/create_account"
+                    android:onClick="@{() -> step == STEPS.LOGIN ? viewModel.goToSignUp() : viewModel.signUp()}"
+                    android:layout_height="wrap_content"/>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

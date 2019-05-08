@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">RootstrapAndroidBase</string>
+    <string name="create_account">Create account</string>
+    <string name="login">Login</string>
+    <string name="check_code">Check code</string>
+    <string name="back">Back</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="error_simple">This is a simple error message</string>
 </resources>
