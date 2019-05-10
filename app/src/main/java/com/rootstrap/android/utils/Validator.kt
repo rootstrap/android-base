@@ -14,7 +14,7 @@ fun String.isEmail(): Boolean = android.util.Patterns.EMAIL_ADDRESS.matcher(this
  * @param regex Regex string function to validate with Pattern.matches
  * @return Boolean : true if pattern match
  * */
-fun String.validate(regex: String): Boolean = Pattern.matches(regex,this)
+fun String.validate(regex: String): Boolean = Pattern.matches(regex, this)
 
 /**
  * Add more validators functions
