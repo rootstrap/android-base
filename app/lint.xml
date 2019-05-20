@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!--All lint checks: http://tools.android.com/tips/lint-checks -->
+    <!-- Change the severity of hardcoded strings to "error" -->
+    <issue id="HardcodedText" severity="error" />
+    <!-- Change the severity of ScrollViewCount child to "error" -->
+    <issue id="ScrollViewCount" severity="error" />
+    <!-- Add more lint rules -->
+</lint>
