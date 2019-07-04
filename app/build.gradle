@@ -30,6 +30,10 @@ android {
         }
     }
 
+    configurations {
+        ktlint
+    }
+
     flavorDimensions "api"
 
     productFlavors {
@@ -82,6 +86,25 @@ android {
         ignoreWarnings false
     }
 
+    task ktlint(type: JavaExec, group: "verification") {
+        description = "Check Kotlin code style."
+        classpath = configurations.ktlint
+        main = "com.pinterest.ktlint.Main"
+        args "src/**/*.kt"
+        // to generate report in checkstyle format prepend following args:
+        // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+        // see https://github.com/pinterest/ktlint#usage for more
+    }
+
+    check.dependsOn ktlint
+
+    task ktlintFormat(type: JavaExec, group: "formatting") {
+        description = "Fix Kotlin code style deviations."
+        classpath = configurations.ktlint
+        main = "com.pinterest.ktlint.Main"
+        args "-F", "src/**/*.kt"
+    }
+
     manifest {
         attributes("Lint-Registry-v2": "com.rootstrap.android.lint.LintRegistry")
     }
@@ -125,10 +148,12 @@ dependencies {
     kapt 'com.android.tools.external.com-intellij:intellij-core:26.4.1'
     annotationProcessor 'com.android.tools.external.com-intellij:intellij-core:26.4.1'
 
-    compileOnly "com.android.tools.lint:lint-api:26.4.1"
-    compileOnly "com.android.tools.lint:lint-checks:26.4.1"
+    testImplementation "com.android.tools.lint:lint-api:26.4.1"
+    testImplementation "com.android.tools.lint:lint-checks:26.4.1"
 
-    androidTestImplementation "com.android.tools.lint:lint:26.4.1"
-    androidTestImplementation "com.android.tools.lint:lint-tests:26.4.1"
-    androidTestImplementation "com.android.tools:testutils:26.4.1"
+    testImplementation "com.android.tools.lint:lint:26.4.1"
+    testImplementation "com.android.tools.lint:lint-tests:26.4.1"
+    testImplementation "com.android.tools:testutils:26.4.1"
+
+    ktlint "com.pinterest:ktlint:0.33.0"
 }
