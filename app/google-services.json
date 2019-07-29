@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "818363481141",
+    "firebase_url": "https://android-base-rootstrap.firebaseio.com",
+    "project_id": "android-base-rootstrap",
+    "storage_bucket": "android-base-rootstrap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818363481141:android:3b08a4b523e9b94c",
+        "android_client_info": {
+          "package_name": "com.rootstrap.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818363481141-3oum0ocne7qvpdgrahc8ffa649la0miq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_4d_y9f4P77B2Dh-cjrNgeI-jMv68cOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818363481141-3oum0ocne7qvpdgrahc8ffa649la0miq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818363481141:android:64ef9ab7c5dc1a36",
+        "android_client_info": {
+          "package_name": "com.rootstrap.android.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818363481141-3oum0ocne7qvpdgrahc8ffa649la0miq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_4d_y9f4P77B2Dh-cjrNgeI-jMv68cOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818363481141-3oum0ocne7qvpdgrahc8ffa649la0miq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818363481141:android:efb8ee5cdb31fffb",
+        "android_client_info": {
+          "package_name": "com.rootstrap.android.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818363481141-3oum0ocne7qvpdgrahc8ffa649la0miq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_4d_y9f4P77B2Dh-cjrNgeI-jMv68cOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818363481141-3oum0ocne7qvpdgrahc8ffa649la0miq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
