@@ -4,7 +4,7 @@ import android.content.Context
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import com.rootstrap.android.R
-import com.rootstrap.android.metrics.base.Metrics
+import com.rootstrap.android.metrics.base.Provider
 import com.rootstrap.android.metrics.base.TrackEvent
 import com.rootstrap.android.metrics.base.UserProperty
 import org.json.JSONException
@@ -12,7 +12,7 @@ import org.json.JSONException
 /**
  * Mix panel android reference: https://developer.mixpanel.com/docs/android
  * */
-class MixPanelAnalytics(context: Context, var analytic: MixpanelAPI? = null) : Metrics {
+class MixPanelAnalytics(context: Context, var analytic: MixpanelAPI? = null) : Provider {
 
     init {
         analytic = MixpanelAPI.getInstance(context, context.getString(R.string.mixpanel_api_key))

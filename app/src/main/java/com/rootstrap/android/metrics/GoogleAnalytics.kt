@@ -2,7 +2,7 @@ package com.rootstrap.android.metrics
 
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.rootstrap.android.metrics.base.Metrics
+import com.rootstrap.android.metrics.base.Provider
 import com.rootstrap.android.metrics.base.TrackEvent
 import com.rootstrap.android.metrics.base.UserProperty
 import org.json.JSONException
@@ -10,7 +10,7 @@ import org.json.JSONException
 /**
  * Reference: https://firebase.google.com/docs/analytics/android/start
  * */
-class GoogleAnalytics(context: Context, var analytic: FirebaseAnalytics? = null ) : Metrics {
+class GoogleAnalytics(context: Context, var analytic: FirebaseAnalytics? = null ) : Provider {
 
     init {
         analytic = FirebaseAnalytics.getInstance(context)

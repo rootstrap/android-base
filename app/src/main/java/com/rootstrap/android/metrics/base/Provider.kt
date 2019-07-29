@@ -5,9 +5,9 @@ import android.os.Bundle
 import org.json.JSONException
 import org.json.JSONObject
 
-interface Metrics {
+interface Provider {
 
-    fun track(action: TrackEvent)
+    fun track(event: TrackEvent)
 
     fun reset()
 
