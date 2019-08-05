@@ -61,7 +61,6 @@ android {
     }
 
     applicationVariants.all {
-        assembleProvider.get().dependsOn.add(tasks["lint${name.capitalize()}"])
         outputs.all { output ->
             def apk = output.outputFile
             def newName = apk.name.replace(".apk", "-v" + versionName + ".apk")

@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/code
+    environment:
+      # You must replace the CC_TEST_REPORTER_ID with the one of your project
+      CC_TEST_REPORTER_ID: cf0482a47e3601e1eec2e11f822ec0967e35fbee74c0df4f81dba1a24fa02019
+      JVM_OPTS: -Xmx3200m
+    docker:
+      - image: circleci/android:api-28-alpha
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+#      - run:
+#         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+#         command: sudo chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Lint prod debug
+          command: |
+            ./gradlew clean :app:lintProdDebug
+      - run:
+          name: Ktlint checks
+          command: |
+            ./gradlew ktlint
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            ./cc-test-reporter before-build
+            ./cc-test-reporter after-build
