@@ -1,4 +1,4 @@
-package com.rootstrap.android.ui.fragment.firstsample
+package com.rootstrap.android.ui.fragment.sample
 
 import android.os.Bundle
 import android.view.LayoutInflater

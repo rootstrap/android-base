@@ -1,4 +1,4 @@
-package com.rootstrap.android.ui.activity.firstsample
+package com.rootstrap.android.ui.activity.main
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders

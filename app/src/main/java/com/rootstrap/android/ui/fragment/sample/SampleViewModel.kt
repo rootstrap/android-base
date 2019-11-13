@@ -1,4 +1,4 @@
-package com.rootstrap.android.ui.fragment.firstsample
+package com.rootstrap.android.ui.fragment.sample
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
