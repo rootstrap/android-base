@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "289773649665",
+    "firebase_url": "https://android-base-2deb6.firebaseio.com",
+    "project_id": "android-base-2deb6",
+    "storage_bucket": "android-base-2deb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289773649665:android:df12cc6c0442a36cf1e500",
+        "android_client_info": {
+          "package_name": "com.rootstrap.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289773649665-g16indgillq57r32d2lraqpe605gc4lr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrO1ywMtRvy0H7fJzYhbUBmjXQqEiUBw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289773649665-g16indgillq57r32d2lraqpe605gc4lr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
