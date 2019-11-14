@@ -18,7 +18,7 @@ class MainActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, factory)
             .get(MainActivityViewModel::class.java)
 
-        //Sample metric
+        //Sample
         appAnalytics.visitPage(VISIT_MAIN)
     }
 }
