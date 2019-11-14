@@ -9,10 +9,10 @@ val appAnalytics: BaseAnalytics by lazy {
     Analytics.instance
 }
 
-class Analytics(var providers: ArrayList<Provider>? = ArrayList()) : BaseAnalytics {
+class Analytics(var providers: ArrayList<Provider> = ArrayList()) : BaseAnalytics {
 
     companion object {
-        fun init(providers: ArrayList<Provider>? = ArrayList()) {
+        fun init(providers: ArrayList<Provider> = ArrayList()) {
             instance = Analytics(providers)
         }
 
@@ -23,24 +23,24 @@ class Analytics(var providers: ArrayList<Provider>? = ArrayList()) : BaseAnalyti
 
     override fun addProvider(provider: Provider) {
         provider.let {
-            providers?.add(it)
+            providers.add(it)
             it.init()
         }
     }
 
     override fun logOut() {
-        providers?.forEach { it.logOut() }
+        providers.forEach { it.logOut() }
     }
 
     override fun logIn() {
-        providers?.forEach { it.logIn() }
+        providers.forEach { it.logIn() }
     }
 
     override fun signUp() {
-        providers?.forEach { it.signUp() }
+        providers.forEach { it.signUp() }
     }
 
     override fun visitPage(pageName: String, data: Any?) {
-        providers?.forEach { it.track(TrackEvent(pageName, data)) }
+        providers.forEach { it.track(TrackEvent(pageName, data)) }
     }
 }
