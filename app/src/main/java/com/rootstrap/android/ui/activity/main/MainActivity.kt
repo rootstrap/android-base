@@ -3,6 +3,7 @@ package com.rootstrap.android.ui.activity.main
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.rootstrap.android.R
+import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_MAIN
 import com.rootstrap.android.metrics.appAnalytics
 import com.rootstrap.android.ui.base.BaseActivity
@@ -19,6 +20,6 @@ class MainActivity : BaseActivity() {
             .get(MainActivityViewModel::class.java)
 
         //Sample
-        appAnalytics.visitPage(VISIT_MAIN)
+        appAnalytics.track(PageEvents.visit(VISIT_MAIN))
     }
 }

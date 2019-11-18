@@ -13,12 +13,6 @@ interface Provider {
 
     fun init()
 
-    fun logIn()
-
-    fun signUp()
-
-    fun logOut()
-
     fun addOrEditUserSuperProperty(userProperty: UserProperty)
 }
 

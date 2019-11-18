@@ -44,7 +44,7 @@ class GoogleAnalytics(context: Context) : Provider {
      * analytic.setUserId(userId)
      * */
     override fun init() {
-
+        // TODO see the comments ↑↑↑
     }
 
     /**
@@ -57,17 +57,5 @@ class GoogleAnalytics(context: Context) : Provider {
      * */
     override fun addOrEditUserSuperProperty(userProperty: UserProperty) {
         analytic.setUserProperty(userProperty.propertyName, userProperty.propertyValue)
-    }
-
-    override fun logIn() {
-        track(TrackEvent(LOGIN))
-    }
-
-    override fun logOut() {
-        track(TrackEvent(LOGOUT))
-    }
-
-    override fun signUp() {
-        track(TrackEvent(SIGNUP))
     }
 }

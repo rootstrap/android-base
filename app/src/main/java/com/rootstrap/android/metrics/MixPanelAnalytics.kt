@@ -53,7 +53,7 @@ class MixPanelAnalytics(context: Context) : Provider {
      *  analytic!!.flush()
      * */
     override fun init() {
-
+        // TODO see the comments ↑↑↑
     }
 
     /**
@@ -66,17 +66,5 @@ class MixPanelAnalytics(context: Context) : Provider {
      * */
     override fun addOrEditUserSuperProperty(userProperty: UserProperty) {
         analytic.registerSuperProperties(userProperty.toJsonObject())
-    }
-
-    override fun logIn() {
-        track(TrackEvent(LOGIN))
-    }
-
-    override fun logOut() {
-        track(TrackEvent(LOGOUT))
-    }
-
-    override fun signUp() {
-        track(TrackEvent(SIGNUP))
     }
 }

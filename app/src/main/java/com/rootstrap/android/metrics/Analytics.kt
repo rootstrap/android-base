@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.rootstrap.android.metrics.base.BaseAnalytics
 import com.rootstrap.android.metrics.base.Provider
 import com.rootstrap.android.metrics.base.TrackEvent
+import com.rootstrap.android.metrics.base.UserProperty
 
 val appAnalytics: BaseAnalytics by lazy {
     Analytics.instance
@@ -28,19 +29,23 @@ class Analytics(var providers: ArrayList<Provider> = ArrayList()) : BaseAnalytic
         }
     }
 
-    override fun logOut() {
-        providers.forEach { it.logOut() }
+    override fun addOrEditProperty(property: UserProperty) {
+        providers.forEach { it.addOrEditUserSuperProperty(property) }
     }
 
-    override fun logIn() {
-        providers.forEach { it.logIn() }
+    override fun addOrEditProperties(properties: List<UserProperty>) {
+        providers.forEach {
+            properties.forEach { property ->
+                it.addOrEditUserSuperProperty(property)
+            }
+        }
     }
 
-    override fun signUp() {
-        providers.forEach { it.signUp() }
+    override fun init() {
+        providers.forEach { it.init() }
     }
 
-    override fun visitPage(pageName: String, data: Any?) {
-        providers.forEach { it.track(TrackEvent(pageName, data)) }
+    override fun track(event: TrackEvent) {
+        providers.forEach { it.track(event) }
     }
 }
