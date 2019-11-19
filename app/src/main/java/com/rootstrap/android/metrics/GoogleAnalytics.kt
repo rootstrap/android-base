@@ -43,7 +43,7 @@ class GoogleAnalytics(context: Context) : Provider {
      * Initialize google analytics user and default data
      * analytic.setUserId(userId)
      * */
-    override fun init() {
+    override fun indentifyUser() {
         // TODO see the comments ↑↑↑
     }
 

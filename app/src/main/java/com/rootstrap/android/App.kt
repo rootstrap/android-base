@@ -12,6 +12,6 @@ class App : Application() {
 
         appAnalytics.addProvider(GoogleAnalytics(this))
         //You need the api key in order to use MixPanel
-        // appAnalytics.addProvider(MixPanelAnalytics(applicationContext))
+        //appAnalytics.addProvider(MixPanelAnalytics(this))
     }
 }

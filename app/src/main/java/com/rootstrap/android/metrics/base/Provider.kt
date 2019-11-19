@@ -11,7 +11,7 @@ interface Provider {
 
     fun reset()
 
-    fun init()
+    fun indentifyUser()
 
     fun addOrEditUserSuperProperty(userProperty: UserProperty)
 }

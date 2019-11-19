@@ -25,7 +25,7 @@ class Analytics(var providers: ArrayList<Provider> = ArrayList()) : BaseAnalytic
     override fun addProvider(provider: Provider) {
         provider.let {
             providers.add(it)
-            it.init()
+            it.indentifyUser()
         }
     }
 
@@ -41,8 +41,8 @@ class Analytics(var providers: ArrayList<Provider> = ArrayList()) : BaseAnalytic
         }
     }
 
-    override fun init() {
-        providers.forEach { it.init() }
+    override fun indentifyUser() {
+        providers.forEach { it.indentifyUser() }
     }
 
     override fun track(event: TrackEvent) {

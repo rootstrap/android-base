@@ -13,7 +13,7 @@ class UserEvents {
             // create a super property with the current user info
             // appAnalytics.addOrEditProperty(UserProperty("user_name", "Fulano"))
             // the same for the other events
-            appAnalytics.init()
+            appAnalytics.indentifyUser()
             return TrackEvent(LOGIN, data)
         }
 
