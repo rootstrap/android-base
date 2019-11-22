@@ -1,25 +1,15 @@
 package com.rootstrap.android.metrics
 
-import android.annotation.SuppressLint
 import com.rootstrap.android.metrics.base.BaseAnalytics
 import com.rootstrap.android.metrics.base.Provider
 import com.rootstrap.android.metrics.base.TrackEvent
 import com.rootstrap.android.metrics.base.UserProperty
 
-val appAnalytics: BaseAnalytics by lazy {
-    Analytics.instance
-}
+object Analytics : BaseAnalytics {
+    var providers: ArrayList<Provider> = ArrayList()
 
-class Analytics(var providers: ArrayList<Provider> = ArrayList()) : BaseAnalytics {
-
-    companion object {
-        fun init(providers: ArrayList<Provider> = ArrayList()) {
-            instance = Analytics(providers)
-        }
-
-        @SuppressLint("StaticFieldLeak")
-        lateinit var instance: BaseAnalytics
-            private set
+    override fun addProviders(providers: ArrayList<Provider>) {
+        this.providers = providers
     }
 
     override fun addProvider(provider: Provider) {
