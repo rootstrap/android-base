@@ -49,4 +49,3 @@ fun ViewGroup.inflate(layout: Int, attachToRoot: Boolean = false) =
 /**
  * Add more extensions in case you need it
  * */
-
