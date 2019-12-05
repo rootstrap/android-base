@@ -26,8 +26,10 @@ abstract class ActionCallback<T> : Callback<T> {
 
     open fun errorAction(response: Response<T>) {
         try {
-            val error = Gson().fromJson(response.errorBody()!!.charStream(), ErrorModel::class.java)
-            bus.post(ErrorEvent(ErrorUtil.handleCustomError(error)))
+            response.errorBody()?.let {
+                val error = Gson().fromJson(it.charStream(), ErrorModel::class.java)
+                bus.post(ErrorEvent(ErrorUtil.handleCustomError(error)))
+            }
         } catch (e: Exception) {
             bus.post(FailureEvent())
         }

@@ -1,9 +1,9 @@
 package com.rootstrap.android.network.services
 
 import com.rootstrap.android.prefs
-import java.io.IOException
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.io.IOException
 
 class AuthenticationInterceptor : Interceptor {
 
@@ -13,17 +13,17 @@ class AuthenticationInterceptor : Interceptor {
 
         if (hasHeaders()) {
             builder
-                    .addHeader(prefs.ACCESS_TOKEN, prefs.accessToken)
-                    .addHeader(prefs.CLIENT, prefs.client)
-                    .addHeader(prefs.UID, prefs.uid)
+                .addHeader(prefs.ACCESS_TOKEN, prefs.accessToken)
+                .addHeader(prefs.CLIENT, prefs.client)
+                .addHeader(prefs.UID, prefs.uid)
         }
 
         return chain.proceed(builder.build())
     }
 
     private fun hasHeaders(): Boolean {
-        return prefs.ACCESS_TOKEN != "" &&
-                prefs.CLIENT != "" &&
-                prefs.UID != ""
+        return prefs.accessToken != "" &&
+                prefs.client != "" &&
+                prefs.uid != ""
     }
 }

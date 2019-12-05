@@ -10,16 +10,17 @@ import retrofit2.Response
 
 class UserManager {
 
-    fun signUp(email: String, phone: String, username: String) {
-        val userSerializer = UserSerializer(User(email = email, name = username, phone = phone))
+    fun signUp(email: String, phone: String, username: String, password: String) {
+        val userSerializer =
+            UserSerializer(User(email = email, name = username, phone = phone, password = password))
 
         val service = ServiceProvider.create(ApiService::class.java)
         val signUp = service.signUp(userSerializer)
         signUp.enqueue(UserCallback())
     }
 
-    fun signIn(phone: String, password: String) {
-        val userSerializer = UserSerializer(User(phone = phone, password = password))
+    fun signIn(email: String, password: String) {
+        val userSerializer = UserSerializer(User(email = email, password = password))
 
         val service = ServiceProvider.create(ApiService::class.java)
         val signIn = service.signIn(userSerializer)
@@ -30,7 +31,9 @@ class UserManager {
 
         override fun responseAction(response: Response<UserSerializer>) {
             super.responseAction(response)
-            SessionManager.user = response.body()!!.user
+            response.body()?.let {
+                SessionManager.user = it.user
+            }
             bus.post(UserCreatedSuccessfullyEvent())
         }
     }
@@ -39,7 +42,9 @@ class UserManager {
 
         override fun responseAction(response: Response<UserSerializer>) {
             super.responseAction(response)
-            SessionManager.signIn(response.body()!!.user)
+            response.body()?.let {
+                SessionManager.signIn(it.user)
+            }
             bus.post(SignInSuccessfullyEvent())
         }
     }
