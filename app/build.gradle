@@ -25,21 +25,57 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            it.buildConfigField("String", "API_URL", "\"https://your-project-api.herokuapp.com/api/v1/\"")
+    signingConfigs {
+        releaseConfig {
+            keyAlias setAlias
+            keyPassword setPassword
+            storeFile file(setStoreFile)
+            storePassword setStorePassword
         }
-//        staging {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            it.buildConfigField("String", "API_URL", "\"https://your-project-api.herokuapp.com/api/v1/\"")
-//            signingConfig signingConfigs.staging
-//        }
+    }
+
+    buildTypes {
         debug {
             minifyEnabled false
-            it.buildConfigField("String", "API_URL", "\"https://your-project-api.herokuapp.com/api/v1/\"")
+        }
+
+        release {
+            signingConfig signingConfigs.releaseConfig
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "server"
+
+    productFlavors {
+        dev {
+            dimension "server"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            buildConfigField("String", "API_URL", "\"https://proj-dev.herokuapp.com/api/\"")
+        }
+
+        staging {
+            dimension "server"
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            buildConfigField("String", "API_URL", "\"https://proj-staging.herokuapp.com/api/\"")
+        }
+
+        prod {
+            dimension "server"
+            buildConfigField("String", "API_URL", "\"https://proj-production.herokuapp.com/api/\"")
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def apk = output.outputFile
+            def newName = apk.name.replace(".apk", "-v" + variant.versionName + ".apk")
+            newName = newName.replace("-" + variant.buildType.name, "")
+
+            outputFileName = new File("./apks/" + newName)
         }
     }
 }
