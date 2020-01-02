@@ -4,7 +4,6 @@ import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 
-
 /**
  * Using Glide to load an image
  * in case you change Glide by other library like Picasso or Fresco

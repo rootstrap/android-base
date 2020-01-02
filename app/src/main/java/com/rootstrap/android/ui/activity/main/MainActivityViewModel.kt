@@ -6,7 +6,6 @@ import com.rootstrap.android.ui.base.BaseViewModel
 
 open class MainActivityViewModel(var view: MainActivity) : BaseViewModel() {
     // TODO implement methods
-
 }
 
 class MainActivityViewModelFactory(var view: MainActivity) : ViewModelProvider.Factory {

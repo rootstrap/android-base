@@ -1,7 +1,7 @@
 package com.rootstrap.android.metrics.base
 
-import com.google.gson.Gson
 import android.os.Bundle
+import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -11,19 +11,19 @@ interface Provider {
 
     fun reset()
 
-    fun indentifyUser()
+    fun identifyUser()
 
     fun addOrEditUserSuperProperty(userProperty: UserProperty)
 }
 
 class UserProperty(val propertyName: String, val propertyValue: String) {
-    fun toJsonObject() : JSONObject{
+    fun toJsonObject(): JSONObject {
         return JSONObject(Gson().toJson(this))
     }
 }
 
 class TrackEvent(val eventName: String, val eventData: Any? = null) {
-    fun actionDataToJsonObject() : JSONObject{
+    fun actionDataToJsonObject(): JSONObject {
         return JSONObject(Gson().toJson(eventData))
     }
 
@@ -41,5 +41,4 @@ class TrackEvent(val eventName: String, val eventData: Any? = null) {
 
         return bundle
     }
-
 }

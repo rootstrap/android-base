@@ -31,7 +31,7 @@ object Analytics : BaseAnalytics {
         }
     }
 
-    override fun indentifyUser() {
+    override fun identifyUser() {
         providers.forEach { it.indentifyUser() }
     }
 
