@@ -52,7 +52,7 @@ class MixPanelAnalytics(context: Context) : Provider {
      *  people.set("\$email", user.email())
      *  analytic!!.flush()
      * */
-    override fun indentifyUser() {
+    override fun identifyUser() {
         // TODO see the comments ↑↑↑
     }
 
