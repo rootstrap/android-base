@@ -1,4 +1,3 @@
 package com.rootstrap.android.ui.adapter
 
-class Adapter {
-}
+class Adapter

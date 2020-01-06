@@ -38,5 +38,4 @@ class Prefs(context: Context) {
     var signedIn: Boolean
         get() = prefs.getBoolean(SIGNED_IN, false)
         set(value) = prefs.edit().putBoolean(SIGNED_IN, value).apply()
-
 }

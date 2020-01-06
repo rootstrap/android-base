@@ -1,4 +1,3 @@
 package com.rootstrap.android.ui.custom
 
-class CustomView {
-}
+class CustomView

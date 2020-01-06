@@ -13,8 +13,8 @@ class ErrorUtil {
                     if (error.errors.first() is String) {
                         message = error.errors.first() as String
                     }
-                } else if (error.errors is Map<*, *> && error.errors.keys.first() is String
-                    && error.errors.values.first() is List<*>
+                } else if (error.errors is Map<*, *> && error.errors.keys.first() is String &&
+                    error.errors.values.first() is List<*>
                 ) {
                     val errors = error.errors as Map<String, List<String>>
                     message = errors.getValue("full_messages").first()

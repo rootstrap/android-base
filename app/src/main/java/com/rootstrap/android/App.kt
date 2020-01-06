@@ -28,7 +28,7 @@ class App : Application() {
         bus = Bus()
 
         Analytics.addProvider(GoogleAnalytics(this))
-        //You need the api key in order to use MixPanel
-        //Analytics.addProvider(MixPanelAnalytics(this))
+        // You need the api key in order to use MixPanel
+        // Analytics.addProvider(MixPanelAnalytics(this))
     }
 }
