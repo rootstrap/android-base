@@ -6,12 +6,24 @@ Description
 - Android SDK
 - Android Studio
 - Firebase google-services.json file.
+- Change your release key information on the build.gradle:
+```
+signingConfigs {
+    releaseConfig {
+        keyAlias setAlias
+        keyPassword setPassword
+        storeFile file(setStoreFile)
+        storePassword setStorePassword
+    }
+}
+```
+- Build the project with Android Studio.   
 
 ## Installation
 1 - Clone
 2 - Build with Android Studio
 
-To manage user and session after sign in/up we store that information in Preferences. The parameters that we save are due to the usage of Devise Token Auth for authentication on the server side.
+To manage user and session after sign in/up we store that information in Preferences. The parameters that we save are due to the usage of Device Token Auth for authentication on the server side.
 
 Please Check
 ```
