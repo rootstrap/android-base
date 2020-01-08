@@ -2,6 +2,7 @@
 <resources>
     <!-- General -->
     <dimen name="loader_padding">30dp</dimen>
+    <dimen name="loader_radius">10dp</dimen>
 
     <!-- Sign Up -->
     <dimen name="text_input_margin_top">20dp</dimen>
