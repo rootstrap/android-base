@@ -10,9 +10,8 @@ import retrofit2.Response
 
 class UserManager {
 
-    fun signUp(email: String, phone: String, username: String, password: String) {
-        val userSerializer =
-            UserSerializer(User(email = email, name = username, phone = phone, password = password))
+    fun signUp(user: User) {
+        val userSerializer = UserSerializer(user)
 
         val service = ServiceProvider.create(ApiService::class.java)
         val signUp = service.signUp(userSerializer)

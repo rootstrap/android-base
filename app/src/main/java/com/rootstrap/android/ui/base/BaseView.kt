@@ -1,5 +1,5 @@
 package com.rootstrap.android.ui.base
 
-open class BaseView {
+interface BaseView {
     // TODO implement base view model functions
 }

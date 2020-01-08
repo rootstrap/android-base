@@ -15,7 +15,7 @@ object Analytics : BaseAnalytics {
     override fun addProvider(provider: Provider) {
         provider.let {
             providers.add(it)
-            it.indentifyUser()
+            it.identifyUser()
         }
     }
 
@@ -32,7 +32,7 @@ object Analytics : BaseAnalytics {
     }
 
     override fun identifyUser() {
-        providers.forEach { it.indentifyUser() }
+        providers.forEach { it.identifyUser() }
     }
 
     override fun track(event: TrackEvent) {
