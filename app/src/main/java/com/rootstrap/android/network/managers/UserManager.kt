@@ -26,6 +26,12 @@ class UserManager {
         signIn.enqueue(LogInCallback())
     }
 
+    fun signOut() {
+        val service = ServiceProvider.create(ApiService::class.java)
+        val signOut = service.signOut()
+        signOut.enqueue(LogOutCallback())
+    }
+
     private inner class UserCallback : ActionCallback<UserSerializer>() {
 
         override fun responseAction(response: Response<UserSerializer>) {
@@ -48,6 +54,18 @@ class UserManager {
         }
     }
 
+    private inner class LogOutCallback : ActionCallback<Void>() {
+
+        override fun responseAction(response: Response<Void>) {
+            super.responseAction(response)
+            response.body()?.let {
+                SessionManager.signOut()
+            }
+            bus.post(SignedOutSuccessfullyEvent())
+        }
+    }
+
     class UserCreatedSuccessfullyEvent
     class SignInSuccessfullyEvent
+    class SignedOutSuccessfullyEvent
 }

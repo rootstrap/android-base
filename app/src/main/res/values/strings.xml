@@ -24,4 +24,5 @@
 
     <!-- Profile -->
     <string name="welcome_message">Hi %1$s!</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

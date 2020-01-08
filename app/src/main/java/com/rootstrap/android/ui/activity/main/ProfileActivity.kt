@@ -26,5 +26,20 @@ class ProfileActivity : BaseActivity() {
         Analytics.track(PageEvents.visit(VISIT_MAIN))
 
         welcome_text_view.text = getString(R.string.welcome_message, SessionManager.user?.firstName)
+        sign_out_button.setOnClickListener { viewModel.signOut() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.register()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.unregister()
+    }
+
+    fun goToFirstScreen() {
+        startActivityClearTask(MainActivity())
     }
 }
