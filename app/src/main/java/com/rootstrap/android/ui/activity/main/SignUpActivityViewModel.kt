@@ -5,11 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
+import com.rootstrap.android.ui.view.SignUpView
 import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class SignUpActivityViewModel(var view: SignUpActivity) : BaseViewModel(view) {
+open class SignUpActivityViewModel(var view: SignUpView) : BaseViewModel(view) {
 
     private val manager = UserManager()
 
@@ -37,7 +38,7 @@ open class SignUpActivityViewModel(var view: SignUpActivity) : BaseViewModel(vie
     }
 }
 
-class SignUpActivityViewModelFactory(var view: SignUpActivity) : ViewModelProvider.Factory {
+class SignUpActivityViewModelFactory(var view: SignUpView) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return SignUpActivityViewModel(view) as T
     }

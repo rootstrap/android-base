@@ -13,7 +13,7 @@ open class BaseActivity : AppCompatActivity(), BaseView {
 
     private var loadingDialog: LoadingDialog? = null
 
-    fun showProgress() {
+    override fun showProgress() {
         if (loadingDialog == null) {
             loadingDialog = LoadingDialog(this, null)
         }
@@ -21,13 +21,13 @@ open class BaseActivity : AppCompatActivity(), BaseView {
         loadingDialog!!.show()
     }
 
-    fun hideProgress() {
+    override fun hideProgress() {
         if (loadingDialog != null) {
             loadingDialog!!.dismiss()
         }
     }
 
-    fun showError(message: String?) {
+    override fun showError(message: String?) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.error))
 

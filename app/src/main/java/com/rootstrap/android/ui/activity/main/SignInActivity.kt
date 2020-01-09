@@ -8,10 +8,11 @@ import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_MAIN
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseActivity
+import com.rootstrap.android.ui.view.SignUpView
 import com.rootstrap.android.util.extensions.value
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
-class SignInActivity : BaseActivity() {
+class SignInActivity : BaseActivity(), SignUpView {
 
     private lateinit var viewModel: SignInActivityViewModel
 
@@ -39,7 +40,7 @@ class SignInActivity : BaseActivity() {
         viewModel.unregister()
     }
 
-    fun showProfile() {
+    override fun showProfile() {
         startActivityClearTask(ProfileActivity())
     }
 
