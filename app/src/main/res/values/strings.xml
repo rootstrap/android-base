@@ -1,7 +1,27 @@
 <resources>
+    <!-- General -->
     <string name="app_name">RootstrapAndroidBase</string>
+    <string name="ok">OK</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mixpanel_api_key">mixpanel_api_key</string>
+
+    <!-- Error Messages -->
+    <string name="generic_error">There was an unexpected error</string>
+    <string name="error">ERROR</string>
+
+    <!-- Sign Up -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="got_account">Already registered? Sign in!</string>
+    <string name="sign_up">Sign Up</string>
+
+    <!-- Sign In -->
+    <string name="sign_in">Sign In</string>
+
+    <!-- Profile -->
+    <string name="welcome_message">Hi %1$s!</string>
 </resources>

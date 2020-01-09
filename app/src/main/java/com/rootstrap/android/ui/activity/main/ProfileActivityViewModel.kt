@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.ui.base.BaseViewModel
 
-open class MainActivityViewModel(var view: MainActivity) : BaseViewModel() {
-    // TODO implement methods
+open class ProfileActivityViewModel(var view: ProfileActivity) : BaseViewModel(view) {
+    //TODO add methods
 }
 
-class MainActivityViewModelFactory(var view: MainActivity) : ViewModelProvider.Factory {
+class ProfileActivityViewModelFactory(var view: ProfileActivity) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainActivityViewModel(view) as T
+        return ProfileActivityViewModel(view) as T
     }
 }

@@ -53,7 +53,7 @@ android {
             dimension "server"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            buildConfigField("String", "API_URL", "\"https://proj-dev.herokuapp.com/api/\"")
+            buildConfigField("String", "API_URL", "\"https://rails5-api-base.herokuapp.com/api/v1/\"")
         }
 
         staging {

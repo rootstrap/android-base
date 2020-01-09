@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.ui.base.BaseViewModel
 
-open class Sample1ViewModel(var view: SampleFragment) : BaseViewModel() {
+open class Sample1ViewModel(var view: SampleFragment) : BaseViewModel(view) {
     // TODO implement methods
 }
 
