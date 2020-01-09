@@ -9,7 +9,7 @@ import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class MainActivityViewModel(var view: MainActivity) : BaseViewModel(view) {
+open class SignUpActivityViewModel(var view: SignUpActivity) : BaseViewModel(view) {
 
     private val manager = UserManager()
 
@@ -37,8 +37,8 @@ open class MainActivityViewModel(var view: MainActivity) : BaseViewModel(view) {
     }
 }
 
-class MainActivityViewModelFactory(var view: MainActivity) : ViewModelProvider.Factory {
+class SignUpActivityViewModelFactory(var view: SignUpActivity) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainActivityViewModel(view) as T
+        return SignUpActivityViewModel(view) as T
     }
 }

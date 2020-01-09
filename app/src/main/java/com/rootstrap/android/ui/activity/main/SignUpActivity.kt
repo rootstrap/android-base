@@ -11,17 +11,17 @@ import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.util.extensions.value
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
-class MainActivity : BaseActivity() {
+class SignUpActivity : BaseActivity() {
 
-    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModel: SignUpActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        val factory = MainActivityViewModelFactory(this)
+        val factory = SignUpActivityViewModelFactory(this)
         viewModel = ViewModelProviders.of(this, factory)
-            .get(MainActivityViewModel::class.java)
+            .get(SignUpActivityViewModel::class.java)
 
         // Sample
         Analytics.track(PageEvents.visit(VISIT_MAIN))
