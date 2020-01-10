@@ -1,6 +1,5 @@
 package com.rootstrap.android.ui.activity.main
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.rootstrap.android.R
@@ -11,25 +10,24 @@ import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.extensions.value
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_in.*
 
-class SignUpActivity : BaseActivity(), AuthView {
+class SignInActivity : BaseActivity(), AuthView {
 
-    private lateinit var viewModel: SignUpActivityViewModel
+    private lateinit var viewModel: SignInActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.activity_sign_in)
 
-        val factory = SignUpActivityViewModelFactory(this)
+        val factory = SignInActivityViewModelFactory(this)
         viewModel = ViewModelProviders.of(this, factory)
-            .get(SignUpActivityViewModel::class.java)
+            .get(SignInActivityViewModel::class.java)
 
         // Sample
         Analytics.track(PageEvents.visit(VISIT_MAIN))
 
-        sign_up_button.setOnClickListener { signUp() }
-        sign_in_text_view.setOnClickListener { startActivity(Intent(this, SignInActivity::class.java)) }
+        sign_in_button.setOnClickListener { signIn() }
     }
 
     override fun onResume() {
@@ -46,13 +44,11 @@ class SignUpActivity : BaseActivity(), AuthView {
         startActivityClearTask(ProfileActivity())
     }
 
-    private fun signUp() {
+    private fun signIn() {
         val user = User(
             email = email_edit_text.value(),
-            firstName = first_name_edit_text.value(),
-            lastName = last_name_edit_text.value(),
             password = password_edit_text.value()
         )
-        viewModel.signUp(user)
+        viewModel.signIn(user)
     }
 }

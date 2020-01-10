@@ -18,8 +18,8 @@ class UserManager {
         signUp.enqueue(UserCallback())
     }
 
-    fun signIn(email: String, password: String) {
-        val userSerializer = UserSerializer(User(email = email, password = password))
+    fun signIn(user: User) {
+        val userSerializer = UserSerializer(user)
 
         val service = ServiceProvider.create(ApiService::class.java)
         val signIn = service.signIn(userSerializer)

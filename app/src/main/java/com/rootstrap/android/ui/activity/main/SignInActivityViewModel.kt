@@ -10,36 +10,36 @@ import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class SignUpActivityViewModel(var view: AuthView) : BaseViewModel(view) {
+open class SignInActivityViewModel(var view: AuthView) : BaseViewModel(view) {
 
     private val manager = UserManager()
 
-    fun signUp(user: User) {
+    fun signIn(user: User) {
         view.showProgress()
-        manager.signUp(user)
+        manager.signIn(user)
     }
 
     @Subscribe
-    fun signedUpSuccessfully(event: UserManager.UserCreatedSuccessfullyEvent) {
+    fun signedInSuccessfully(event: UserManager.SignInSuccessfullyEvent) {
         view.hideProgress()
         view.showProfile()
     }
 
     @Subscribe
-    fun signedUpError(event: ErrorEvent) {
+    fun signedInError(event: ErrorEvent) {
         view.hideProgress()
         view.showError(event.error)
     }
 
     @Subscribe
-    fun signedUpFailure(event: FailureEvent) {
+    fun signedInFailure(event: FailureEvent) {
         view.hideProgress()
         view.showError(null)
     }
 }
 
-class SignUpActivityViewModelFactory(var view: AuthView) : ViewModelProvider.Factory {
+class SignInActivityViewModelFactory(var view: AuthView) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SignUpActivityViewModel(view) as T
+        return SignInActivityViewModel(view) as T
     }
 }
