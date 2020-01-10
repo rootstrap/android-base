@@ -8,9 +8,10 @@ import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_MAIN
 import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
+import com.rootstrap.android.ui.view.ProfileView
 import kotlinx.android.synthetic.main.activity_profile.*
 
-class ProfileActivity : BaseActivity() {
+class ProfileActivity : BaseActivity(), ProfileView {
 
     private lateinit var viewModel: ProfileActivityViewModel
 
@@ -26,5 +27,20 @@ class ProfileActivity : BaseActivity() {
         Analytics.track(PageEvents.visit(VISIT_MAIN))
 
         welcome_text_view.text = getString(R.string.welcome_message, SessionManager.user?.firstName)
+        sign_out_button.setOnClickListener { viewModel.signOut() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.register()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.unregister()
+    }
+
+    override fun goToFirstScreen() {
+        startActivityClearTask(SignUpActivity())
     }
 }
