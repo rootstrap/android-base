@@ -4,11 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.ui.base.BaseViewModel
+import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class ProfileActivityViewModel(var view: ProfileActivity) : BaseViewModel(view) {
+open class ProfileActivityViewModel(var view: ProfileView) : BaseViewModel(view) {
 
     private val manager = UserManager()
 
@@ -36,7 +37,7 @@ open class ProfileActivityViewModel(var view: ProfileActivity) : BaseViewModel(v
     }
 }
 
-class ProfileActivityViewModelFactory(var view: ProfileActivity) : ViewModelProvider.Factory {
+class ProfileActivityViewModelFactory(var view: ProfileView) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return ProfileActivityViewModel(view) as T
     }

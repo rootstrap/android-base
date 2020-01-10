@@ -8,9 +8,10 @@ import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_MAIN
 import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
+import com.rootstrap.android.ui.view.ProfileView
 import kotlinx.android.synthetic.main.activity_profile.*
 
-class ProfileActivity : BaseActivity() {
+class ProfileActivity : BaseActivity(), ProfileView {
 
     private lateinit var viewModel: ProfileActivityViewModel
 
@@ -39,7 +40,7 @@ class ProfileActivity : BaseActivity() {
         viewModel.unregister()
     }
 
-    fun goToFirstScreen() {
-        startActivityClearTask(MainActivity())
+    override fun goToFirstScreen() {
+        startActivityClearTask(SignUpActivity())
     }
 }
