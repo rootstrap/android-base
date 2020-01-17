@@ -1,4 +1,5 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/0178f2031dec54c86ff9/maintainability)](https://codeclimate.com/repos/5cd1d8c8af2ce517db016a12/maintainability)
+[![License](https://img.shields.io/github/license/rootstrap/ios-base.svg)](https://opensource.org/licenses/MIT)
 
 # Android Base
 
