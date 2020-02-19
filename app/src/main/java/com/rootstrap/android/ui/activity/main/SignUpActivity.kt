@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.rootstrap.android.R
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
-import com.rootstrap.android.metrics.VISIT_MAIN
+import com.rootstrap.android.metrics.VISIT_SIGN_UP
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
@@ -20,13 +20,11 @@ class SignUpActivity : BaseActivity(), AuthView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+        Analytics.track(PageEvents.visit(VISIT_SIGN_UP))
 
         val factory = SignUpActivityViewModelFactory(this)
         viewModel = ViewModelProviders.of(this, factory)
             .get(SignUpActivityViewModel::class.java)
-
-        // Sample
-        Analytics.track(PageEvents.visit(VISIT_MAIN))
 
         sign_up_button.setOnClickListener { signUp() }
         sign_in_text_view.setOnClickListener { startActivity(Intent(this, SignInActivity::class.java)) }

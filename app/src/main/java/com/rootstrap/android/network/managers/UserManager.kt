@@ -1,5 +1,6 @@
 package com.rootstrap.android.network.managers
 
+import androidx.annotation.RestrictTo
 import com.rootstrap.android.bus
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.network.models.UserSerializer
@@ -8,32 +9,31 @@ import com.rootstrap.android.network.services.ApiService
 import com.rootstrap.android.util.extensions.ActionCallback
 import retrofit2.Response
 
-class UserManager {
+/**
+ * Singleton Object
+ * */
+object UserManager {
+
+    private var service = ServiceProvider.create(ApiService::class.java)
 
     fun signUp(user: User) {
         val userSerializer = UserSerializer(user)
-
-        val service = ServiceProvider.create(ApiService::class.java)
         val signUp = service.signUp(userSerializer)
         signUp.enqueue(UserCallback())
     }
 
     fun signIn(user: User) {
         val userSerializer = UserSerializer(user)
-
-        val service = ServiceProvider.create(ApiService::class.java)
         val signIn = service.signIn(userSerializer)
         signIn.enqueue(LogInCallback())
     }
 
     fun signOut() {
-        val service = ServiceProvider.create(ApiService::class.java)
         val signOut = service.signOut()
         signOut.enqueue(LogOutCallback())
     }
 
-    private inner class UserCallback : ActionCallback<UserSerializer>() {
-
+    private class UserCallback : ActionCallback<UserSerializer>() {
         override fun responseAction(response: Response<UserSerializer>) {
             super.responseAction(response)
             response.body()?.let {
@@ -43,7 +43,7 @@ class UserManager {
         }
     }
 
-    private inner class LogInCallback : ActionCallback<UserSerializer>() {
+    private class LogInCallback : ActionCallback<UserSerializer>() {
 
         override fun responseAction(response: Response<UserSerializer>) {
             super.responseAction(response)
@@ -54,15 +54,19 @@ class UserManager {
         }
     }
 
-    private inner class LogOutCallback : ActionCallback<Void>() {
+    private class LogOutCallback : ActionCallback<Void>() {
 
         override fun responseAction(response: Response<Void>) {
             super.responseAction(response)
-            response.body()?.let {
-                SessionManager.signOut()
-            }
+
+            SessionManager.signOut()
             bus.post(SignedOutSuccessfullyEvent())
         }
+    }
+
+    @RestrictTo(RestrictTo.Scope.TESTS)
+    open fun reloadService(url: String) {
+        service = ServiceProvider.create(ApiService::class.java, url)
     }
 
     class UserCreatedSuccessfullyEvent
