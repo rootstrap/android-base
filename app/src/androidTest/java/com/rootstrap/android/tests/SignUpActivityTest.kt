@@ -13,7 +13,7 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -40,10 +40,10 @@ class SignUpActivityTest : BaseTests() {
         scrollAndTypeText(R.id.password_edit_text, testUser.password)
         scrollAndPerformClick(R.id.sign_up_button)
         val user = SessionManager.user
-        Assert.assertEquals(user, testUser)
+        assertEquals(user, testUser)
         activity.runOnUiThread {
             val current = currentActivity()
-            Assert.assertEquals(ProfileActivity::class.java.name, current::class.java.name)
+            assertEquals(ProfileActivity::class.java.name, current::class.java.name)
         }
     }
 
@@ -53,7 +53,7 @@ class SignUpActivityTest : BaseTests() {
         scrollAndPerformClick(R.id.sign_in_text_view)
         activity.runOnUiThread {
             val current = currentActivity()
-            Assert.assertEquals(SignInActivity::class.java.name, current::class.java.name)
+            assertEquals(SignInActivity::class.java.name, current::class.java.name)
         }
     }
 

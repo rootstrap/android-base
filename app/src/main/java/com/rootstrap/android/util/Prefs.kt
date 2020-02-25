@@ -39,5 +39,5 @@ class Prefs(context: Context) {
         get() = prefs.getBoolean(SIGNED_IN, false)
         set(value) = prefs.edit().putBoolean(SIGNED_IN, value).apply()
 
-    fun clear() = prefs.edit().clear()
+    fun clear() = prefs.edit().clear().apply()
 }

@@ -4,7 +4,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.platform.app.InstrumentationRegistry
 import com.rootstrap.android.R
 import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.ui.activity.main.ProfileActivity
@@ -14,7 +13,7 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -39,12 +38,12 @@ class ProfileActivityTest : BaseTests() {
             activity.getString(R.string.welcome_message, SessionManager.user?.firstName)
         )
         onView(withId(R.id.sign_out_button)).perform(click())
-        Assert.assertEquals(null, SessionManager.user)
+        assertEquals(null, SessionManager.user)
 
         // Check if this activity was successful launched
         activity.runOnUiThread {
             val current = currentActivity()
-            Assert.assertEquals(SignUpActivity::class.java.name, current::class.java.name)
+            assertEquals(SignUpActivity::class.java.name, current::class.java.name)
         }
     }
 
