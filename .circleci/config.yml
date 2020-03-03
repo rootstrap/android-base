@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-28
+      - image: circleci/android:api-29
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -20,7 +20,16 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew testStagingDebugUnitTest
-      # todo add instrumentation test
       - run:
           name: Run Ktlint
           command: ./gradlew ktlint
+      # todo add instrumentation test
+      - run:
+          name: Setup emulator
+          command: (yes | sdkmanager "system-images;android-29;default;x86_64" && echo "no" | avdmanager create avd -n test -k "system-images;android-29;default;x86_64") || true
+      - run:
+          name: open emulator
+          command: emulator -avd test -no-audio &
+      - run:
+          name: Run EspressoTests
+          command: ./gradlew connectedStagingDebugAndroidTest
