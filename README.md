@@ -23,8 +23,9 @@ signingConfigs {
 - Build the project with Android Studio.   
 
 ## Installation
-1 - Clone
-2 - Build with Android Studio
+1. Clone
+
+2. Build with Android Studio
 
 To manage user and session after sign in/up we store that information in Preferences. The parameters that we save are due to the usage of Device Token Auth for authentication on the server side.
 
@@ -63,13 +64,14 @@ in order to track the login event.
 `<string name="mixpanel_api_key">mixpanel_api_key</string>`
 
 ## Code Quality Standards
-In order to meet the required code quality standards, this project use [Ktlint](https://github.com/pinterest/ktlint) and [Detekt](https://github.com/arturbosch/detekt)
+In order to meet the required code quality standards, this project uses [Ktlint](https://github.com/pinterest/ktlint) and [Detekt](https://github.com/arturbosch/detekt)
 
 ## Contributing
-Bug reports (please use Issues) and pull requests are welcome on GitHub at https://github.com/rootstrap/android-base. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports (please use Issues) and pull requests are welcome on GitHub at [android-base](https://github.com/rootstrap/android-base). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 The library is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
 NOTE: Remove the free LICENSE file for private projects or replace it with the corresponding license.
 
 ## Credits

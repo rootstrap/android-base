@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo "Running git pre-commit hook"
+
+./gradlew ktlintFormat
+git add .
+
+git stash -q --keep-index
+
+./gradlew ktlint
+
+RESULT=$?
+
+git stash pop -q
+
+# return 1 exit code if running checks fails
+[ $RESULT -ne 0 ] && echo "Please fix the remaining issues before commiting" && exit 1
+echo "😎" && exit 0
