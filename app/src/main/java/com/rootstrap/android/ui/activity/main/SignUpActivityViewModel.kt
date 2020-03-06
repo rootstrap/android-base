@@ -12,7 +12,7 @@ import com.squareup.otto.Subscribe
 
 open class SignUpActivityViewModel(var view: AuthView) : BaseViewModel(view) {
 
-    private val manager = UserManager()
+    private val manager = UserManager
 
     fun signUp(user: User) {
         view.showProgress()

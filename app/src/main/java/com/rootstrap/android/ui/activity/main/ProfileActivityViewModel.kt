@@ -11,7 +11,7 @@ import com.squareup.otto.Subscribe
 
 open class ProfileActivityViewModel(var view: ProfileView) : BaseViewModel(view) {
 
-    private val manager = UserManager()
+    private val manager = UserManager
 
     fun signOut() {
         view.showProgress()

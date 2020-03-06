@@ -11,24 +11,25 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object ServiceProvider {
 
-    private const val URL_API = BuildConfig.API_URL
+    private var URL_API: String? = null
 
     private fun build(): Retrofit {
         val client = OkHttpClient.Builder()
-                .addInterceptor(HeadersInterceptor())
-                .addInterceptor(AuthenticationInterceptor())
-                .addInterceptor(ResponseInterceptor())
-                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
-                .build()
+            .addInterceptor(HeadersInterceptor())
+            .addInterceptor(AuthenticationInterceptor())
+            .addInterceptor(ResponseInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            .build()
 
         return Retrofit.Builder()
-                .baseUrl(URL_API)
-                .addConverterFactory(MoshiConverterFactory.create().withNullSerialization())
-                .client(client)
-                .build()
+            .baseUrl(URL_API)
+            .addConverterFactory(MoshiConverterFactory.create().withNullSerialization())
+            .client(client)
+            .build()
     }
 
-    fun <T> create(klass: Class<T>): T {
+    fun <T> create(klass: Class<T>, url: String? = BuildConfig.API_URL): T {
+        URL_API = url
         return build().create(klass)
     }
 }

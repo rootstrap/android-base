@@ -19,10 +19,11 @@ object SessionManager {
 
     fun signOut() {
         user = null
-        prefs.prefs.edit().clear().apply()
+        prefs.clear()
     }
 
     fun signIn(user: User) {
+        this.user = user
         prefs.user = user
         prefs.signedIn = true
     }
