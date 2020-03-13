@@ -11,25 +11,50 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Download Dependencies
+          name: Downloading Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Run Unit Tests
+          name: Running Unit Tests
           command: ./gradlew testStagingDebugUnitTest
       - run:
-          name: Run Ktlint
+          name: Running Ktlint
           command: ./gradlew ktlint
       # todo add instrumentation test
       - run:
           name: Setup emulator
           command: (yes | sdkmanager "system-images;android-29;default;x86_64" && echo "no" | avdmanager create avd -n test -k "system-images;android-29;default;x86_64") || true
       - run:
-          name: open emulator
+          name: Running emulator
+          background: true
           command: emulator -avd test -no-audio &
       - run:
-          name: Run EspressoTests
+          name: Run Android Connected Tests
+          command: |
+            export ADB_INSTALL_TIMEOUT=120
+            export ANDROID_HOME=$ANDROID_SDK_ROOT
+            ./gradlew assembleDebug
+            # TODO: Fix this
+            sleep 60
+            # Is the emulator still running?
+            adb devices
+            # Check if package manager is running
+            adb shell pm list packages
+            # Install package
+            $ANDROID_SDK_ROOT/platform-tools/adb install /home/android/android-base/app/build/outputs/apk/app-debug.apk
+            ./gradlew connectedAndroidTest
+      - run:
+          name: Wait for Emulator
+          no_output_timeout: 15m
+          command: |
+            # wait for it to have booted
+            circle-android wait-for-boot
+            # unlock the emulator screen
+            sleep 30
+            adb shell input keyevent 82
+      - run:
+          name: Running EspressoTests
           command: ./gradlew connectedStagingDebugAndroidTest
