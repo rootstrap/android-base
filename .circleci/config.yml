@@ -11,6 +11,15 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: Install licenses
+          command: cp licenses/* /opt/android/sdk/licenses/
+      - run:
+          name: Approve license for build tools
+          command: (echo y; echo y; echo y; echo y; echo y; echo y) | $ANDROID_HOME/tools/bin/sdkmanager --licenses && sdkmanager --update
+      - run:
           name: Downloading Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
