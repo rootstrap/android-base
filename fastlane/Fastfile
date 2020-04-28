@@ -1,0 +1,30 @@
+
+default_platform(:android)
+
+platform :android do
+  lane :deploy_production do
+    increment_version_code(
+      gradle_file_path: “app/build.gradle”
+    )
+
+    gradle(
+      task: "clean"
+    )
+
+    gradle(
+      task: 'androidDependencies',
+      print_command: false
+    )
+
+    build_android_app(
+      task: 'assemble',
+      flavor: "Prod",
+      build_type: 'Release',
+      print_command: false,
+    )
+
+    upload_to_play_store(
+      track: 'internal'
+    )
+  end
+end

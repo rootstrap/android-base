@@ -4,7 +4,6 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import java.io.IOException
 
-
 object MockServer {
 
     private val MOCK_WEB_SERVER_PORT = 8000
