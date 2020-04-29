@@ -2,7 +2,7 @@ package com.rootstrap.android.utils
 
 import android.app.Activity
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.action.ViewActions.* // ktlint-disable no-wildcard-imports
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -15,14 +15,13 @@ import com.rootstrap.android.network.models.User
 import okhttp3.mockwebserver.Dispatcher
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4ClassRunner::class)
 open class BaseTests {
 
     var mockServer: MockServer = MockServer
 
     open fun setServerDispatch(dispatcher: Dispatcher) {
-        mockServer.server().dispatcher = dispatcher;
+        mockServer.server().dispatcher = dispatcher
     }
 
     open fun before() {

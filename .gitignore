@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+/gradle.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -9,7 +10,9 @@
 /.idea/assetWizardSettings.xml
 /.idea/gradle.xml
 /.idea/*
-
+/secure/*
+/app/prod/release/*
+/fastlane/report.xml
 .DS_Store
 /build
 /captures
