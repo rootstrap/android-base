@@ -12,6 +12,7 @@ import androidx.test.runner.lifecycle.Stage
 import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
+import okhttp3.Dispatcher
 import okhttp3.mockwebserver.Dispatcher
 import org.junit.runner.RunWith
 

@@ -1,8 +1,29 @@
-json_key_file("secure/google-api.json")
+json_key_file("secure/api-8236557723486032825-998757-52fb9a510a17.json")
 # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
 
 for_platform :android do
   for_lane :deploy_production do
     package_name("com.rootstrap.android")
   end
+
+  for_lane :debug_production do
+    package_name("com.rootstrap.android")
+  end
+
+  for_lane :deploy_dev do
+   package_name("com.rootstrap.android.dev")
+  end
+
+  for_lane :debug_dev do
+    package_name("com.rootstrap.android.dev")
+  end
+
+  for_lane :deploy_staging do
+    package_name("com.rootstrap.android.staging")
+  end
+   
+  for_lane :debug_staging do
+    package_name("com.rootstrap.android.staging")
+  end
+
 end
