@@ -3,6 +3,30 @@ default_platform(:android)
 
 platform :android do
   lane :deploy_production do
+    release(flavor: 'Prod', track: 'internal')
+  end
+
+  lane :deploy_dev do
+    release(flavor: 'Dev', track: 'internal')
+  end
+
+  lane :deploy_staging do
+    release(flavor: 'Staging', track: 'internal')
+  end
+
+  lane :debug_production do
+      debug(flavor: 'Prod')
+  end
+
+  lane :debug_dev do
+    debug(flavor: 'Dev')
+  end
+
+  lane :debug_staging do
+    debug(flavor: 'Staging')
+  end
+
+  lane :release do |options|
     increment_version_code(
       gradle_file_path: “app/build.gradle”
     )
@@ -18,13 +42,37 @@ platform :android do
 
     build_android_app(
       task: 'assemble',
-      flavor: "Prod",
+      flavor: options[:flavor],
       build_type: 'Release',
       print_command: false,
     )
 
     upload_to_play_store(
-      track: 'internal'
+      track: options[:track]
     )
+  end
+
+  lane :debug do |options|
+    increment_version_code(
+      gradle_file_path: “app/build.gradle”
+    )
+
+    gradle(
+      task: "clean"
+    )
+
+    gradle(
+      task: 'androidDependencies',
+      print_command: false
+    )
+
+    build_android_app(
+      task: 'assemble',
+      flavor: options[:flavor],
+      build_type: 'Debug',
+      print_command: false,
+    )
+
+# Do something with the apk
   end
 end
