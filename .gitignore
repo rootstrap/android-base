@@ -17,3 +17,5 @@
 /build
 /captures
 .externalNativeBuild
+.gitsecret/keys/random_seed
+!*.secret
