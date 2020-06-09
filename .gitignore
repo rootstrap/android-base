@@ -18,4 +18,5 @@
 /captures
 .externalNativeBuild
 .gitsecret/keys/random_seed
+fastlane/report.xml
 !*.secret

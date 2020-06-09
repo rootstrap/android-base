@@ -39,6 +39,31 @@ to handle the server side authentication, in case you need to modify them:
 ## Usage
 - You can use this open source project as a template of your new Android projects.
 
+## Key File encryption
+
+Build signing requires a developer-owned keystore. Location and credentials for it are specified in `gradle.properties`. Likewise submission to Google Play requires a Developer API key in .json format (`google-api.json`).
+It is recommended that these files remains outside the source repo
+
+We suggest using [git secret](https://git-secret.io/) as a simple and secure solution for keeping these sensitive files in the repo. See [Config](./secure/Readme.md) for detailed instructions.
+
+
+## Build and Release with Fastlane
+
+We provide configuration files for automating build, test and submission of the application using [Fastlane](https://docs.fastlane.tools/)
+
+
+Lanes for each deployment target example are provided with some basic behavior:
+- Each target has two options: `debug_x` and `deploy_x`.
+- Each option will:
+  - Increment the build number.
+  - Run `gradlew clean`
+  - Run `gradlew androidDependencies`
+  - Build the app (`gradle assemble`) for the target flavor.
+- The `deploy` lanes will additionaly submit the APK to the corresponding track in the Play Store.
+
+Check `fastlane/Appfile` and `fastlane/Fastfile` for more information.
+
+
 ## Analytics
 - Add analytics manager:
     1. Firebase
