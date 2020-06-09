@@ -10,7 +10,6 @@
 /.idea/assetWizardSettings.xml
 /.idea/gradle.xml
 /.idea/*
-/secure/*
 /app/prod/release/*
 /fastlane/report.xml
 .DS_Store
@@ -20,3 +19,5 @@
 .gitsecret/keys/random_seed
 fastlane/report.xml
 !*.secret
+/secure/key.keystore
+/secure/google-api.json
