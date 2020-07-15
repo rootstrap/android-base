@@ -9,6 +9,8 @@ import com.rootstrap.android.metrics.VISIT_SIGN_IN
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
+import com.rootstrap.android.util.NetworkState
+import com.rootstrap.android.util.ViewModelDelegate
 import com.rootstrap.android.util.extensions.value
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -21,21 +23,13 @@ class SignInActivity : BaseActivity(), AuthView {
         setContentView(R.layout.activity_sign_in)
         Analytics.track(PageEvents.visit(VISIT_SIGN_IN))
 
-        val factory = SignInActivityViewModelFactory(this)
+        val factory = SignInActivityViewModelFactory(viewModelDelegate)
         viewModel = ViewModelProviders.of(this, factory)
             .get(SignInActivityViewModel::class.java)
 
         sign_in_button.setOnClickListener { signIn() }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.register()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.unregister()
+        lifecycle.addObserver(viewModel)
     }
 
     override fun showProfile() {
@@ -48,5 +42,25 @@ class SignInActivity : BaseActivity(), AuthView {
             password = password_edit_text.value()
         )
         viewModel.signIn(user)
+    }
+
+    // delegate
+    private val viewModelDelegate = object : ViewModelDelegate {
+        override fun updateState() {
+            when (viewModel.state) {
+                SignInState.signedInFailure -> showError(viewModel.error)
+                SignInState.signedInSuccess -> showProfile()
+                else -> {
+                }
+            }
+        }
+
+        override fun updateNetworkState() {
+            when (viewModel.networkState) {
+                NetworkState.loading -> showProgress()
+                NetworkState.idle -> hideProgress()
+                else -> showError(viewModel.error ?: getString(R.string.default_error))
+            }
+        }
     }
 }

@@ -5,41 +5,58 @@ import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
-import com.rootstrap.android.ui.view.AuthView
+import com.rootstrap.android.util.NetworkState
+import com.rootstrap.android.util.ViewModelDelegate
 import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class SignUpActivityViewModel(var view: AuthView) : BaseViewModel(view) {
+open class SignUpActivityViewModel(
+    delegate: ViewModelDelegate?
+) : BaseViewModel(delegate) {
 
     private val manager = UserManager
 
+    var state: SignUpState = SignUpState.none
+        set(value) {
+            field = value
+            delegate?.updateState()
+        }
+
     fun signUp(user: User) {
-        view.showProgress()
+        networkState = NetworkState.loading
         manager.signUp(user)
     }
 
     @Subscribe
     fun signedUpSuccessfully(event: UserManager.UserCreatedSuccessfullyEvent) {
-        view.hideProgress()
-        view.showProfile()
+        networkState = NetworkState.idle
+        state = SignUpState.signedUpSuccess
     }
 
     @Subscribe
     fun signedUpError(event: ErrorEvent) {
-        view.hideProgress()
-        view.showError(event.error)
+        error = event.error
+        networkState = NetworkState.idle
+        networkState = NetworkState.error
     }
 
     @Subscribe
     fun signedUpFailure(event: FailureEvent) {
-        view.hideProgress()
-        view.showError(null)
+        error = null
+        networkState = NetworkState.idle
+        state = SignUpState.signedUpFailure
     }
 }
 
-class SignUpActivityViewModelFactory(var view: AuthView) : ViewModelProvider.Factory {
+enum class SignUpState {
+    signedUpFailure,
+    signedUpSuccess,
+    none,
+}
+
+class SignUpActivityViewModelFactory(var delegate: ViewModelDelegate?) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SignUpActivityViewModel(view) as T
+        return SignUpActivityViewModel(delegate) as T
     }
 }
