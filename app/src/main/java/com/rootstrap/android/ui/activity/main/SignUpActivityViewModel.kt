@@ -6,19 +6,19 @@ import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelDelegate
+import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class SignUpActivityViewModel(delegate: ViewModelDelegate?) : BaseViewModel(delegate) {
+open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
     private val manager = UserManager
 
     var state: SignUpState = SignUpState.none
         set(value) {
             field = value
-            delegate?.updateState()
+            listener?.updateState()
         }
 
     fun signUp(user: User) {
@@ -53,8 +53,8 @@ enum class SignUpState {
     none,
 }
 
-class SignUpActivityViewModelFactory(var delegate: ViewModelDelegate?) : ViewModelProvider.Factory {
+class SignUpActivityViewModelFactory(var listener: ViewModelListener?) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SignUpActivityViewModel(delegate) as T
+        return SignUpActivityViewModel(listener) as T
     }
 }

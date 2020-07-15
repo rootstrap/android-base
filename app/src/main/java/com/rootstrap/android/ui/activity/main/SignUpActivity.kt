@@ -11,7 +11,7 @@ import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelDelegate
+import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.value
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -24,7 +24,7 @@ class SignUpActivity : BaseActivity(), AuthView {
         setContentView(R.layout.activity_sign_up)
         Analytics.track(PageEvents.visit(VISIT_SIGN_UP))
 
-        val factory = SignUpActivityViewModelFactory(viewModelDelegate)
+        val factory = SignUpActivityViewModelFactory(viewModelListener)
         viewModel = ViewModelProviders.of(this, factory)
             .get(SignUpActivityViewModel::class.java)
 
@@ -48,8 +48,8 @@ class SignUpActivity : BaseActivity(), AuthView {
         viewModel.signUp(user)
     }
 
-    // delegate
-    private val viewModelDelegate = object : ViewModelDelegate {
+    // ViewModelListener
+    private val viewModelListener = object : ViewModelListener {
         override fun updateState() {
             when (viewModel.state) {
                 SignUpState.signedUpFailure -> showError(viewModel.error)

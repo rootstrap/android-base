@@ -1,6 +1,6 @@
 package com.rootstrap.android.util
 
-interface ViewModelDelegate {
+interface ViewModelListener {
     fun updateState()
     fun updateNetworkState()
 }

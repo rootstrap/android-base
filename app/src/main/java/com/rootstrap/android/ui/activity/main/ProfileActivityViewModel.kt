@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelDelegate
+import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class ProfileActivityViewModel(delegate: ViewModelDelegate?) : BaseViewModel(delegate) {
+open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
     private val manager = UserManager
 
@@ -22,7 +22,7 @@ open class ProfileActivityViewModel(delegate: ViewModelDelegate?) : BaseViewMode
     var state: ProfileState = ProfileState.none
         set(value) {
             field = value
-            delegate?.updateState()
+            listener?.updateState()
         }
 
     @Subscribe
@@ -52,9 +52,9 @@ enum class ProfileState {
     none,
 }
 
-class ProfileActivityViewModelFactory(var delegate: ViewModelDelegate?) :
+class ProfileActivityViewModelFactory(var listener: ViewModelListener?) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ProfileActivityViewModel(delegate) as T
+        return ProfileActivityViewModel(listener) as T
     }
 }

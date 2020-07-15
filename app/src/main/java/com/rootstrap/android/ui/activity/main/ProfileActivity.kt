@@ -10,7 +10,7 @@ import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelDelegate
+import com.rootstrap.android.util.ViewModelListener
 import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : BaseActivity(), ProfileView {
@@ -21,7 +21,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        val factory = ProfileActivityViewModelFactory(viewModelDelegate)
+        val factory = ProfileActivityViewModelFactory(viewModelListener)
         viewModel = ViewModelProviders.of(this, factory)
             .get(ProfileActivityViewModel::class.java)
 
@@ -37,8 +37,8 @@ class ProfileActivity : BaseActivity(), ProfileView {
         startActivityClearTask(SignUpActivity())
     }
 
-    // delegate
-    private val viewModelDelegate = object : ViewModelDelegate {
+    // ViewModelListener
+    private val viewModelListener = object : ViewModelListener {
         override fun updateState() {
             when (viewModel.state) {
                 ProfileState.signOutFailure -> showError(viewModel.error)
