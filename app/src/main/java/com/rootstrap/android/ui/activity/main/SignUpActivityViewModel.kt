@@ -11,9 +11,7 @@ import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class SignUpActivityViewModel(
-    delegate: ViewModelDelegate?
-) : BaseViewModel(delegate) {
+open class SignUpActivityViewModel(delegate: ViewModelDelegate?) : BaseViewModel(delegate) {
 
     private val manager = UserManager
 
