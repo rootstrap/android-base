@@ -9,6 +9,8 @@ import com.rootstrap.android.metrics.VISIT_PROFILE
 import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
+import com.rootstrap.android.util.NetworkState
+import com.rootstrap.android.util.ViewModelListener
 import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : BaseActivity(), ProfileView {
@@ -19,7 +21,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        val factory = ProfileActivityViewModelFactory(this)
+        val factory = ProfileActivityViewModelFactory(viewModelListener)
         viewModel = ViewModelProviders.of(this, factory)
             .get(ProfileActivityViewModel::class.java)
 
@@ -27,19 +29,31 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
         welcome_text_view.text = getString(R.string.welcome_message, SessionManager.user?.firstName)
         sign_out_button.setOnClickListener { viewModel.signOut() }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.register()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.unregister()
+        lifecycle.addObserver(viewModel)
     }
 
     override fun goToFirstScreen() {
         startActivityClearTask(SignUpActivity())
+    }
+
+    // ViewModelListener
+    private val viewModelListener = object : ViewModelListener {
+        override fun updateState() {
+            when (viewModel.state) {
+                ProfileState.signOutFailure -> showError(viewModel.error)
+                ProfileState.signedOutSuccessfully -> goToFirstScreen()
+                else -> {
+                }
+            }
+        }
+
+        override fun updateNetworkState() {
+            when (viewModel.networkState) {
+                NetworkState.loading -> showProgress()
+                NetworkState.idle -> hideProgress()
+                else -> showError(viewModel.error ?: getString(R.string.default_error))
+            }
+        }
     }
 }

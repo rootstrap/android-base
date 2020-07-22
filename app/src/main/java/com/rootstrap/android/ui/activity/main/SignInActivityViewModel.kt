@@ -5,41 +5,56 @@ import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
-import com.rootstrap.android.ui.view.AuthView
+import com.rootstrap.android.util.NetworkState
+import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.ErrorEvent
 import com.rootstrap.android.util.extensions.FailureEvent
 import com.squareup.otto.Subscribe
 
-open class SignInActivityViewModel(var view: AuthView) : BaseViewModel(view) {
+open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
     private val manager = UserManager
 
+    var state: SignInState = SignInState.none
+        set(value) {
+            field = value
+            listener?.updateState()
+        }
+
     fun signIn(user: User) {
-        view.showProgress()
+        networkState = NetworkState.loading
         manager.signIn(user)
     }
 
     @Subscribe
     fun signedInSuccessfully(event: UserManager.SignInSuccessfullyEvent) {
-        view.hideProgress()
-        view.showProfile()
+        networkState = NetworkState.idle
+        state = SignInState.signedInSuccess
     }
 
     @Subscribe
     fun signedInError(event: ErrorEvent) {
-        view.hideProgress()
-        view.showError(event.error)
+        error = event.error
+        networkState = NetworkState.idle
+        networkState = NetworkState.error
     }
 
     @Subscribe
     fun signedInFailure(event: FailureEvent) {
-        view.hideProgress()
-        view.showError(null)
+        error = null
+        networkState = NetworkState.idle
+        state = SignInState.signedInFailure
     }
 }
 
-class SignInActivityViewModelFactory(var view: AuthView) : ViewModelProvider.Factory {
+enum class SignInState {
+    signedInFailure,
+    signedInSuccess,
+    none,
+}
+
+class SignInActivityViewModelFactory(var listener: ViewModelListener?) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SignInActivityViewModel(view) as T
+        return SignInActivityViewModel(listener) as T
     }
 }
