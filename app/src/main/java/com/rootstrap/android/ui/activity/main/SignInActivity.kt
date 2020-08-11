@@ -1,5 +1,6 @@
 package com.rootstrap.android.ui.activity.main
 
+import android.Manifest
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.rootstrap.android.R
@@ -7,14 +8,15 @@ import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_IN
 import com.rootstrap.android.network.models.User
-import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.value
+import com.rootstrap.android.util.permissions.PermissionActivity
+import com.rootstrap.android.util.permissions.PermissionResponse
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
-class SignInActivity : BaseActivity(), AuthView {
+class SignInActivity : PermissionActivity(), AuthView {
 
     private lateinit var viewModel: SignInActivityViewModel
 
@@ -30,6 +32,8 @@ class SignInActivity : BaseActivity(), AuthView {
         sign_in_button.setOnClickListener { signIn() }
 
         lifecycle.addObserver(viewModel)
+
+        sampleAskForPermission()
     }
 
     override fun showProfile() {
@@ -62,5 +66,21 @@ class SignInActivity : BaseActivity(), AuthView {
                 else -> showError(viewModel.error ?: getString(R.string.default_error))
             }
         }
+    }
+
+    fun sampleAskForPermission() {
+        checkPermission(Manifest.permission.CAMERA, object : PermissionResponse {
+            override fun granted() {
+                // TODO..
+            }
+
+            override fun denied() {
+                // TODO..
+            }
+
+            override fun foreverDenied() {
+                // TODO..
+            }
+        })
     }
 }
