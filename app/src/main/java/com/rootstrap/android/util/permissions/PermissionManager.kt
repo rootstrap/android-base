@@ -22,7 +22,7 @@ fun Context.checkPermission(permission: String): Boolean =
         permission
     ) == PackageManager.PERMISSION_GRANTED
 
-fun Context.checkNoGrantedPermissions(permission: Array<String>): List<String> =
+fun Context.checkNotGrantedPermissions(permissions: Array<String>): List<String> =
     permission.filter { !checkPermission(it) }
 
 /**
