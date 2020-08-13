@@ -7,9 +7,10 @@ open class PermissionFragment : BaseFragment() {
 
     private var permissionListener: PermissionResponse? = null
 
-    private fun requestPermission(permissions: Array<String>) {
+    private fun requestPermission(permissions: Array<String>, listener: PermissionResponse) {
+        permissionListener = listener
         activity?.let { activityContext ->
-            val notGrantedPermissions = activityContext.checkNoGrantedPermissions(permissions)
+            val notGrantedPermissions = activityContext.checkNotGrantedPermissions(permissions)
 
             when {
                 notGrantedPermissions.isEmpty() -> permissionListener?.granted()
@@ -19,16 +20,6 @@ open class PermissionFragment : BaseFragment() {
                 )
             }
         }
-    }
-
-    fun checkPermission(permission: String, listener: PermissionResponse) {
-        permissionListener = listener
-        requestPermission(arrayOf(permission))
-    }
-
-    fun checkPermissions(permissions: Array<String>, listener: PermissionResponse) {
-        permissionListener = listener
-        requestPermission(permissions)
     }
 
     override fun onRequestPermissionsResult(
@@ -41,21 +32,19 @@ open class PermissionFragment : BaseFragment() {
                 return
             }
 
-            val permissionDenied = mutableListOf<String>()
+            val deniedPermissions = mutableListOf<String>()
 
             for (i in grantResults.indices) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    permissionDenied.add(permissions[i])
+                    deniedPermissions.add(permissions[i])
                 }
             }
 
-            val granted = permissionDenied.size == 0
-
             when {
-                granted -> listener.granted()
+                deniedPermissions.isEmpty() -> listener.granted()
                 else -> {
-                    for (s in permissionDenied) {
-                        if (!shouldShowRequestPermissionRationale(s)) {
+                    for (deniedPermission in deniedPermissions) {
+                        if (!shouldShowRequestPermissionRationale(deniedPermission)) {
                             listener.foreverDenied()
                             return
                         }

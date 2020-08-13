@@ -69,7 +69,7 @@ class SignInActivity : PermissionActivity(), AuthView {
     }
 
     fun sampleAskForPermission() {
-        checkPermission(Manifest.permission.CAMERA, object : PermissionResponse {
+        requestPermission(arrayOf(Manifest.permission.CAMERA), object : PermissionResponse {
             override fun granted() {
                 // TODO..
             }

@@ -23,7 +23,7 @@ fun Context.checkPermission(permission: String): Boolean =
     ) == PackageManager.PERMISSION_GRANTED
 
 fun Context.checkNotGrantedPermissions(permissions: Array<String>): List<String> =
-    permission.filter { !checkPermission(it) }
+    permissions.filter { !checkPermission(it) }
 
 /**
  * Use this extension to open the app details to grant permission manually
