@@ -2,18 +2,21 @@ package com.rootstrap.android.ui.activity.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.rootstrap.android.network.managers.IUserManager
+import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
-import com.rootstrap.android.util.extensions.ErrorEvent
-import com.rootstrap.android.util.extensions.FailureEvent
-import com.squareup.otto.Subscribe
+import com.rootstrap.android.util.extensions.ApiErrorType
+import com.rootstrap.android.util.extensions.ApiException
+import kotlinx.coroutines.launch
 
 open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
-    private val manager = UserManager
+    private val manager: IUserManager = UserManager()
 
     var state: SignInState = SignInState.none
         set(value) {
@@ -23,26 +26,28 @@ open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel
 
     fun signIn(user: User) {
         networkState = NetworkState.loading
-        manager.signIn(user)
+        viewModelScope.launch {
+            val result = manager.signIn(user = user)
+            if (result.isSuccess) {
+                result.getOrNull()?.value?.user?.let { user ->
+                    SessionManager.signIn(user)
+                }
+
+                networkState = NetworkState.idle
+                state = SignInState.signedInSuccess
+            } else {
+                mangeError(result.exceptionOrNull())
+            }
+        }
     }
 
-    @Subscribe
-    fun signedInSuccessfully(event: UserManager.SignInSuccessfullyEvent) {
-        networkState = NetworkState.idle
-        state = SignInState.signedInSuccess
-    }
+    private fun mangeError(exception: Throwable?) {
+        error = if (exception is ApiException && exception.errorType == ApiErrorType.apiError) {
+            exception.message
+        } else null
 
-    @Subscribe
-    fun signedInError(event: ErrorEvent) {
-        error = event.error
         networkState = NetworkState.idle
         networkState = NetworkState.error
-    }
-
-    @Subscribe
-    fun signedInFailure(event: FailureEvent) {
-        error = null
-        networkState = NetworkState.idle
         state = SignInState.signedInFailure
     }
 }

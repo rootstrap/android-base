@@ -1,16 +1,11 @@
 package com.rootstrap.android.network.providers
 
-import com.google.gson.Gson
 import com.rootstrap.android.BuildConfig
-import com.rootstrap.android.network.managers.ApiErrorType
-import com.rootstrap.android.network.managers.ApiException
-import com.rootstrap.android.network.models.ErrorModel
 import com.rootstrap.android.network.services.AuthenticationInterceptor
 import com.rootstrap.android.network.services.HeadersInterceptor
 import com.rootstrap.android.network.services.ResponseInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 

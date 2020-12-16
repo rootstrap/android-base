@@ -6,21 +6,23 @@ import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.network.providers.ServiceProvider
 import com.rootstrap.android.network.services.ApiService
 import com.rootstrap.android.util.extensions.ActionCallback
+import com.rootstrap.android.util.extensions.Data
 
 /**
  * Singleton Object
  * */
-object UserManager {
+class UserManager : IUserManager {
 
     private var service = ServiceProvider.create(ApiService::class.java)
 
-    suspend fun signUp(user: User): Result<UserSerializer> =
+    override suspend fun signUp(user: User): Result<Data<UserSerializer>> =
         ActionCallback.call(service.signUp(UserSerializer(user)))
 
-    suspend fun signIn(user: User): Result<UserSerializer> =
+    override suspend fun signIn(user: User): Result<Data<UserSerializer>> =
         ActionCallback.call(service.signIn(UserSerializer(user)))
 
-    suspend fun signOut() = ActionCallback.call(service.signOut())
+    override suspend fun signOut(): Result<Data<Void>> =
+        ActionCallback.call(service.signOut())
 
     @RestrictTo(RestrictTo.Scope.TESTS)
     fun reloadService(url: String) {
