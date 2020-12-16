@@ -2,14 +2,13 @@ package com.rootstrap.android.ui.activity.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
-import com.rootstrap.android.util.extensions.ErrorEvent
-import com.rootstrap.android.util.extensions.FailureEvent
-import com.squareup.otto.Subscribe
+import kotlinx.coroutines.launch
 
 open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
@@ -23,27 +22,17 @@ open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel
 
     fun signUp(user: User) {
         networkState = NetworkState.loading
-        manager.signUp(user)
-    }
-
-    @Subscribe
-    fun signedUpSuccessfully(event: UserManager.UserCreatedSuccessfullyEvent) {
-        networkState = NetworkState.idle
-        state = SignUpState.signedUpSuccess
-    }
-
-    @Subscribe
-    fun signedUpError(event: ErrorEvent) {
-        error = event.error
-        networkState = NetworkState.idle
-        networkState = NetworkState.error
-    }
-
-    @Subscribe
-    fun signedUpFailure(event: FailureEvent) {
-        error = null
-        networkState = NetworkState.idle
-        state = SignUpState.signedUpFailure
+        viewModelScope.launch {
+            val result = kotlin.runCatching { manager.signUp(user = user) }
+            result.onSuccess {
+                networkState = NetworkState.idle
+                state = SignUpState.signedUpSuccess
+            }.onFailure {
+                error = it.message
+                networkState = NetworkState.idle
+                networkState = NetworkState.error
+            }
+        }
     }
 }
 

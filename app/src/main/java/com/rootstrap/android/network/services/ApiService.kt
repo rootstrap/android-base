@@ -9,11 +9,11 @@ import retrofit2.http.POST
 interface ApiService {
 
     @POST("users/")
-    fun signUp(@Body user: UserSerializer): Call<UserSerializer>
+    suspend fun signUp(@Body user: UserSerializer): Call<UserSerializer>
 
     @POST("users/sign_in")
-    fun signIn(@Body user: UserSerializer): Call<UserSerializer>
+    suspend fun signIn(@Body user: UserSerializer): Call<UserSerializer>
 
     @DELETE("users/sign_out")
-    fun signOut(): Call<Void>
+    suspend fun signOut(): Call<Void>
 }
