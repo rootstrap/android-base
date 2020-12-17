@@ -36,12 +36,12 @@ open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel
                 networkState = NetworkState.idle
                 state = SignInState.signedInSuccess
             } else {
-                mangeError(result.exceptionOrNull())
+                manageError(result.exceptionOrNull())
             }
         }
     }
 
-    private fun mangeError(exception: Throwable?) {
+    private fun manageError(exception: Throwable?) {
         error = if (exception is ApiException && exception.errorType == ApiErrorType.apiError) {
             exception.message
         } else null

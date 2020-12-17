@@ -36,7 +36,7 @@ class ActionCallback {
                 }
             }
 
-            return Result.failure(ApiException(errorType = ApiErrorType.uknownError))
+            return Result.failure(ApiException(errorType = ApiErrorType.unknownError))
         }
     }
 }
@@ -53,5 +53,5 @@ class ApiException(
 
 enum class ApiErrorType {
     apiError,
-    uknownError
+    unknownError
 }

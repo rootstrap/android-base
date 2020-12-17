@@ -24,12 +24,12 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
                 networkState = NetworkState.idle
                 state = ProfileState.signedOutSuccessfully
             } else {
-                mangeError(result.exceptionOrNull())
+                manageError(result.exceptionOrNull())
             }
         }
     }
 
-    private fun mangeError(exception: Throwable?) {
+    private fun manageError(exception: Throwable?) {
         error = if (exception is ApiException && exception.errorType == ApiErrorType.apiError) {
             exception.message
         } else null
