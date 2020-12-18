@@ -52,8 +52,8 @@ class SignInActivity : PermissionActivity(), AuthView {
     private val viewModelListener = object : ViewModelListener {
         override fun updateState() {
             when (viewModel.state) {
-                SignInState.signedInFailure -> showError(viewModel.error)
-                SignInState.signedInSuccess -> showProfile()
+                SignInState.signInFailure -> showError(viewModel.error)
+                SignInState.signInSuccessfully -> showProfile()
                 else -> {
                 }
             }

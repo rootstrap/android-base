@@ -12,4 +12,4 @@ data class User(
     @Json(name = "username") val username: String = ""
 )
 
-data class UserSerializer(val user: User)
+data class UserSerializer(@Json(name = "user") val user: User)

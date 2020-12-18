@@ -2,18 +2,21 @@ package com.rootstrap.android.ui.activity.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.rootstrap.android.network.managers.IUserManager
+import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
-import com.rootstrap.android.util.extensions.ErrorEvent
-import com.rootstrap.android.util.extensions.FailureEvent
-import com.squareup.otto.Subscribe
+import com.rootstrap.android.util.extensions.ApiErrorType
+import com.rootstrap.android.util.extensions.ApiException
+import kotlinx.coroutines.launch
 
 open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
-    private val manager = UserManager
+    private val manager: IUserManager = UserManager()
 
     var state: SignUpState = SignUpState.none
         set(value) {
@@ -23,33 +26,36 @@ open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel
 
     fun signUp(user: User) {
         networkState = NetworkState.loading
-        manager.signUp(user)
+        viewModelScope.launch {
+            val result = manager.signUp(user = user)
+
+            if (result.isSuccess) {
+                result.getOrNull()?.value?.user?.let { user ->
+                    SessionManager.signIn(user)
+                }
+
+                networkState = NetworkState.idle
+                state = SignUpState.signUpSuccessfully
+            } else {
+                manageError(result.exceptionOrNull())
+            }
+        }
     }
 
-    @Subscribe
-    fun signedUpSuccessfully(event: UserManager.UserCreatedSuccessfullyEvent) {
-        networkState = NetworkState.idle
-        state = SignUpState.signedUpSuccess
-    }
+    private fun manageError(exception: Throwable?) {
+        error = if (exception is ApiException && exception.errorType == ApiErrorType.apiError) {
+            exception.message
+        } else null
 
-    @Subscribe
-    fun signedUpError(event: ErrorEvent) {
-        error = event.error
         networkState = NetworkState.idle
         networkState = NetworkState.error
-    }
-
-    @Subscribe
-    fun signedUpFailure(event: FailureEvent) {
-        error = null
-        networkState = NetworkState.idle
-        state = SignUpState.signedUpFailure
+        state = SignUpState.signUpFailure
     }
 }
 
 enum class SignUpState {
-    signedUpFailure,
-    signedUpSuccess,
+    signUpFailure,
+    signUpSuccessfully,
     none,
 }
 

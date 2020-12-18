@@ -52,8 +52,8 @@ class SignUpActivity : BaseActivity(), AuthView {
     private val viewModelListener = object : ViewModelListener {
         override fun updateState() {
             when (viewModel.state) {
-                SignUpState.signedUpFailure -> showError(viewModel.error)
-                SignUpState.signedUpSuccess -> showProfile()
+                SignUpState.signUpFailure -> showError(viewModel.error)
+                SignUpState.signUpSuccessfully -> showProfile()
                 else -> {
                 }
             }

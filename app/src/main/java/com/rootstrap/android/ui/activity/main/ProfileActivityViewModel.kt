@@ -2,21 +2,41 @@ package com.rootstrap.android.ui.activity.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.rootstrap.android.network.managers.IUserManager
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
-import com.rootstrap.android.util.extensions.ErrorEvent
-import com.rootstrap.android.util.extensions.FailureEvent
-import com.squareup.otto.Subscribe
+import com.rootstrap.android.util.extensions.ApiErrorType
+import com.rootstrap.android.util.extensions.ApiException
+import kotlinx.coroutines.launch
 
 open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
-    private val manager = UserManager
+    private val manager: IUserManager = UserManager()
 
     fun signOut() {
         networkState = NetworkState.loading
-        manager.signOut()
+        viewModelScope.launch {
+            val result = manager.signOut()
+            if (result.isSuccess) {
+                networkState = NetworkState.idle
+                state = ProfileState.signOutSuccessfully
+            } else {
+                manageError(result.exceptionOrNull())
+            }
+        }
+    }
+
+    private fun manageError(exception: Throwable?) {
+        error = if (exception is ApiException && exception.errorType == ApiErrorType.apiError) {
+            exception.message
+        } else null
+
+        networkState = NetworkState.idle
+        networkState = NetworkState.error
+        state = ProfileState.signOutFailure
     }
 
     var state: ProfileState = ProfileState.none
@@ -24,31 +44,11 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
             field = value
             listener?.updateState()
         }
-
-    @Subscribe
-    fun signedOutSuccessfully(event: UserManager.SignedOutSuccessfullyEvent) {
-        networkState = NetworkState.idle
-        state = ProfileState.signedOutSuccessfully
-    }
-
-    @Subscribe
-    fun signOutError(event: ErrorEvent) {
-        error = event.error
-        networkState = NetworkState.idle
-        networkState = NetworkState.error
-    }
-
-    @Subscribe
-    fun signOutFailure(event: FailureEvent) {
-        error = null
-        networkState = NetworkState.idle
-        state = ProfileState.signOutFailure
-    }
 }
 
 enum class ProfileState {
     signOutFailure,
-    signedOutSuccessfully,
+    signOutSuccessfully,
     none,
 }
 

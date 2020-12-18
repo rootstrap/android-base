@@ -42,7 +42,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         override fun updateState() {
             when (viewModel.state) {
                 ProfileState.signOutFailure -> showError(viewModel.error)
-                ProfileState.signedOutSuccessfully -> goToFirstScreen()
+                ProfileState.signOutSuccessfully -> goToFirstScreen()
                 else -> {
                 }
             }
