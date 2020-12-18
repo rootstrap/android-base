@@ -53,7 +53,7 @@ class SignInActivity : PermissionActivity(), AuthView {
         override fun updateState() {
             when (viewModel.state) {
                 SignInState.signInFailure -> showError(viewModel.error)
-                SignInState.signInSuccessfully -> showProfile()
+                SignInState.signInSuccess -> showProfile()
                 else -> {
                 }
             }

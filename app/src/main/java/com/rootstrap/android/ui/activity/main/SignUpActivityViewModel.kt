@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
-    private val manager: IUserManager = UserManager()
+    private val manager: IUserManager = UserManager
 
     var state: SignUpState = SignUpState.none
         set(value) {
@@ -35,14 +35,14 @@ open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel
                 }
 
                 networkState = NetworkState.idle
-                state = SignUpState.signUpSuccessfully
+                state = SignUpState.signUpSuccess
             } else {
-                manageError(result.exceptionOrNull())
+                handleError(result.exceptionOrNull())
             }
         }
     }
 
-    private fun manageError(exception: Throwable?) {
+    private fun handleError(exception: Throwable?) {
         error = if (exception is ApiException && exception.errorType == ApiErrorType.apiError) {
             exception.message
         } else null
@@ -55,7 +55,7 @@ open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel
 
 enum class SignUpState {
     signUpFailure,
-    signUpSuccessfully,
+    signUpSuccess,
     none,
 }
 

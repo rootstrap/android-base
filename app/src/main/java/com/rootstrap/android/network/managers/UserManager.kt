@@ -11,7 +11,7 @@ import com.rootstrap.android.util.extensions.Data
 /**
  * Singleton Object
  * */
-class UserManager : IUserManager {
+object UserManager : IUserManager {
 
     private var service = ServiceProvider.create(ApiService::class.java)
 
