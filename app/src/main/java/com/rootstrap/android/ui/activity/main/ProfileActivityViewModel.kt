@@ -22,7 +22,7 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
             val result = manager.signOut()
             if (result.isSuccess) {
                 networkState = NetworkState.idle
-                state = ProfileState.signedOutSuccessfully
+                state = ProfileState.signOutSuccessfully
             } else {
                 manageError(result.exceptionOrNull())
             }
@@ -48,7 +48,7 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
 
 enum class ProfileState {
     signOutFailure,
-    signedOutSuccessfully,
+    signOutSuccessfully,
     none,
 }
 

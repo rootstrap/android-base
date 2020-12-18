@@ -34,7 +34,7 @@ open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel
                 }
 
                 networkState = NetworkState.idle
-                state = SignInState.signedInSuccess
+                state = SignInState.signInSuccessfully
             } else {
                 manageError(result.exceptionOrNull())
             }
@@ -48,13 +48,13 @@ open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel
 
         networkState = NetworkState.idle
         networkState = NetworkState.error
-        state = SignInState.signedInFailure
+        state = SignInState.signInFailure
     }
 }
 
 enum class SignInState {
-    signedInFailure,
-    signedInSuccess,
+    signInFailure,
+    signInSuccessfully,
     none,
 }
 

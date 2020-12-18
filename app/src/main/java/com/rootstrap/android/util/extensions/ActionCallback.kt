@@ -14,10 +14,10 @@ class ActionCallback {
         suspend fun <T> call(apiCall: Call<T>): Result<Data<T>> =
             withContext(Dispatchers.IO) {
                 val response = apiCall.execute()
-                manageResponse(response)
+                handleResponse(response)
             }
 
-        private fun <T> manageResponse(response: Response<T>): Result<Data<T>> {
+        private fun <T> handleResponse(response: Response<T>): Result<Data<T>> {
             if (response.isSuccessful) {
                 return Result.success(
                     Data(response.body())
