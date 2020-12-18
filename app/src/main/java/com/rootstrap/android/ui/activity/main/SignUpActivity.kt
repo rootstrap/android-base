@@ -53,7 +53,7 @@ class SignUpActivity : BaseActivity(), AuthView {
         override fun updateState() {
             when (viewModel.state) {
                 SignUpState.signUpFailure -> showError(viewModel.error)
-                SignUpState.signUpSuccessfully -> showProfile()
+                SignUpState.signUpSuccess -> showProfile()
                 else -> {
                 }
             }

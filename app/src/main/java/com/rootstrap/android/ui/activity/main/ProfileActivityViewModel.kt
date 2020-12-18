@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
 
-    private val manager: IUserManager = UserManager()
+    private val manager: IUserManager = UserManager
 
     fun signOut() {
         networkState = NetworkState.loading
@@ -22,14 +22,14 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
             val result = manager.signOut()
             if (result.isSuccess) {
                 networkState = NetworkState.idle
-                state = ProfileState.signOutSuccessfully
+                state = ProfileState.signOutSuccess
             } else {
-                manageError(result.exceptionOrNull())
+                handleError(result.exceptionOrNull())
             }
         }
     }
 
-    private fun manageError(exception: Throwable?) {
+    private fun handleError(exception: Throwable?) {
         error = if (exception is ApiException && exception.errorType == ApiErrorType.apiError) {
             exception.message
         } else null
@@ -48,7 +48,7 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
 
 enum class ProfileState {
     signOutFailure,
-    signOutSuccessfully,
+    signOutSuccess,
     none,
 }
 
