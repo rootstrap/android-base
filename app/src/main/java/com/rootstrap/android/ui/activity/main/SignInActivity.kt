@@ -2,8 +2,9 @@ package com.rootstrap.android.ui.activity.main
 
 import android.Manifest
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.R
+import com.rootstrap.android.databinding.ActivitySignInBinding
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_IN
@@ -14,22 +15,24 @@ import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.android.util.permissions.PermissionActivity
 import com.rootstrap.android.util.permissions.PermissionResponse
-import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : PermissionActivity(), AuthView {
 
     private lateinit var viewModel: SignInActivityViewModel
+    private lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+
         setContentView(R.layout.activity_sign_in)
         Analytics.track(PageEvents.visit(VISIT_SIGN_IN))
 
         val factory = SignInActivityViewModelFactory(viewModelListener)
-        viewModel = ViewModelProviders.of(this, factory)
+        viewModel = ViewModelProvider(this, factory)
             .get(SignInActivityViewModel::class.java)
 
-        sign_in_button.setOnClickListener { signIn() }
+        binding.signInButton.setOnClickListener { signIn() }
 
         lifecycle.addObserver(viewModel)
 
@@ -42,8 +45,8 @@ class SignInActivity : PermissionActivity(), AuthView {
 
     private fun signIn() {
         val user = User(
-            email = email_edit_text.value(),
-            password = password_edit_text.value()
+            email = binding.emailEditText.value(),
+            password = binding.passwordEditText.value()
         )
         viewModel.signIn(user)
     }
