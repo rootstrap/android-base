@@ -51,7 +51,17 @@ We suggest using [git secret](https://git-secret.io/) as a simple and secure sol
 
 We provide configuration files for automating build, test and submission of the application using [Fastlane](https://docs.fastlane.tools/)
 
+### Requirements
 
+* Ensure JDK 1.8 is installed
+* Ensure proper version of Android SDK command line tools is installed
+* Install _fastlane_ using
+```
+[sudo] gem install fastlane -NV
+```
+or alternatively using `brew cask install fastlane`
+
+### Usage
 Lanes for each deployment target example are provided with some basic behavior:
 - Each target has two options: `debug_x` and `deploy_x`.
 - Each option will:
@@ -63,6 +73,18 @@ Lanes for each deployment target example are provided with some basic behavior:
 
 Check `fastlane/Appfile` and `fastlane/Fastfile` for more information.
 
+
+## Continuous Integration with GitHub Actions
+
+We provide an example workflow [cicd.yml](.github/workflows/cicd.yml) including two jobs for running under [GitHub Actions](https://docs.github.com/en/actions), which can be modified according to the specifics of each project:
+
+* `ci`
+    * runs upon every push and PR
+    * installs Fastlane and runs `debug_dev` lane
+* `release`
+    * runs upon every push to `develop` or `master`
+    * downloads keystore and Google api key from S3 (credentials need to be present in repo Secrets)
+    * installs Fastlane and runs `deploy_*` lane depending on branch (`Dev` if in `develop`, `Stsaging` if in `master`) - This could be easily modified to release `Prod` instead 
 
 ## Analytics
 - Add analytics manager:
