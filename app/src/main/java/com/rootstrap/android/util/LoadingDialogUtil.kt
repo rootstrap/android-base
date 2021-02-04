@@ -23,17 +23,20 @@ object LoadingDialogUtil {
 
     fun showError(message: String?, context: Context) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.getString(R.string.error))
+        with(builder) {
+            setTitle(context.getString(R.string.error))
 
-        if (message.isNullOrEmpty())
-            builder.setMessage(context.getString(R.string.generic_error))
-        else builder.setMessage(message)
+            val showMessage = if (message.isNullOrEmpty())
+                context.getString(R.string.generic_error)
+            else message
 
-        builder.setPositiveButton(context.getString(R.string.ok)) { dialog, _ ->
-            dialog.cancel()
+            setMessage(showMessage)
+
+            setPositiveButton(context.getString(R.string.ok)) { dialog, _ ->
+                dialog.cancel()
+            }
+            val dialog: AlertDialog = create()
+            dialog.show()
         }
-
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
     }
 }
