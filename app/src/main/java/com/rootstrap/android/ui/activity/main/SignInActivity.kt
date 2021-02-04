@@ -44,11 +44,13 @@ class SignInActivity : PermissionActivity(), AuthView {
     }
 
     private fun signIn() {
-        val user = User(
-            email = binding.emailEditText.value(),
-            password = binding.passwordEditText.value()
-        )
-        viewModel.signIn(user)
+        with(binding) {
+            val user = User(
+                email = emailEditText.value(),
+                password = passwordEditText.value()
+            )
+            viewModel.signIn(user)
+        }
     }
 
     // ViewModelListener
