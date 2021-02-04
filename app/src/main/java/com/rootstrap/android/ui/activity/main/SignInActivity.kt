@@ -71,7 +71,7 @@ class SignInActivity : PermissionActivity(), AuthView {
         }
     }
 
-    fun sampleAskForPermission() {
+    private fun sampleAskForPermission() {
         requestPermission(arrayOf(Manifest.permission.CAMERA), object : PermissionResponse {
             override fun granted() {
                 // TODO..

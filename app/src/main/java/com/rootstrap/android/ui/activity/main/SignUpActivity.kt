@@ -31,9 +31,10 @@ class SignUpActivity : BaseActivity(), AuthView {
         viewModel = ViewModelProvider(this, factory)
             .get(SignUpActivityViewModel::class.java)
 
-        binding.signUpButton.setOnClickListener { signUp() }
-        binding.signInTextView.setOnClickListener { startActivity(Intent(this, SignInActivity::class.java)) }
-
+        with(binding) {
+            signUpButton.setOnClickListener { signUp() }
+            signInTextView.setOnClickListener { signIn() }
+        }
         lifecycle.addObserver(viewModel)
     }
 
@@ -41,14 +42,20 @@ class SignUpActivity : BaseActivity(), AuthView {
         startActivityClearTask(ProfileActivity())
     }
 
+    private fun signIn() {
+        startActivity(Intent(this, SignInActivity::class.java))
+    }
+
     private fun signUp() {
-        val user = User(
-            email = binding.emailEditText.value(),
-            firstName = binding.firstNameEditText.value(),
-            lastName = binding.lastNameEditText.value(),
-            password = binding.passwordEditText.value()
-        )
-        viewModel.signUp(user)
+        with(binding) {
+            val user = User(
+                email = emailEditText.value(),
+                firstName = firstNameEditText.value(),
+                lastName = lastNameEditText.value(),
+                password = passwordEditText.value()
+            )
+            viewModel.signUp(user)
+        }
     }
 
     // ViewModelListener
