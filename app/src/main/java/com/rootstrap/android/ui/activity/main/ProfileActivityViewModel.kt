@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.IUserManager
+import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
@@ -23,6 +24,7 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
             if (result.isSuccess) {
                 networkState = NetworkState.idle
                 state = ProfileState.signOutSuccess
+                SessionManager.signOut()
             } else {
                 handleError(result.exceptionOrNull())
             }

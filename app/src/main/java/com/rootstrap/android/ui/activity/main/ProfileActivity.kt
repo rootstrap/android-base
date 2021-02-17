@@ -1,7 +1,7 @@
 package com.rootstrap.android.ui.activity.main
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.R
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
@@ -22,7 +22,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
         setContentView(R.layout.activity_profile)
 
         val factory = ProfileActivityViewModelFactory(viewModelListener)
-        viewModel = ViewModelProviders.of(this, factory)
+        viewModel = ViewModelProvider(this, factory)
             .get(ProfileActivityViewModel::class.java)
 
         Analytics.track(PageEvents.visit(VISIT_PROFILE))
