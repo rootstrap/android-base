@@ -9,8 +9,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import com.rootstrap.android.network.managers.SessionManager
-import com.rootstrap.android.network.managers.UserManager
+import com.rootstrap.android.network.managers.session.SessionManagerImpl
+import com.rootstrap.android.network.managers.user.UserManagerImpl
 import com.rootstrap.android.network.models.User
 import okhttp3.mockwebserver.Dispatcher
 import org.junit.runner.RunWith
@@ -26,7 +26,7 @@ open class BaseTests {
 
     open fun before() {
         mockServer.startServer()
-        UserManager.reloadService(mockServer.server().url("/").toString())
+        UserManagerImpl.reloadService(mockServer.server().url("/").toString())
     }
 
     open fun after() {
@@ -34,7 +34,7 @@ open class BaseTests {
     }
 
     open fun setupSession() {
-        SessionManager.user = testUser()
+        SessionManagerImpl.user = testUser()
     }
 
     open fun testUser() = User(

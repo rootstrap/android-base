@@ -3,7 +3,7 @@ package com.rootstrap.android.tests
 import androidx.test.core.app.ActivityScenario
 import com.google.gson.Gson
 import com.rootstrap.android.R
-import com.rootstrap.android.network.managers.SessionManager
+import com.rootstrap.android.network.managers.session.SessionManagerImpl
 import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.ui.activity.main.ProfileActivity
 import com.rootstrap.android.ui.activity.main.SignInActivity
@@ -39,7 +39,7 @@ class SignUpActivityTest : BaseTests() {
         scrollAndTypeText(R.id.email_edit_text, testUser.email)
         scrollAndTypeText(R.id.password_edit_text, testUser.password)
         scrollAndPerformClick(R.id.sign_up_button)
-        val user = SessionManager.user
+        val user = SessionManagerImpl.user
         assertEquals(user, testUser)
         activity.runOnUiThread {
             val current = currentActivity()

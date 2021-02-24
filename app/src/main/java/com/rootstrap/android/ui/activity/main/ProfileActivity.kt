@@ -6,16 +6,19 @@ import com.rootstrap.android.R
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_PROFILE
-import com.rootstrap.android.network.managers.SessionManager
+import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileActivity : BaseActivity(), ProfileView {
+
+    @Inject lateinit var sessionManager: SessionManager
 
     private val viewModel: ProfileActivityViewModel by viewModels()
 
@@ -25,7 +28,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
         Analytics.track(PageEvents.visit(VISIT_PROFILE))
 
-        welcome_text_view.text = getString(R.string.welcome_message, SessionManager.user?.firstName)
+        welcome_text_view.text = getString(R.string.welcome_message, sessionManager.user?.firstName)
         sign_out_button.setOnClickListener { viewModel.signOut() }
 
         lifecycle.addObserver(viewModel)

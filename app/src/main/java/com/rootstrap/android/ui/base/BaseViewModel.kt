@@ -6,7 +6,6 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
 import com.rootstrap.android.bus
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelListener
 
 /**
  * A [ViewModel] base class
@@ -18,7 +17,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     var networkState: NetworkState = NetworkState.idle
         set(value) {
             field = value
-            //listener?.updateNetworkState()
+            // listener?.updateNetworkState()
         }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

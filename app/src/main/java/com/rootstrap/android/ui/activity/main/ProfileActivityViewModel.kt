@@ -1,31 +1,28 @@
 package com.rootstrap.android.ui.activity.main
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.rootstrap.android.network.managers.IUserManager
-import com.rootstrap.android.network.managers.SessionManager
-import com.rootstrap.android.network.managers.UserManager
+import com.rootstrap.android.network.managers.session.SessionManager
+import com.rootstrap.android.network.managers.user.UserManager
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.ApiErrorType
 import com.rootstrap.android.util.extensions.ApiException
 import kotlinx.coroutines.launch
 
-open class ProfileActivityViewModel @ViewModelInject constructor() : BaseViewModel() {
-
-    private val manager: IUserManager = UserManager
+open class ProfileActivityViewModel @ViewModelInject constructor(
+    private val sessionManager: SessionManager,
+    private val userManager: UserManager
+) : BaseViewModel() {
 
     fun signOut() {
         networkState = NetworkState.loading
         viewModelScope.launch {
-            val result = manager.signOut()
+            val result = userManager.signOut()
             if (result.isSuccess) {
                 networkState = NetworkState.idle
                 state = ProfileState.signOutSuccess
-                SessionManager.signOut()
+                sessionManager.signOut()
             } else {
                 handleError(result.exceptionOrNull())
             }
@@ -45,7 +42,7 @@ open class ProfileActivityViewModel @ViewModelInject constructor() : BaseViewMod
     var state: ProfileState = ProfileState.none
         set(value) {
             field = value
-            //listener?.updateState()
+            // listener?.updateState()
         }
 }
 
