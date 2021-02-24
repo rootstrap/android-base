@@ -5,6 +5,7 @@ import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.GoogleAnalytics
 import com.rootstrap.android.util.Prefs
 import com.squareup.otto.Bus
+import dagger.hilt.android.HiltAndroidApp
 
 val prefs: Prefs by lazy {
     App.prefs!!
@@ -14,6 +15,7 @@ val bus: Bus by lazy {
     App.bus!!
 }
 
+@HiltAndroidApp
 class App : Application() {
 
     companion object {

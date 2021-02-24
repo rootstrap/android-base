@@ -2,6 +2,7 @@ package com.rootstrap.android.ui.activity.main
 
 import android.Manifest
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignInBinding
@@ -15,10 +16,12 @@ import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.android.util.permissions.PermissionActivity
 import com.rootstrap.android.util.permissions.PermissionResponse
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignInActivity : PermissionActivity(), AuthView {
 
-    private lateinit var viewModel: SignInActivityViewModel
+    private val viewModel: SignInActivityViewModel by viewModels()
     private lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +30,6 @@ class SignInActivity : PermissionActivity(), AuthView {
 
         setContentView(R.layout.activity_sign_in)
         Analytics.track(PageEvents.visit(VISIT_SIGN_IN))
-
-        val factory = SignInActivityViewModelFactory(viewModelListener)
-        viewModel = ViewModelProvider(this, factory)
-            .get(SignInActivityViewModel::class.java)
 
         binding.signInButton.setOnClickListener { signIn() }
 

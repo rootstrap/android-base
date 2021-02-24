@@ -2,6 +2,7 @@ package com.rootstrap.android.ui.activity.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
@@ -14,10 +15,12 @@ import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.value
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpActivity : BaseActivity(), AuthView {
 
-    private lateinit var viewModel: SignUpActivityViewModel
+    private val viewModel: SignUpActivityViewModel by viewModels()
     private lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +29,6 @@ class SignUpActivity : BaseActivity(), AuthView {
 
         setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_UP))
-
-        val factory = SignUpActivityViewModelFactory(viewModelListener)
-        viewModel = ViewModelProvider(this, factory)
-            .get(SignUpActivityViewModel::class.java)
 
         with(binding) {
             signUpButton.setOnClickListener { signUp() }

@@ -1,7 +1,6 @@
 package com.rootstrap.android.ui.activity.main
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.IUserManager
 import com.rootstrap.android.network.managers.SessionManager
@@ -14,14 +13,14 @@ import com.rootstrap.android.util.extensions.ApiErrorType
 import com.rootstrap.android.util.extensions.ApiException
 import kotlinx.coroutines.launch
 
-open class SignUpActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
+open class SignUpActivityViewModel @ViewModelInject constructor() : BaseViewModel() {
 
     private val manager: IUserManager = UserManager
 
     var state: SignUpState = SignUpState.none
         set(value) {
             field = value
-            listener?.updateState()
+            //listener?.updateState()
         }
 
     fun signUp(user: User) {
@@ -57,10 +56,4 @@ enum class SignUpState {
     signUpFailure,
     signUpSuccess,
     none,
-}
-
-class SignUpActivityViewModelFactory(var listener: ViewModelListener?) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SignUpActivityViewModel(listener) as T
-    }
 }

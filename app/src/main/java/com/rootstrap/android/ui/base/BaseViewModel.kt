@@ -12,13 +12,13 @@ import com.rootstrap.android.util.ViewModelListener
  * A [ViewModel] base class
  * implement app general LiveData as Session or User
  * **/
-open class BaseViewModel(var listener: ViewModelListener?) : ViewModel(), LifecycleObserver {
+open class BaseViewModel : ViewModel(), LifecycleObserver {
     var error: String? = null
 
     var networkState: NetworkState = NetworkState.idle
         set(value) {
             field = value
-            listener?.updateNetworkState()
+            //listener?.updateNetworkState()
         }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

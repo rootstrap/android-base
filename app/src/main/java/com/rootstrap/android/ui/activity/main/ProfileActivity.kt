@@ -1,7 +1,7 @@
 package com.rootstrap.android.ui.activity.main
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import com.rootstrap.android.R
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
@@ -11,19 +11,17 @@ import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.ViewModelListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile.*
 
+@AndroidEntryPoint
 class ProfileActivity : BaseActivity(), ProfileView {
 
-    private lateinit var viewModel: ProfileActivityViewModel
+    private val viewModel: ProfileActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-
-        val factory = ProfileActivityViewModelFactory(viewModelListener)
-        viewModel = ViewModelProvider(this, factory)
-            .get(ProfileActivityViewModel::class.java)
 
         Analytics.track(PageEvents.visit(VISIT_PROFILE))
 
