@@ -1,29 +1,32 @@
 package com.rootstrap.android.ui.activity.main
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.IUserManager
 import com.rootstrap.android.network.managers.SessionManager
 import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.ApiErrorType
 import com.rootstrap.android.util.extensions.ApiException
 import kotlinx.coroutines.launch
 
-open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
+open class ProfileActivityViewModel : BaseViewModel() {
 
     private val manager: IUserManager = UserManager
 
+    private val _state = MutableLiveData<ProfileState>()
+    val state: LiveData<ProfileState>
+        get() = _state
+
     fun signOut() {
-        networkState = NetworkState.loading
+        _networkState.value = NetworkState.loading
         viewModelScope.launch {
             val result = manager.signOut()
             if (result.isSuccess) {
-                networkState = NetworkState.idle
-                state = ProfileState.signOutSuccess
+                _networkState.value = NetworkState.idle
+                _state.value = ProfileState.signOutSuccess
                 SessionManager.signOut()
             } else {
                 handleError(result.exceptionOrNull())
@@ -36,27 +39,13 @@ open class ProfileActivityViewModel(listener: ViewModelListener?) : BaseViewMode
             exception.message
         } else null
 
-        networkState = NetworkState.idle
-        networkState = NetworkState.error
-        state = ProfileState.signOutFailure
+        _networkState.value = NetworkState.idle
+        _networkState.value = NetworkState.error
+        _state.value = ProfileState.signOutFailure
     }
-
-    var state: ProfileState = ProfileState.none
-        set(value) {
-            field = value
-            listener?.updateState()
-        }
 }
 
 enum class ProfileState {
     signOutFailure,
-    signOutSuccess,
-    none,
-}
-
-class ProfileActivityViewModelFactory(var listener: ViewModelListener?) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ProfileActivityViewModel(listener) as T
-    }
+    signOutSuccess
 }
