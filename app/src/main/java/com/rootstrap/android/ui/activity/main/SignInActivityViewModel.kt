@@ -1,7 +1,7 @@
 package com.rootstrap.android.ui.activity.main
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.IUserManager
 import com.rootstrap.android.network.managers.SessionManager
@@ -9,23 +9,20 @@ import com.rootstrap.android.network.managers.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.ApiErrorType
 import com.rootstrap.android.util.extensions.ApiException
 import kotlinx.coroutines.launch
 
-open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel(listener) {
+open class SignInActivityViewModel : BaseViewModel() {
 
     private val manager: IUserManager = UserManager
 
-    var state: SignInState = SignInState.none
-        set(value) {
-            field = value
-            listener?.updateState()
-        }
+    private val _state = MutableLiveData<SignInState>()
+    val state: LiveData<SignInState>
+        get() = _state
 
     fun signIn(user: User) {
-        networkState = NetworkState.loading
+        _networkState.value = NetworkState.loading
         viewModelScope.launch {
             val result = manager.signIn(user = user)
             if (result.isSuccess) {
@@ -33,8 +30,8 @@ open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel
                     SessionManager.signIn(user)
                 }
 
-                networkState = NetworkState.idle
-                state = SignInState.signInSuccess
+                _networkState.value = NetworkState.idle
+                _state.value = SignInState.signInSuccess
             } else {
                 handleError(result.exceptionOrNull())
             }
@@ -46,20 +43,13 @@ open class SignInActivityViewModel(listener: ViewModelListener?) : BaseViewModel
             exception.message
         } else null
 
-        networkState = NetworkState.idle
-        networkState = NetworkState.error
-        state = SignInState.signInFailure
+        _networkState.value = NetworkState.idle
+        _networkState.value = NetworkState.error
+        _state.value = SignInState.signInFailure
     }
 }
 
 enum class SignInState {
     signInFailure,
-    signInSuccess,
-    none,
-}
-
-class SignInActivityViewModelFactory(var listener: ViewModelListener?) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SignInActivityViewModel(listener) as T
-    }
+    signInSuccess
 }

@@ -2,6 +2,7 @@ package com.rootstrap.android.ui.activity.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
@@ -12,7 +13,6 @@ import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.ViewModelListener
 import com.rootstrap.android.util.extensions.value
 
 class SignUpActivity : BaseActivity(), AuthView {
@@ -27,8 +27,7 @@ class SignUpActivity : BaseActivity(), AuthView {
         setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_UP))
 
-        val factory = SignUpActivityViewModelFactory(viewModelListener)
-        viewModel = ViewModelProvider(this, factory)
+        viewModel = ViewModelProvider(this)
             .get(SignUpActivityViewModel::class.java)
 
         with(binding) {
@@ -36,6 +35,7 @@ class SignUpActivity : BaseActivity(), AuthView {
             signInTextView.setOnClickListener { signIn() }
         }
         lifecycle.addObserver(viewModel)
+        setObservers()
     }
 
     override fun showProfile() {
@@ -58,23 +58,20 @@ class SignUpActivity : BaseActivity(), AuthView {
         }
     }
 
-    // ViewModelListener
-    private val viewModelListener = object : ViewModelListener {
-        override fun updateState() {
-            when (viewModel.state) {
+    private fun setObservers() {
+        viewModel.state.observe(this, Observer {
+            when (it) {
                 SignUpState.signUpFailure -> showError(viewModel.error)
                 SignUpState.signUpSuccess -> showProfile()
-                else -> {
-                }
             }
-        }
+        })
 
-        override fun updateNetworkState() {
-            when (viewModel.networkState) {
+        viewModel.networkState.observe(this, Observer {
+            when (it) {
                 NetworkState.loading -> showProgress()
                 NetworkState.idle -> hideProgress()
                 else -> showError(viewModel.error ?: getString(R.string.default_error))
             }
-        }
+        })
     }
 }
