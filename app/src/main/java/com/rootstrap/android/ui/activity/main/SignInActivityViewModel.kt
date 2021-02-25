@@ -1,6 +1,8 @@
 package com.rootstrap.android.ui.activity.main
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.network.managers.user.UserManager
@@ -16,14 +18,12 @@ open class SignInActivityViewModel @ViewModelInject constructor(
     private val userManager: UserManager
 ) : BaseViewModel() {
 
-    var state: SignInState = SignInState.none
-        set(value) {
-            field = value
-            // listener?.updateState()
-        }
+    private val _state = MutableLiveData<SignInState>()
+    val state: LiveData<SignInState>
+        get() = _state
 
     fun signIn(user: User) {
-        networkState = NetworkState.loading
+        _networkState.value = NetworkState.loading
         viewModelScope.launch {
             val result = userManager.signIn(user = user)
             if (result.isSuccess) {
@@ -31,8 +31,8 @@ open class SignInActivityViewModel @ViewModelInject constructor(
                     sessionManager.signIn(user)
                 }
 
-                networkState = NetworkState.idle
-                state = SignInState.signInSuccess
+                _networkState.value = NetworkState.idle
+                _state.value = SignInState.signInSuccess
             } else {
                 handleError(result.exceptionOrNull())
             }
@@ -44,14 +44,13 @@ open class SignInActivityViewModel @ViewModelInject constructor(
             exception.message
         } else null
 
-        networkState = NetworkState.idle
-        networkState = NetworkState.error
-        state = SignInState.signInFailure
+        _networkState.value = NetworkState.idle
+        _networkState.value = NetworkState.error
+        _state.value = SignInState.signInFailure
     }
 }
 
 enum class SignInState {
     signInFailure,
-    signInSuccess,
-    none,
+    signInSuccess
 }

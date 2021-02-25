@@ -1,6 +1,8 @@
 package com.rootstrap.android.ui.activity.main
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.network.managers.user.UserManager
@@ -15,13 +17,17 @@ open class ProfileActivityViewModel @ViewModelInject constructor(
     private val userManager: UserManager
 ) : BaseViewModel() {
 
+    private val _state = MutableLiveData<ProfileState>()
+    val state: LiveData<ProfileState>
+        get() = _state
+
     fun signOut() {
-        networkState = NetworkState.loading
+        _networkState.value = NetworkState.loading
         viewModelScope.launch {
             val result = userManager.signOut()
             if (result.isSuccess) {
-                networkState = NetworkState.idle
-                state = ProfileState.signOutSuccess
+                _networkState.value = NetworkState.idle
+                _state.value = ProfileState.signOutSuccess
                 sessionManager.signOut()
             } else {
                 handleError(result.exceptionOrNull())
@@ -34,20 +40,13 @@ open class ProfileActivityViewModel @ViewModelInject constructor(
             exception.message
         } else null
 
-        networkState = NetworkState.idle
-        networkState = NetworkState.error
-        state = ProfileState.signOutFailure
+        _networkState.value = NetworkState.idle
+        _networkState.value = NetworkState.error
+        _state.value = ProfileState.signOutFailure
     }
-
-    var state: ProfileState = ProfileState.none
-        set(value) {
-            field = value
-            // listener?.updateState()
-        }
 }
 
 enum class ProfileState {
     signOutFailure,
-    signOutSuccess,
-    none,
+    signOutSuccess
 }

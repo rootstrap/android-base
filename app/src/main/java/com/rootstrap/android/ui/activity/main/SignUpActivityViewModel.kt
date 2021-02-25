@@ -1,6 +1,8 @@
 package com.rootstrap.android.ui.activity.main
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.network.managers.user.UserManager
@@ -16,14 +18,12 @@ open class SignUpActivityViewModel @ViewModelInject constructor(
     private val userManager: UserManager
 ) : BaseViewModel() {
 
-    var state: SignUpState = SignUpState.none
-        set(value) {
-            field = value
-            // listener?.updateState()
-        }
+    private val _state = MutableLiveData<SignUpState>()
+    val state: LiveData<SignUpState>
+        get() = _state
 
     fun signUp(user: User) {
-        networkState = NetworkState.loading
+        _networkState.value = NetworkState.loading
         viewModelScope.launch {
             val result = userManager.signUp(user = user)
 
@@ -32,8 +32,8 @@ open class SignUpActivityViewModel @ViewModelInject constructor(
                     sessionManager.signIn(user)
                 }
 
-                networkState = NetworkState.idle
-                state = SignUpState.signUpSuccess
+                _networkState.value = NetworkState.idle
+                _state.value = SignUpState.signUpSuccess
             } else {
                 handleError(result.exceptionOrNull())
             }
@@ -45,14 +45,13 @@ open class SignUpActivityViewModel @ViewModelInject constructor(
             exception.message
         } else null
 
-        networkState = NetworkState.idle
-        networkState = NetworkState.error
-        state = SignUpState.signUpFailure
+        _networkState.value = NetworkState.idle
+        _networkState.value = NetworkState.error
+        _state.value = SignUpState.signUpFailure
     }
 }
 
 enum class SignUpState {
     signUpFailure,
-    signUpSuccess,
-    none,
+    signUpSuccess
 }
