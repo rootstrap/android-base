@@ -5,8 +5,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.rootstrap.android.R
-import com.rootstrap.android.network.managers.session.SessionManager
-import com.rootstrap.android.network.managers.session.SessionManagerImpl
 import com.rootstrap.android.ui.activity.main.ProfileActivity
 import com.rootstrap.android.ui.activity.main.SignUpActivity
 import com.rootstrap.android.utils.BaseTests
@@ -18,7 +16,6 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
 class ProfileActivityTest : BaseTests() {

@@ -10,7 +10,6 @@ import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_UP
 import com.rootstrap.android.network.models.User
-import com.rootstrap.android.network.providers.ServiceProviderModule
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState

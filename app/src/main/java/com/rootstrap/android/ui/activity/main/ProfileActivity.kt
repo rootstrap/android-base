@@ -3,7 +3,6 @@ package com.rootstrap.android.ui.activity.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.R
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
