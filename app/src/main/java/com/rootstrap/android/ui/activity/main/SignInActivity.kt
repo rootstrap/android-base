@@ -27,15 +27,15 @@ class SignInActivity : PermissionActivity(), AuthView {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_sign_in)
+        setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_IN))
 
         binding.signInButton.setOnClickListener { signIn() }
 
         lifecycle.addObserver(viewModel)
 
-        sampleAskForPermission()
         setObservers()
+        sampleAskForPermission()
     }
 
     override fun showProfile() {

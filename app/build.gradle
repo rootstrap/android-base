@@ -21,7 +21,7 @@ android {
         targetSdkVersion 29
         versionCode 35
         versionName "1.0"
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'com.rootstrap.android.CustomTestRunner'
     }
 
     viewBinding {
@@ -186,4 +186,6 @@ dependencies {
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
     kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
 }

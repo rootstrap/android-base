@@ -6,16 +6,20 @@ import com.rootstrap.android.network.managers.user.UserManager
 import com.rootstrap.android.network.managers.user.UserManagerImpl
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class ManagerModule {
 
     @Binds
-    abstract fun provideSessionManager(sessionManagerImpl: SessionManagerImpl): SessionManager
+    @Singleton
+    abstract fun bindSessionManager(sessionManagerImpl: SessionManagerImpl): SessionManager
 
     @Binds
-    abstract fun provideUserManager(userManagerImplImpl: UserManagerImpl): UserManager
+    @Singleton
+    abstract fun bindUserManager(userManagerImplImpl: UserManagerImpl): UserManager
 }

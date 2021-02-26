@@ -1,14 +1,17 @@
 package com.rootstrap.android.tests
 
+import android.util.Log
 import androidx.test.core.app.ActivityScenario
 import com.google.gson.Gson
 import com.rootstrap.android.R
+import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.network.managers.session.SessionManagerImpl
 import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.ui.activity.main.ProfileActivity
 import com.rootstrap.android.ui.activity.main.SignInActivity
 import com.rootstrap.android.ui.activity.main.SignUpActivity
 import com.rootstrap.android.utils.BaseTests
+import dagger.hilt.android.testing.HiltAndroidTest
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
@@ -16,7 +19,9 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
+@HiltAndroidTest
 class SignUpActivityTest : BaseTests() {
 
     private lateinit var activity: SignUpActivity
@@ -39,8 +44,9 @@ class SignUpActivityTest : BaseTests() {
         scrollAndTypeText(R.id.email_edit_text, testUser.email)
         scrollAndTypeText(R.id.password_edit_text, testUser.password)
         scrollAndPerformClick(R.id.sign_up_button)
-        val user = SessionManagerImpl.user
+        val user = sessionManager.user
         assertEquals(user, testUser)
+
         activity.runOnUiThread {
             val current = currentActivity()
             assertEquals(ProfileActivity::class.java.name, current::class.java.name)

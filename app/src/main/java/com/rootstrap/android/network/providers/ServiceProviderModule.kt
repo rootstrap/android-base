@@ -12,12 +12,14 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 class ServiceProviderModule {
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(
         authenticationInterceptor: AuthenticationInterceptor,
         responseInterceptor: ResponseInterceptor
@@ -34,11 +36,17 @@ class ServiceProviderModule {
     }
 
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        val url = URL_API ?: BuildConfig.API_URL
         return Retrofit.Builder()
-                .baseUrl(BuildConfig.API_URL)
+                .baseUrl(url)
                 .addConverterFactory(MoshiConverterFactory.create().withNullSerialization())
                 .client(okHttpClient)
                 .build()
+    }
+
+    companion object {
+        var URL_API: String? = null
     }
 }
