@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
-import com.rootstrap.android.bus
 import com.rootstrap.android.util.NetworkState
+import com.squareup.otto.Bus
 
 /**
  * A [ViewModel] base class
@@ -21,8 +21,8 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         get() = _networkState
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun register() = bus.register(this)
+    fun register() = Bus().register(this)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun unregister() = bus.unregister(this)
+    fun unregister() = Bus().unregister(this)
 }

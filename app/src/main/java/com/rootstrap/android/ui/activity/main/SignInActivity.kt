@@ -2,8 +2,8 @@ package com.rootstrap.android.ui.activity.main
 
 import android.Manifest
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignInBinding
 import com.rootstrap.android.metrics.Analytics
@@ -15,28 +15,27 @@ import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.android.util.permissions.PermissionActivity
 import com.rootstrap.android.util.permissions.PermissionResponse
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignInActivity : PermissionActivity(), AuthView {
 
-    private lateinit var viewModel: SignInActivityViewModel
+    private val viewModel: SignInActivityViewModel by viewModels()
     private lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_sign_in)
+        setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_IN))
-
-        viewModel = ViewModelProvider(this)
-            .get(SignInActivityViewModel::class.java)
 
         binding.signInButton.setOnClickListener { signIn() }
 
         lifecycle.addObserver(viewModel)
 
-        sampleAskForPermission()
         setObservers()
+        sampleAskForPermission()
     }
 
     override fun showProfile() {
