@@ -4,10 +4,12 @@ import com.rootstrap.android.BuildConfig
 import com.rootstrap.android.network.services.AuthenticationInterceptor
 import com.rootstrap.android.network.services.HeadersInterceptor
 import com.rootstrap.android.network.services.ResponseInterceptor
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -39,9 +41,12 @@ class ServiceProviderModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val url = URL_API ?: BuildConfig.API_URL
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
         return Retrofit.Builder()
                 .baseUrl(url)
-                .addConverterFactory(MoshiConverterFactory.create().withNullSerialization())
+                .addConverterFactory(MoshiConverterFactory.create(moshi).withNullSerialization())
                 .client(okHttpClient)
                 .build()
     }
