@@ -1,41 +1,41 @@
 package com.rootstrap.android.ui.activity.main
 
+import android.Manifest
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProviders
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.rootstrap.android.R
+import com.rootstrap.android.databinding.ActivitySignInBinding
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_IN
 import com.rootstrap.android.network.models.User
-import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
+import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
-import kotlinx.android.synthetic.main.activity_sign_in.*
+import com.rootstrap.android.util.permissions.PermissionActivity
+import com.rootstrap.android.util.permissions.PermissionResponse
+import dagger.hilt.android.AndroidEntryPoint
 
-class SignInActivity : BaseActivity(), AuthView {
+@AndroidEntryPoint
+class SignInActivity : PermissionActivity(), AuthView {
 
-    private lateinit var viewModel: SignInActivityViewModel
+    private val viewModel: SignInActivityViewModel by viewModels()
+    private lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_IN))
 
-        val factory = SignInActivityViewModelFactory(this)
-        viewModel = ViewModelProviders.of(this, factory)
-            .get(SignInActivityViewModel::class.java)
+        binding.signInButton.setOnClickListener { signIn() }
 
-        sign_in_button.setOnClickListener { signIn() }
-    }
+        lifecycle.addObserver(viewModel)
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.register()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.unregister()
+        setObservers()
+        sampleAskForPermission()
     }
 
     override fun showProfile() {
@@ -43,10 +43,45 @@ class SignInActivity : BaseActivity(), AuthView {
     }
 
     private fun signIn() {
-        val user = User(
-            email = email_edit_text.value(),
-            password = password_edit_text.value()
-        )
-        viewModel.signIn(user)
+        with(binding) {
+            val user = User(
+                email = emailEditText.value(),
+                password = passwordEditText.value()
+            )
+            viewModel.signIn(user)
+        }
+    }
+
+    private fun setObservers() {
+        viewModel.state.observe(this, Observer {
+            when (it) {
+                SignInState.signInFailure -> showError(viewModel.error)
+                SignInState.signInSuccess -> showProfile()
+            }
+        })
+
+        viewModel.networkState.observe(this, Observer {
+            when (it) {
+                NetworkState.loading -> showProgress()
+                NetworkState.idle -> hideProgress()
+                else -> showError(viewModel.error ?: getString(R.string.default_error))
+            }
+        })
+    }
+
+    private fun sampleAskForPermission() {
+        requestPermission(arrayOf(Manifest.permission.CAMERA), object : PermissionResponse {
+            override fun granted() {
+                // TODO..
+            }
+
+            override fun denied() {
+                // TODO..
+            }
+
+            override fun foreverDenied() {
+                // TODO..
+            }
+        })
     }
 }

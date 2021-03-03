@@ -1,44 +1,57 @@
 package com.rootstrap.android.util.extensions
 
 import com.google.gson.Gson
-import com.rootstrap.android.bus
 import com.rootstrap.android.network.models.ErrorModel
-import com.rootstrap.android.util.ErrorUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
-abstract class ActionCallback<T> : Callback<T> {
+class ActionCallback {
 
-    override fun onResponse(call: Call<T>, response: Response<T>) {
-        if (response.isSuccessful) {
-            responseAction(response)
-        } else {
-            errorAction(response)
-        }
-    }
+    companion object {
 
-    override fun onFailure(call: Call<T>, t: Throwable) {
-        failureAction(t)
-    }
-
-    open fun responseAction(response: Response<T>) {}
-
-    open fun errorAction(response: Response<T>) {
-        try {
-            response.errorBody()?.let {
-                val error = Gson().fromJson(it.charStream(), ErrorModel::class.java)
-                bus.post(ErrorEvent(ErrorUtil.handleCustomError(error)))
+        suspend fun <T> call(apiCall: Call<T>): Result<Data<T>> =
+            withContext(Dispatchers.IO) {
+                val response = apiCall.execute()
+                handleResponse(response)
             }
-        } catch (e: Exception) {
-            bus.post(FailureEvent())
-        }
-    }
 
-    open fun failureAction(throwable: Throwable?) {
-        bus.post(FailureEvent())
+        private fun <T> handleResponse(response: Response<T>): Result<Data<T>> {
+            if (response.isSuccessful) {
+                return Result.success(
+                    Data(response.body())
+                )
+            } else {
+                try {
+                    response.errorBody()?.let {
+                        val apiError = Gson().fromJson(it.charStream(), ErrorModel::class.java)
+                        return Result.failure(
+                            ApiException(
+                                errorMessage = apiError.error
+                            )
+                        )
+                    }
+                } catch (ignore: Exception) {
+                }
+            }
+
+            return Result.failure(ApiException(errorType = ApiErrorType.unknownError))
+        }
     }
 }
 
-class ErrorEvent(val error: String)
-class FailureEvent
+class Data<T>(val value: T?)
+
+class ApiException(
+    private val errorMessage: String? = null,
+    val errorType: ApiErrorType = ApiErrorType.apiError
+) : java.lang.Exception() {
+    override val message: String?
+        get() = errorMessage
+}
+
+enum class ApiErrorType {
+    apiError,
+    unknownError
+}

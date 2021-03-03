@@ -1,11 +1,12 @@
 package com.rootstrap.android.network.services
 
-import com.rootstrap.android.prefs
+import com.rootstrap.android.util.Prefs
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import javax.inject.Inject
 
-class AuthenticationInterceptor : Interceptor {
+class AuthenticationInterceptor @Inject constructor(private val prefs: Prefs) : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

@@ -1,13 +1,12 @@
 package com.rootstrap.android.util
 
-import android.content.Context
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.util.extensions.fromJson
+import javax.inject.Inject
 
-class Prefs(context: Context) {
+class Prefs @Inject constructor(private val prefs: SharedPreferences) {
 
     val ACCESS_TOKEN = "access-token"
     val CLIENT = "Client"
@@ -15,8 +14,6 @@ class Prefs(context: Context) {
     val USER = "user"
     val SIGNED_IN = "signed_in"
 
-    val prefs: SharedPreferences = PreferenceManager
-        .getDefaultSharedPreferences(context)
     private val gson: Gson = Gson()
 
     var accessToken: String

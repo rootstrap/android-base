@@ -1,12 +1,16 @@
 package com.rootstrap.android.network.services
 
-import com.rootstrap.android.network.managers.SessionManager
-import com.rootstrap.android.prefs
+import com.rootstrap.android.network.managers.session.SessionManager
+import com.rootstrap.android.util.Prefs
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import javax.inject.Inject
 
-class ResponseInterceptor : Interceptor {
+class ResponseInterceptor @Inject constructor(
+    private val prefs: Prefs,
+    private val sessionManager: SessionManager
+) : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -20,7 +24,7 @@ class ResponseInterceptor : Interceptor {
         val client = response.header(prefs.CLIENT)
         val uid = response.header(prefs.UID)
         if (preferValid(accessToken, client, uid))
-            SessionManager.addAuthenticationHeaders(accessToken!!, client!!, uid!!)
+            sessionManager.addAuthenticationHeaders(accessToken!!, client!!, uid!!)
     }
 
     private fun preferValid(accessToken: String?, client: String?, uid: String?): Boolean {
