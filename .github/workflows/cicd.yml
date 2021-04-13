@@ -1,0 +1,83 @@
+name: Continuous Integration
+
+on:
+  push:
+  pull_request:
+
+env:
+  LANG: en_US.UTF-8
+  # Notifications
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
+  SLACK_CHANNEL: '#dev-builds'
+
+jobs:
+
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install Fastlane and required plugins
+      run: |
+        sudo gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)"
+        bundle install --path vendor/bundle    
+    # Runs build with Gradle
+    - name: Build with Fastlane
+      run: bundle exec fastlane debug_dev
+    - name: Send notification of build result
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        text: '${{github.repository}} Dev build status is ${{ job.status }}'
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      if: always()  
+
+
+  release:
+    if: ${{ github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # S3
+      FOLDER: android-base
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      KEYS_BUCKET: ${{ secrets.AWS_S3_KEYS_BUCKET }}
+      # Android Release
+      JSON_KEYFILE: google-api.json
+      RELEASE_STORE_FILE: key.keystore
+      RELEASE_STORE_PASSWORD: ${{ secrets.ANDROID_RELEASE_STORE_PASSWORD }}
+      RELEASE_KEY_ALIAS: debug
+      RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_RELEASE_KEY_PASSWORD }}
+      # Notifications
+      SLACK_URL: ${{ secrets.SLACK_URL }}
+      SLACK_CHANNEL: '#dev-builds'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    # Downloads certificate, private key and Firebase file
+    - name: Download code signing items
+      run: | 
+        aws s3 cp s3://$KEYS_BUCKET/$FOLDER/ . --recursive
+        mv ./android/$RELEASE_STORE_FILE ./app/$RELEASE_STORE_FILE
+    - name: Install Fastlane and required plugins
+      run: |
+        sudo gem install bundler
+        bundle install --path vendor/bundle
+    # Build with Gradle and submit to Play Store
+    - name: Submit Development build with Fastlane
+      if: ${{ github.ref == 'refs/heads/develop' }}
+      run: bundle exec fastlane deploy_dev
+    - name: Submit Staging build with Fastlane
+      if: ${{ github.ref == 'refs/heads/master' }}
+      run: bundle exec fastlane deploy_staging
+    - name: Send notification of build result
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        text: '${{github.repository}} ${{github.ref}} build submission status is ${{ job.status }}'
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      if: always()  
+ 
