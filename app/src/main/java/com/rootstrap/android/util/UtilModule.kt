@@ -2,7 +2,11 @@ package com.rootstrap.android.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import com.rootstrap.android.BuildConfig
 import com.squareup.otto.Bus
 import dagger.Module
 import dagger.Provides
@@ -18,7 +22,27 @@ class UtilModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+
+        val spec = KeyGenParameterSpec.Builder(
+            BuildConfig.SECURE_KEY_ALIAS,
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+            )
+            .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            .setKeySize(256)
+            .build()
+
+        val masterKey = MasterKey.Builder(context, BuildConfig.SECURE_KEY_ALIAS)
+            .setKeyGenParameterSpec(spec)
+            .build()
+
+        return EncryptedSharedPreferences.create(
+            context,
+            BuildConfig.SECURE_FILE_NAME,
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
     }
 
     @Provides

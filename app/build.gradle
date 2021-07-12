@@ -17,7 +17,7 @@ android {
     dataBinding.enabled = true
     defaultConfig {
         applicationId "com.rootstrap.android"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 42
         versionName "1.0"
@@ -66,6 +66,8 @@ android {
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
             buildConfigField("String", "API_URL", "\"https://rails5-api-base.herokuapp.com/api/v1/\"")
+            buildConfigField("String", "SECURE_KEY_ALIAS", "\"$projectKeyAlias\"")
+            buildConfigField("String", "SECURE_FILE_NAME", "\"appPreferencesDev\"")
         }
 
         staging {
@@ -73,11 +75,15 @@ android {
             applicationIdSuffix ".staging"
             versionNameSuffix "-staging"
             buildConfigField("String", "API_URL", "\"https://proj-staging.herokuapp.com/api/\"")
+            buildConfigField("String", "SECURE_KEY_ALIAS", "\"$projectKeyAlias\"")
+            buildConfigField("String", "SECURE_FILE_NAME", "\"appPreferencesStaging\"")
         }
 
         prod {
             dimension "server"
             buildConfigField("String", "API_URL", "\"https://proj-production.herokuapp.com/api/\"")
+            buildConfigField("String", "SECURE_KEY_ALIAS", "\"$projectKeyAlias\"")
+            buildConfigField("String", "SECURE_FILE_NAME", "\"appPreferences\"")
         }
     }
 
@@ -188,4 +194,7 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+
+    //security crypto
+    implementation "androidx.security:security-crypto:1.1.0-alpha03"
 }
