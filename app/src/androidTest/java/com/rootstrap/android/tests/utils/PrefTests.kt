@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import com.rootstrap.android.util.Prefs
 import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -12,7 +11,6 @@ import org.junit.Test
 import java.util.* // ktlint-disable no-wildcard-imports
 import javax.inject.Inject
 
-@HiltAndroidTest
 class PrefTests {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)

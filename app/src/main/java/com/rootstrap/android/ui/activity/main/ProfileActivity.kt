@@ -1,7 +1,6 @@
 package com.rootstrap.android.ui.activity.main
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.metrics.Analytics
@@ -11,16 +10,14 @@ import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.NetworkState
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class ProfileActivity : BaseActivity(), ProfileView {
 
-    @Inject lateinit var sessionManager: SessionManager
-
-    private val viewModel: ProfileActivityViewModel by viewModels()
+    private val viewModel by viewModel<ProfileActivityViewModel>()
+    private val sessionManager: SessionManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +33,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
     }
 
     override fun goToFirstScreen() {
-        startActivityClearTask(SignUpActivity())
+        startActivityClearTask(SignUpActivity::class.java)
     }
 
     private fun setObservers() {

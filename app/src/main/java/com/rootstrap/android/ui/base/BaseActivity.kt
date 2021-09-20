@@ -21,8 +21,8 @@ open class BaseActivity : AppCompatActivity(), BaseView {
         LoadingDialogUtil.showError(message, this)
     }
 
-    protected fun startActivityClearTask(activity: Activity) {
-        val intent = Intent(this, activity.javaClass)
+    protected fun startActivityClearTask(activity: Class<out Activity>) {
+        val intent = Intent(this, activity)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)

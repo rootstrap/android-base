@@ -1,6 +1,5 @@
 package com.rootstrap.android.ui.activity.main
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,7 +11,7 @@ import com.rootstrap.android.util.extensions.ApiErrorType
 import com.rootstrap.android.util.extensions.ApiException
 import kotlinx.coroutines.launch
 
-open class ProfileActivityViewModel @ViewModelInject constructor(
+open class ProfileActivityViewModel(
     private val sessionManager: SessionManager,
     private val userManager: UserManager
 ) : BaseViewModel() {

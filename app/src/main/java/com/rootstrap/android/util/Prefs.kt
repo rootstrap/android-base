@@ -4,9 +4,8 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.util.extensions.fromJson
-import javax.inject.Inject
 
-class Prefs @Inject constructor(private val prefs: SharedPreferences) {
+class Prefs(private val prefs: SharedPreferences) {
 
     val ACCESS_TOKEN = "access-token"
     val CLIENT = "Client"

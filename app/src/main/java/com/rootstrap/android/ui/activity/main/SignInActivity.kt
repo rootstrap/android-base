@@ -2,7 +2,6 @@ package com.rootstrap.android.ui.activity.main
 
 import android.Manifest
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignInBinding
@@ -15,12 +14,11 @@ import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.android.util.permissions.PermissionActivity
 import com.rootstrap.android.util.permissions.PermissionResponse
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class SignInActivity : PermissionActivity(), AuthView {
 
-    private val viewModel: SignInActivityViewModel by viewModels()
+    private val viewModel by viewModel<SignInActivityViewModel>()
     private lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +37,7 @@ class SignInActivity : PermissionActivity(), AuthView {
     }
 
     override fun showProfile() {
-        startActivityClearTask(ProfileActivity())
+        startActivityClearTask(ProfileActivity::class.java)
     }
 
     private fun signIn() {
