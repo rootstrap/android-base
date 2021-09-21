@@ -1,6 +1,7 @@
 package com.rootstrap.android.util
 
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 import com.google.gson.Gson
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.util.extensions.fromJson
@@ -16,24 +17,27 @@ class Prefs(private val prefs: SharedPreferences) {
     private val gson: Gson = Gson()
 
     var accessToken: String
-        get() = prefs.getString(ACCESS_TOKEN, "")!!
-        set(value) = prefs.edit().putString(ACCESS_TOKEN, value).apply()
+        get() = getPref().getString(ACCESS_TOKEN, "")!!
+        set(value) = getPref().edit().putString(ACCESS_TOKEN, value).apply()
 
     var client: String
-        get() = prefs.getString(CLIENT, "")!!
-        set(value) = prefs.edit().putString(CLIENT, value).apply()
+        get() = getPref().getString(CLIENT, "")!!
+        set(value) = getPref().edit().putString(CLIENT, value).apply()
 
     var uid: String
-        get() = prefs.getString(UID, "")!!
-        set(value) = prefs.edit().putString(UID, value).apply()
+        get() = getPref().getString(UID, "")!!
+        set(value) = getPref().edit().putString(UID, value).apply()
 
     var user: User?
         get() = gson.fromJson<User>(prefs.getString(USER, "")!!)
-        set(value) = prefs.edit().putString(USER, gson.toJson(value)).apply()
+        set(value) = getPref().edit().putString(USER, gson.toJson(value)).apply()
 
     var signedIn: Boolean
-        get() = prefs.getBoolean(SIGNED_IN, false)
-        set(value) = prefs.edit().putBoolean(SIGNED_IN, value).apply()
+        get() = getPref().getBoolean(SIGNED_IN, false)
+        set(value) = getPref().edit().putBoolean(SIGNED_IN, value).apply()
 
-    fun clear() = prefs.edit().clear().apply()
+    fun clear() = getPref().edit().clear().apply()
+
+    @VisibleForTesting
+    private fun getPref() = prefs
 }

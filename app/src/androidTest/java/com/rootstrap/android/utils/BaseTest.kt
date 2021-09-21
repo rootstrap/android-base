@@ -2,11 +2,11 @@ package com.rootstrap.android.utils
 
 import android.app.Activity
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.typeText
-import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.clearText
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.clearText
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -15,31 +15,35 @@ import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
 import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.network.models.User
-import com.rootstrap.android.network.providers.ServiceProviderModule
-import dagger.hilt.android.testing.HiltAndroidRule
+import io.mockk.every
+import io.mockk.spyk
 import okhttp3.mockwebserver.Dispatcher
-import org.junit.Rule
 import org.junit.runner.RunWith
-import javax.inject.Inject
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-open class BaseTests {
+open class BaseTest {
 
-    @Inject lateinit var sessionManager: SessionManager
+    lateinit var sessionManager: SessionManager
 
     var mockServer: MockServer = MockServer
-
-    @get:Rule
-    var hiltRule = HiltAndroidRule(this)
 
     open fun setServerDispatch(dispatcher: Dispatcher) {
         mockServer.server().dispatcher = dispatcher
     }
 
     open fun before() {
+        sessionManager = spyk<SessionManager>()
+        val user = User(
+            "9032",
+            "user123@mail.com",
+            "Richard",
+            "Richard",
+            "99090909",
+            "asdasdasdasda",
+            "Richard"
+        )
+        every { sessionManager.user } returns user
         mockServer.startServer()
-        ServiceProviderModule.URL_API = mockServer.server().url("/").toString()
-        hiltRule.inject()
     }
 
     open fun after() {
