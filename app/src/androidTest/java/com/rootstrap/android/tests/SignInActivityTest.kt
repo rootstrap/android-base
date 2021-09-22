@@ -6,8 +6,7 @@ import com.rootstrap.android.R
 import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.ui.activity.main.ProfileActivity
 import com.rootstrap.android.ui.activity.main.SignInActivity
-import com.rootstrap.android.utils.BaseTests
-import dagger.hilt.android.testing.HiltAndroidTest
+import com.rootstrap.android.utils.BaseTest
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
@@ -16,8 +15,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@HiltAndroidTest
-class SignInActivityTest : BaseTests() {
+class SignInActivityTest : BaseTest() {
 
     private lateinit var activity: SignInActivity
     private lateinit var scenario: ActivityScenario<SignInActivity>

@@ -2,7 +2,6 @@ package com.rootstrap.android.ui.activity.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
@@ -14,12 +13,11 @@ import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class SignUpActivity : BaseActivity(), AuthView {
 
-    private val viewModel: SignUpActivityViewModel by viewModels()
+    private val viewModel by viewModel<SignUpActivityViewModel>()
     private lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +36,7 @@ class SignUpActivity : BaseActivity(), AuthView {
     }
 
     override fun showProfile() {
-        startActivityClearTask(ProfileActivity())
+        startActivityClearTask(ProfileActivity::class.java)
     }
 
     private fun signIn() {

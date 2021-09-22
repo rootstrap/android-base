@@ -2,9 +2,8 @@ package com.rootstrap.android.network.managers.session
 
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.util.Prefs
-import javax.inject.Inject
 
-class SessionManagerImpl @Inject constructor(private val prefs: Prefs) : SessionManager {
+class SessionManagerImpl(private val prefs: Prefs) : SessionManager {
 
     override var user: User? = prefs.user
         set(value) {

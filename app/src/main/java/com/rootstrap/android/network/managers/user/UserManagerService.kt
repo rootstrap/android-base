@@ -1,4 +1,4 @@
-package com.rootstrap.android.network.services
+package com.rootstrap.android.network.managers.user
 
 import com.rootstrap.android.network.models.UserSerializer
 import retrofit2.Call
@@ -6,7 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.POST
 
-interface ApiService {
+interface UserManagerService {
 
     @POST("users/")
     fun signUp(@Body user: UserSerializer): Call<UserSerializer>
