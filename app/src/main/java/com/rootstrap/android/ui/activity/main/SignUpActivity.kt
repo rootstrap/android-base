@@ -20,11 +20,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignUpActivity : BaseActivity(), AuthView {
 
     private val viewModel: SignUpActivityViewModel by viewModels()
-    private lateinit var binding: ActivitySignUpBinding
+    private val binding: ActivitySignUpBinding by lazy {
+        ActivitySignUpBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_UP))
