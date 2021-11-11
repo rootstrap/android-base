@@ -21,11 +21,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignInActivity : PermissionActivity(), AuthView {
 
     private val viewModel: SignInActivityViewModel by viewModels()
-    private lateinit var binding: ActivitySignInBinding
+    private val binding: ActivitySignInBinding by lazy {
+        ActivitySignInBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignInBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_IN))
