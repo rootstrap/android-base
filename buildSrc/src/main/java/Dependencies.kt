@@ -7,10 +7,6 @@ object Versions {
     const val preference = "1.1.1"
     const val recyclerview = "1.1.0"
     const val gson = "2.8.7"
-    const val playServicesMaps = "17.0.1"
-    const val playServicesLocation = "18.0.0"
-    const val dexter = "6.2.2"
-    const val amplitude = "2.32.1"
     const val firebaseBom = "26.1.0"
     const val navigation = "2.3.5"
     const val glide = "4.12.0"
@@ -26,7 +22,6 @@ object Versions {
     const val okhttp = "4.9.0"
     const val otto = "1.3.8"
     const val ktlint = "0.35.0"
-    const val hiltViewModel = "1.0.0-alpha03"
     const val securityCrypto = "1.1.0-alpha03"
     const val retrofit = "2.9.0"
     const val room = "1.1.1"
@@ -39,8 +34,6 @@ object Versions {
     const val rules = "1.4.0"
     const val mockwebserver = "4.9.0"
     const val testRunner = "1.4.0"
-    const val flexbox = "3.0.0"
-    const val paging = "3.1.0"
 }
 
 object Libs {
@@ -58,9 +51,6 @@ object Libs {
 
     // Material
     const val material = "com.google.android.material:material:${Versions.materialDesign}"
-
-    // Paging
-    const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
 
     // Room
     const val roomRuntime = "android.arch.persistence.room:runtime:${Versions.room}"
@@ -80,16 +70,6 @@ object Libs {
 
     // Google JSON serializer/deserializer
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
-
-    // Google Maps
-    const val playServicesMaps = "com.google.android.gms:play-services-maps:${Versions.playServicesMaps}"
-
-    // Location
-    const val playServicesLocation = "com.google.android.gms:play-services-location:${Versions.playServicesLocation}"
-    const val dexter = "com.karumi:dexter:${Versions.dexter}"
-
-    // Amplitude
-    const val amplitude = "com.amplitude:android-sdk:${Versions.amplitude}"
 
     // Firebase
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
@@ -115,9 +95,6 @@ object Libs {
     // Linters
     const val ktlint = "com.pinterest:ktlint:${Versions.ktlint}"
 
-    // Hilt
-    const val hiltViewModel= "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltViewModel}"
-
     // Koin
     const val koinCore = "io.insert-koin:koin-core:${Versions.koin}"
     const val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
@@ -128,9 +105,6 @@ object Libs {
 
     // Security crypto
     const val securityCrypto = "androidx.security:security-crypto:${Versions.securityCrypto}"
-
-    // Flexbox
-    const val flexbox = "com.google.android.flexbox:flexbox:${Versions.flexbox}"
 
     // Testing
     const val junit = "junit:junit:${Versions.junit}"
