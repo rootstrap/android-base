@@ -4,9 +4,9 @@ import androidx.test.core.app.ActivityScenario
 import com.google.gson.Gson
 import com.rootstrap.android.R
 import com.rootstrap.android.network.models.UserSerializer
-import com.rootstrap.android.ui.activity.main.ProfileActivity
-import com.rootstrap.android.ui.activity.main.SignInActivity
-import com.rootstrap.android.ui.activity.main.SignUpActivity
+import com.rootstrap.android.ui.activity.MainActivity
+import com.rootstrap.android.ui.activity.OnBoardingActivity
+import com.rootstrap.android.ui.fragment.SignInFragment
 import com.rootstrap.android.utils.BaseTests
 import dagger.hilt.android.testing.HiltAndroidTest
 import okhttp3.mockwebserver.Dispatcher
@@ -20,13 +20,13 @@ import org.junit.Test
 @HiltAndroidTest
 class SignUpActivityTest : BaseTests() {
 
-    private lateinit var activity: SignUpActivity
-    private lateinit var scenario: ActivityScenario<SignUpActivity>
+    private lateinit var activity: OnBoardingActivity
+    private lateinit var scenario: ActivityScenario<OnBoardingActivity>
 
     @Before
     override fun before() {
         super.before()
-        scenario = ActivityScenario.launch(SignUpActivity::class.java)
+        scenario = ActivityScenario.launch(OnBoardingActivity::class.java)
         scenario.onActivity { activity -> this.activity = activity }
     }
 
@@ -45,7 +45,7 @@ class SignUpActivityTest : BaseTests() {
 
         activity.runOnUiThread {
             val current = currentActivity()
-            assertEquals(ProfileActivity::class.java.name, current::class.java.name)
+            assertEquals(MainActivity::class.java.name, current::class.java.name)
         }
     }
 
@@ -54,8 +54,10 @@ class SignUpActivityTest : BaseTests() {
         scenario.recreate()
         scrollAndPerformClick(R.id.sign_in_text_view)
         activity.runOnUiThread {
-            val current = currentActivity()
-            assertEquals(SignInActivity::class.java.name, current::class.java.name)
+            assertEquals(
+                SignInFragment::class.java.name,
+                activity.supportFragmentManager.fragments[0]::class.java
+            )
         }
     }
 

@@ -5,8 +5,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.rootstrap.android.R
-import com.rootstrap.android.ui.activity.main.ProfileActivity
-import com.rootstrap.android.ui.activity.main.SignUpActivity
+import com.rootstrap.android.ui.activity.MainActivity
 import com.rootstrap.android.utils.BaseTests
 import dagger.hilt.android.testing.HiltAndroidTest
 import okhttp3.mockwebserver.Dispatcher
@@ -20,15 +19,15 @@ import org.junit.Test
 @HiltAndroidTest
 class ProfileActivityTest : BaseTests() {
 
-    private lateinit var activity: ProfileActivity
-    private lateinit var scenario: ActivityScenario<ProfileActivity>
+    private lateinit var activity: MainActivity
+    private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Before
     override fun before() {
         super.before()
         setServerDispatch(logoutDispatcher())
         sessionManager.user = testUser()
-        scenario = ActivityScenario.launch(ProfileActivity::class.java)
+        scenario = ActivityScenario.launch(MainActivity::class.java)
         scenario.onActivity { activity -> this.activity = activity }
     }
 
@@ -44,7 +43,7 @@ class ProfileActivityTest : BaseTests() {
         // Check if this activity was successful launched
         activity.runOnUiThread {
             val current = currentActivity()
-            assertEquals(SignUpActivity::class.java.name, current::class.java.name)
+            assertEquals(MainActivity::class.java.name, current::class.java.name)
         }
     }
 
