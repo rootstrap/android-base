@@ -55,7 +55,7 @@ class ProfileFragment : BaseFragment() {
             state.observe(viewLifecycleOwner, {
                 when (it) {
                     ProfileState.signOutFailure -> showError(error)
-                    ProfileState.signOutSuccess -> openActivity(OnBoardingActivity::class.java)
+                    ProfileState.signOutSuccess -> openActivity(OnBoardingActivity::class.java, true)
                 }
             })
             observeNetwork(this)

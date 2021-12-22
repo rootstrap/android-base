@@ -59,7 +59,7 @@ class SignInFragment : BaseFragment() {
             state.observe(requireActivity(), {
                 when (it) {
                     SignInState.signInFailure -> showError(error)
-                    SignInState.signInSuccess -> openActivity(MainActivity::class.java)
+                    SignInState.signInSuccess -> openActivity(MainActivity::class.java, true)
                 }
             })
             observeNetwork(this)

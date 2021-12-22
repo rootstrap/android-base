@@ -33,6 +33,9 @@ open class BaseFragment : Fragment(), BaseView {
                 extras?.let { bundle -> it.putExtras(bundle) }
             }
         )
+        if (clearTask) {
+            requireActivity().finish()
+        }
     }
 
     fun observeNetwork(baseViewModel: BaseViewModel) {

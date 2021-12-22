@@ -37,7 +37,7 @@ open class BaseNavActivity : BaseActivity() {
             NavHostFragment.findNavController(fragment).popBackStack(it, false)
         } ?: run {
             if (!NavHostFragment.findNavController(fragment).popBackStack()) {
-                finish()
+                super.onBackPressed()
             }
         }
     }
