@@ -1,4 +1,4 @@
-package com.rootstrap.android
+package com.rootstrap.android.test
 
 import com.rootstrap.android.util.dispatcher.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher

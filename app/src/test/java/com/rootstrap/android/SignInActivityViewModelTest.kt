@@ -4,6 +4,8 @@ import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.network.managers.user.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.network.models.UserSerializer
+import com.rootstrap.android.test.TestDispatcherProvider
+import com.rootstrap.android.test.UnitTestBase
 import com.rootstrap.android.ui.activity.main.SignInActivityViewModel
 import com.rootstrap.android.ui.activity.main.SignInState
 import com.rootstrap.android.util.NetworkState

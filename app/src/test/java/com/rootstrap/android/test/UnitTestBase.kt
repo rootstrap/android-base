@@ -1,4 +1,4 @@
-package com.rootstrap.android
+package com.rootstrap.android.test
 
 import androidx.annotation.CallSuper
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
