@@ -15,8 +15,10 @@ import com.rootstrap.android.ui.activity.OnBoardingActivity
 import com.rootstrap.android.ui.activity.main.ProfileActivityViewModel
 import com.rootstrap.android.ui.activity.main.ProfileState
 import com.rootstrap.android.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment() {
 
     @Inject

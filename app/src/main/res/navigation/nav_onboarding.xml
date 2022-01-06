@@ -25,4 +25,14 @@
             android:label="@string/sign_in"
             tools:layout="@layout/fragment_sign_in" />
 
+    <action
+            android:id="@+id/nav_onboarding_to_main"
+            app:destination="@id/nav_activity_main"
+            app:launchSingleTop="true"
+            tools:layout="@layout/fragment_profile" />
+
+    <activity
+            android:id="@+id/nav_activity_main"
+            android:name="com.rootstrap.android.ui.activity.MainActivity" />
+
 </navigation>

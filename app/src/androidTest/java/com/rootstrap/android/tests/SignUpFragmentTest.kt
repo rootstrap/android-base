@@ -6,7 +6,6 @@ import com.rootstrap.android.R
 import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.ui.activity.MainActivity
 import com.rootstrap.android.ui.activity.OnBoardingActivity
-import com.rootstrap.android.ui.fragment.SignInFragment
 import com.rootstrap.android.utils.BaseTests
 import dagger.hilt.android.testing.HiltAndroidTest
 import okhttp3.mockwebserver.Dispatcher
@@ -18,7 +17,7 @@ import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-class SignUpActivityTest : BaseTests() {
+class SignUpFragmentTest : BaseTests() {
 
     private lateinit var activity: OnBoardingActivity
     private lateinit var scenario: ActivityScenario<OnBoardingActivity>
@@ -28,6 +27,7 @@ class SignUpActivityTest : BaseTests() {
         super.before()
         scenario = ActivityScenario.launch(OnBoardingActivity::class.java)
         scenario.onActivity { activity -> this.activity = activity }
+        scenario.recreate()
     }
 
     @Test
@@ -41,23 +41,11 @@ class SignUpActivityTest : BaseTests() {
         scrollAndTypeText(R.id.password_edit_text, testUser.password)
         scrollAndPerformClick(R.id.sign_up_button)
         val user = sessionManager.user
-        assertEquals(user, testUser)
+        assertEquals(user?.email, testUser.email)
 
         activity.runOnUiThread {
             val current = currentActivity()
             assertEquals(MainActivity::class.java.name, current::class.java.name)
-        }
-    }
-
-    @Test
-    fun checkCTASignIn() {
-        scenario.recreate()
-        scrollAndPerformClick(R.id.sign_in_text_view)
-        activity.runOnUiThread {
-            assertEquals(
-                SignInFragment::class.java.name,
-                activity.supportFragmentManager.fragments[0]::class.java
-            )
         }
     }
 

@@ -11,12 +11,13 @@ import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_UP
 import com.rootstrap.android.network.models.User
-import com.rootstrap.android.ui.activity.MainActivity
 import com.rootstrap.android.ui.activity.main.SignUpActivityViewModel
 import com.rootstrap.android.ui.activity.main.SignUpState
 import com.rootstrap.android.ui.base.BaseFragment
 import com.rootstrap.android.util.extensions.value
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
 
     private val viewModel: SignUpActivityViewModel by viewModels()
@@ -65,7 +66,7 @@ class SignUpFragment : BaseFragment() {
             state.observe(requireActivity(), {
                 when (it) {
                     SignUpState.signUpFailure -> showError(error)
-                    SignUpState.signUpSuccess -> openActivity(MainActivity::class.java, true)
+                    SignUpState.signUpSuccess -> navigateTo(R.id.nav_onboarding_to_main)
                 }
             })
             observeNetwork(this)

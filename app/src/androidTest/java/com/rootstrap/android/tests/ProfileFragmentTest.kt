@@ -17,7 +17,7 @@ import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-class ProfileActivityTest : BaseTests() {
+class ProfileFragmentTest : BaseTests() {
 
     private lateinit var activity: MainActivity
     private lateinit var scenario: ActivityScenario<MainActivity>

@@ -17,7 +17,7 @@ import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-class SignInActivityTest : BaseTests() {
+class SignInFragmentTest : BaseTests() {
 
     private lateinit var activity: OnBoardingActivity
     private lateinit var scenario: ActivityScenario<OnBoardingActivity>
@@ -40,7 +40,7 @@ class SignInActivityTest : BaseTests() {
         typeText(R.id.password_edit_text, testUser.password)
         performClick(R.id.sign_in_button)
         val user = sessionManager.user
-        assertEquals(user, testUser)
+        assertEquals(user?.email, testUser.email)
 
         activity.runOnUiThread {
             val current = currentActivity()
