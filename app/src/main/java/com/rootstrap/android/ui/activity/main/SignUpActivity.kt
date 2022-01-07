@@ -9,14 +9,12 @@ import com.rootstrap.android.databinding.ActivitySignUpBinding
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_UP
-import com.rootstrap.android.network.models.User
+import com.rootstrap.data.dto.response.User
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class SignUpActivity : BaseActivity(), AuthView {
 
     private val viewModel: SignUpActivityViewModel by viewModels()

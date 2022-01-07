@@ -39,7 +39,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:289773649665:android:d4cfc41fd5630d4bf1e500",
         "android_client_info": {
-          "package_name": "com.rootstrap.android.dev"
+          "package_name": "com.rootstrap.android.debug"
         }
       },
       "oauth_client": [

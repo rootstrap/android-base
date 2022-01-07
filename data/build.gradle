@@ -1,9 +1,52 @@
 plugins {
-    id 'java-library'
-    id 'kotlin'
+    id "com.android.library"
+    id "kotlin-android"
+    id "kotlin-parcelize"
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 31
+
+        testInstrumentationRunner "com.rootstrap.android.CustomTestRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        getByName("debug") {
+            minifyEnabled false
+            buildConfigField("String", "API_URL", "\"https://rails5-api-base.herokuapp.com/api/v1/\"")
+        }
+
+        create("staging") {
+            initWith(getByName("debug"))
+            buildConfigField("String", "API_URL", "\"https://proj-staging.herokuapp.com/api/\"")
+        }
+
+        getByName("release") {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "API_URL", "\"https://proj-production.herokuapp.com/api/\"")
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation project(":domain")
+    implementation androidDataLibs.values()
+    implementation kotlinLibs.values()
+    implementation platform(Libs.firebaseBom)
+    implementation libs.values()
+    testImplementation testLibs.values()
 }

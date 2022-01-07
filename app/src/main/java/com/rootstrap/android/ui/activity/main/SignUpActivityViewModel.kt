@@ -3,19 +3,16 @@ package com.rootstrap.android.ui.activity.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.network.managers.user.UserManager
-import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.extensions.ApiErrorType
-import com.rootstrap.android.util.extensions.ApiException
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.rootstrap.data.util.extensions.ApiErrorType
+import com.rootstrap.data.util.extensions.ApiException
+import com.rootstrap.data.dto.response.User
+import com.rootstrap.data.managers.session.SessionManager
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-open class SignUpActivityViewModel @Inject constructor(
+open class SignUpActivityViewModel(
     private val sessionManager: SessionManager,
     private val userManager: UserManager
 ) : BaseViewModel() {

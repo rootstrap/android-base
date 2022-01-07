@@ -1,7 +1,7 @@
 package com.rootstrap.android.util
 
 import com.google.android.material.textfield.TextInputLayout
-import com.rootstrap.android.network.models.ErrorModel
+import com.rootstrap.data.dto.response.ErrorModel
 
 class ErrorUtil {
 

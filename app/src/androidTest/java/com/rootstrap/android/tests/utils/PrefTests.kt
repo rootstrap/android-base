@@ -2,7 +2,7 @@ package com.rootstrap.android.tests.utils
 
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
-import com.rootstrap.android.util.Prefs
+import com.rootstrap.data.util.Prefs
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Assert

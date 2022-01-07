@@ -8,14 +8,12 @@ import com.rootstrap.android.databinding.ActivityProfileBinding
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_PROFILE
-import com.rootstrap.android.network.managers.session.SessionManager
+import com.rootstrap.data.managers.session.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.NetworkState
-import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class ProfileActivity : BaseActivity(), ProfileView {
 
     @Inject lateinit var sessionManager: SessionManager
