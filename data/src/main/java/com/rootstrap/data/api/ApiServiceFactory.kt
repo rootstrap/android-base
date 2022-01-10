@@ -1,6 +1,6 @@
 package com.rootstrap.data.api
 
-import com.rootstrap.android.data.BuildConfig
+import com.rootstrap.data.BuildConfig
 import com.rootstrap.data.api.interceptors.AuthenticationInterceptor
 import com.rootstrap.data.api.interceptors.HeadersInterceptor
 import com.rootstrap.data.api.interceptors.ResponseInterceptor

@@ -34,6 +34,7 @@ object Versions {
     const val rules = "1.4.0"
     const val mockwebserver = "4.9.0"
     const val testRunner = "1.4.0"
+    const val mixPanel = "5.6.1"
 }
 
 object Libs {
@@ -77,13 +78,17 @@ object Libs {
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
 
+    //---- MixPanel ----
+    const val mixPanel = "com.mixpanel.android:mixpanel-android:${Versions.mixPanel}"
+
     // Image
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glideKapt = "com.github.bumptech.glide:compiler:${Versions.glide}"
 
     // Network
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
+    const val retrofitGsonConverter =
+        "com.squareup.retrofit2:converter-gson:${Versions.converterGson}"
     const val moshi = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
     const val converterMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.converterMoshi}"
     const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"

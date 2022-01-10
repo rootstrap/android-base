@@ -9,11 +9,11 @@ import com.rootstrap.android.databinding.ActivitySignUpBinding
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_UP
-import com.rootstrap.data.dto.response.User
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
+import com.rootstrap.data.dto.request.UserSignUpRequest
 
 class SignUpActivity : BaseActivity(), AuthView {
 
@@ -24,7 +24,6 @@ class SignUpActivity : BaseActivity(), AuthView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(binding.root)
         Analytics.track(PageEvents.visit(VISIT_SIGN_UP))
 
@@ -46,7 +45,7 @@ class SignUpActivity : BaseActivity(), AuthView {
 
     private fun signUp() {
         with(binding) {
-            val user = User(
+            val user = UserSignUpRequest(
                 email = emailEditText.value(),
                 firstName = firstNameEditText.value(),
                 lastName = lastNameEditText.value(),
@@ -59,8 +58,8 @@ class SignUpActivity : BaseActivity(), AuthView {
     private fun setObservers() {
         viewModel.state.observe(this, Observer {
             when (it) {
-                SignUpState.signUpFailure -> showError(viewModel.error)
-                SignUpState.signUpSuccess -> showProfile()
+                SignUpState.SIGN_UP_FAILURE -> showError(viewModel.error)
+                SignUpState.SIGN_UP_SUCCESS -> showProfile()
             }
         })
 

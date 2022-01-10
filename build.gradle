@@ -36,79 +36,80 @@ allprojects {
 
     ext {
         androidLibs = [
-                appcompat           : Libs.appCompat,
-                legacySupportV4     : Libs.legacySupportV4,
-                recyclerview        : Libs.recyclerview,
-                constraintlayout    : Libs.constraintlayout,
-                androidxCore        : Libs.core,
-                lifecycleCommon     : Libs.lifecycleCommon,
-                lifecycleRuntime    : Libs.lifecycleRuntime,
-                lifecycleLivedata   : Libs.lifecycleLivedata,
-                lifecycleExtensions : Libs.lifecycleExtensions,
-                lifecycleViewModel  : Libs.lifecycleViewModel,
-                material            : Libs.material,
-                roomRuntime         : Libs.roomRuntime,
-                glide               : Libs.glide,
-                navigationFragment  : Libs.navigationFragment,
-                navigationUi        : Libs.navigationUi
+                appcompat          : Libs.appCompat,
+                legacySupportV4    : Libs.legacySupportV4,
+                recyclerview       : Libs.recyclerview,
+                constraintlayout   : Libs.constraintlayout,
+                androidxCore       : Libs.core,
+                lifecycleCommon    : Libs.lifecycleCommon,
+                lifecycleRuntime   : Libs.lifecycleRuntime,
+                lifecycleLivedata  : Libs.lifecycleLivedata,
+                lifecycleExtensions: Libs.lifecycleExtensions,
+                lifecycleViewModel : Libs.lifecycleViewModel,
+                material           : Libs.material,
+                roomRuntime        : Libs.roomRuntime,
+                glide              : Libs.glide,
+                navigationFragment : Libs.navigationFragment,
+                navigationUi       : Libs.navigationUi
         ]
 
         androidDataLibs = [
-                preference          : Libs.preference
+                preference: Libs.preference
         ]
 
         androidKaptLibs = [
                 roomCompiler : Libs.roomKapt,
-                lifecycleKapt : Libs.lifecycleKapt,
+                lifecycleKapt: Libs.lifecycleKapt,
                 glideCompiler: Libs.glideKapt
         ]
 
         ktlintLibs = [
-                ktlint  : Libs.ktlint
+                ktlint: Libs.ktlint
         ]
 
         kotlinLibs = [
-                kotlinStdLib    : Libs.kotlinStdLib,
-                reflect         : Libs.reflect,
-                coroutines      : Libs.coroutinesAndroid
+                kotlinStdLib: Libs.kotlinStdLib,
+                reflect     : Libs.reflect,
+                coroutines  : Libs.coroutinesAndroid
         ]
 
         libs = [
-                okhttpLoginInterceptor  : Libs.loggingInterceptor,
-                retrofit                : Libs.retrofit,
-                retrofitGsonConverter   : Libs.retrofitGsonConverter,
-                koinCore                : Libs.koinCore,
-                koinAndroid             : Libs.koinAndroid,
-                koinAndroidCompat       : Libs.koinAndroidCompat,
-                koinWorkManager         : Libs.koinWorkManager,
-                koinCompose             : Libs.koinCompose,
-                otto                    : Libs.otto,
-                gson                    : Libs.gson,
-                okhttp                  : Libs.okhttp,
-                moshi                   : Libs.moshi,
-                converterMoshi          : Libs.converterMoshi,
-                securityCrypto          : Libs.securityCrypto,
-                firebaseCore            : Libs.firebaseCore,
-                firebaseAnalytics       : Libs.firebaseAnalytics,
-                firebaseCrashlytics     : Libs.firebaseCrashlytics
+                okhttpLoginInterceptor: Libs.loggingInterceptor,
+                retrofit              : Libs.retrofit,
+                retrofitGsonConverter : Libs.retrofitGsonConverter,
+                koinCore              : Libs.koinCore,
+                koinAndroid           : Libs.koinAndroid,
+                koinAndroidCompat     : Libs.koinAndroidCompat,
+                koinWorkManager       : Libs.koinWorkManager,
+                koinCompose           : Libs.koinCompose,
+                otto                  : Libs.otto,
+                gson                  : Libs.gson,
+                okhttp                : Libs.okhttp,
+                moshi                 : Libs.moshi,
+                converterMoshi        : Libs.converterMoshi,
+                securityCrypto        : Libs.securityCrypto,
+                firebaseCore          : Libs.firebaseCore,
+                firebaseAnalytics     : Libs.firebaseAnalytics,
+                firebaseCrashlytics   : Libs.firebaseCrashlytics,
+                mixPanel              : Libs.mixPanel
         ]
 
         testLibs = [
-                junit           : Libs.junit,
-                mockitoCore     : Libs.mockitoCore,
-                mockk           : Libs.mockk
+                junit      : Libs.junit,
+                mockitoCore: Libs.mockitoCore,
+                mockk      : Libs.mockk
         ]
 
         androidTestLibs = [
-                testRunner      : Libs.testRunner,
-                espressoCore    : Libs.espressoCore,
-                espressoIntents : Libs.espressoIntents,
-                rules           : Libs.rules,
-                extJunit        : Libs.extJunit,
-                koinTest        : Libs.koinTest,
-                mockWebServer   : Libs.mockwebserver,
-                mockkAndroid    : Libs.mockkAndroid,
-                uiautomator     : Libs.uiautomator
+                testRunner     : Libs.testRunner,
+                espressoCore   : Libs.espressoCore,
+                espressoIntents: Libs.espressoIntents,
+                rules          : Libs.rules,
+                extJunit       : Libs.extJunit,
+                koinTest       : Libs.koinTest,
+                mockWebServer  : Libs.mockwebserver,
+                mockkAndroid   : Libs.mockkAndroid,
+                uiautomator    : Libs.uiautomator
         ]
     }
 }

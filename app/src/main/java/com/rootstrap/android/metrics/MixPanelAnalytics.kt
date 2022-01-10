@@ -1,7 +1,6 @@
 package com.rootstrap.android.metrics
 
 import android.content.Context
-
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import com.rootstrap.android.R
 import com.rootstrap.android.metrics.base.Provider

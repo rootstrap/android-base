@@ -137,7 +137,6 @@ dependencies {
     implementation libs.values()
     kapt androidKaptLibs.values()
     ktlint ktlintLibs.values()
-
     testImplementation testLibs.values()
     androidTestImplementation androidTestLibs.values()
 }

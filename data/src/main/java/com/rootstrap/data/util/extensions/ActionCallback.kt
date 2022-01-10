@@ -14,16 +14,16 @@ class ActionCallback {
 
     companion object {
 
-        suspend fun <T> call(apiCall: Call<T>): DataResult<Data<T>> =
+        suspend fun <T> call(apiCall: Call<T>): DataResult<T> =
             withContext(Dispatchers.IO) {
                 val response = apiCall.execute()
                 handleResponse(response)
             }
 
-        private fun <T> handleResponse(response: Response<T>): DataResult<Data<T>> {
+        private fun <T> handleResponse(response: Response<T>): DataResult<T> {
             if (response.isSuccessful) {
                 return DataResult.Success(
-                    Data(response.body())
+                    response.body()
                 )
             } else {
                 try {
@@ -44,4 +44,3 @@ class ActionCallback {
     }
 }
 
-class Data<T>(val value: T?)
