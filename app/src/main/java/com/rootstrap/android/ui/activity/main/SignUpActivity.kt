@@ -2,7 +2,6 @@ package com.rootstrap.android.ui.activity.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
@@ -14,10 +13,11 @@ import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.data.dto.request.UserSignUpRequest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignUpActivity : BaseActivity(), AuthView {
 
-    private val viewModel: SignUpActivityViewModel by viewModels()
+    private val viewModel: SignUpActivityViewModel by viewModel()
     private val binding: ActivitySignUpBinding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)
     }
@@ -65,8 +65,8 @@ class SignUpActivity : BaseActivity(), AuthView {
 
         viewModel.networkState.observe(this, Observer {
             when (it) {
-                NetworkState.loading -> showProgress()
-                NetworkState.idle -> hideProgress()
+                NetworkState.LOADING -> showProgress()
+                NetworkState.IDLE -> hideProgress()
                 else -> showError(viewModel.error ?: getString(R.string.default_error))
             }
         })

@@ -1,6 +1,8 @@
 package com.rootstrap.android.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import com.rootstrap.android.BuildConfig
 import com.rootstrap.android.ui.activity.main.*
 import com.rootstrap.data.api.ApiProvider
@@ -9,12 +11,16 @@ import com.rootstrap.data.api.interceptors.AuthenticationInterceptor
 import com.rootstrap.data.api.interceptors.ConnectivityInterceptor
 import com.rootstrap.data.api.interceptors.HeadersInterceptor
 import com.rootstrap.data.api.interceptors.ResponseInterceptor
+import com.rootstrap.data.managers.session.SessionManager
 import com.rootstrap.data.managers.session.SessionManagerImpl
 import com.rootstrap.data.repository.UserRepository
 import com.rootstrap.data.util.Prefs
 import com.rootstrap.usecases.SignIn
 import com.rootstrap.usecases.SignOut
 import com.rootstrap.usecases.SignUp
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
@@ -35,13 +41,14 @@ fun Application.initDI() {
 }
 
 val appModule = module {
+    single<CoroutineDispatcher> { Dispatchers.Main }
     single { SignUp(get()) }
     single { SignIn(get()) }
     single { SignOut(get()) }
 
-    viewModel { SignUpActivityViewModel(get(), get()) }
-    viewModel { SignInActivityViewModel(get(), get()) }
-    viewModel { ProfileActivityViewModel(get(), get()) }
+    viewModel { SignUpActivityViewModel(get(), get(), get()) }
+    viewModel { SignInActivityViewModel(get(), get(), get()) }
+    viewModel { ProfileActivityViewModel(get(), get(), get()) }
 }
 
 val dataModule = module {
@@ -51,10 +58,16 @@ val dataModule = module {
     single { AuthenticationInterceptor(get()) }
     single { ResponseInterceptor(get(), get()) }
     single { ApiProvider(get()) }
+    single<SharedPreferences> {
+        androidApplication().getSharedPreferences(
+            "prefs",
+            Context.MODE_PRIVATE
+        )
+    }
 
     factory { Prefs(get()) }
     factory { UserRepository(get()) }
-    factory { SessionManagerImpl(get()) }
+    single<SessionManager> { SessionManagerImpl(get()) }
 }
 
 private val scopesModule = module {

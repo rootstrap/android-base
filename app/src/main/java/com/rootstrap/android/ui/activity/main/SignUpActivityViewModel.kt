@@ -12,19 +12,21 @@ import com.rootstrap.data.dto.response.DataResult
 import com.rootstrap.data.managers.session.SessionManager
 
 import com.rootstrap.usecases.SignUp
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 open class SignUpActivityViewModel(
     private val signUp: SignUp,
     private val sessionManager: SessionManager,
-) : BaseViewModel() {
+    uiDispatcher: CoroutineDispatcher
+) : BaseViewModel(uiDispatcher) {
 
     private val _state = MutableLiveData<SignUpState>()
     val state: LiveData<SignUpState>
         get() = _state
 
     fun signUp(userSignUpRequest: UserSignUpRequest) {
-        _networkState.value = NetworkState.loading
+        _networkState.value = NetworkState.LOADING
         viewModelScope.launch {
 
             when (val result = signUp.invoke(UserSignUpRequestSerializer(userSignUpRequest))) {
@@ -33,11 +35,12 @@ open class SignUpActivityViewModel(
                         sessionManager.signIn(user)
                     } ?: handleError(ApiException(null))
 
-                    _networkState.value = NetworkState.idle
+                    restoreNetworkState()
                     _state.value = SignUpState.SIGN_UP_SUCCESS
                 }
                 is DataResult.Error -> {
                     handleError(result.exception)
+                    restoreNetworkState()
                 }
             }
         }
@@ -45,8 +48,12 @@ open class SignUpActivityViewModel(
 
     private fun handleError(exception: ApiException?) {
         error = exception?.message
-        _networkState.value = NetworkState.error
+        _networkState.value = NetworkState.ERROR
         _state.value = SignUpState.SIGN_UP_FAILURE
+    }
+
+    private fun restoreNetworkState() {
+        _networkState.value = NetworkState.IDLE
     }
 }
 

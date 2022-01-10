@@ -8,12 +8,14 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
 import com.rootstrap.android.util.NetworkState
 import com.squareup.otto.Bus
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
  * A [ViewModel] base class
  * implement app general LiveData as Session or User
  * **/
-open class BaseViewModel : ViewModel(), LifecycleObserver {
+open class BaseViewModel(uiDispatcher: CoroutineDispatcher) : ScopedViewModel(uiDispatcher),
+    LifecycleObserver {
     var error: String? = null
 
     protected val _networkState = MutableLiveData<NetworkState>()

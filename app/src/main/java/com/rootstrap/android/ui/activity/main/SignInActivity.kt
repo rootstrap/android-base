@@ -2,7 +2,6 @@ package com.rootstrap.android.ui.activity.main
 
 import android.Manifest
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignInBinding
@@ -15,13 +14,12 @@ import com.rootstrap.android.util.extensions.value
 import com.rootstrap.android.util.permissions.PermissionActivity
 import com.rootstrap.android.util.permissions.PermissionResponse
 import com.rootstrap.data.dto.request.UserSignInRequest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInActivity : PermissionActivity(), AuthView {
 
-    private val viewModel: SignInActivityViewModel by viewModels()
-    private lateinit var binding: ActivitySignInBinding /* by lazy {
-        ActivitySignInBinding.inflate(layoutInflater)
-    } */
+    private val viewModel: SignInActivityViewModel by viewModel()
+    private lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +52,15 @@ class SignInActivity : PermissionActivity(), AuthView {
     private fun setObservers() {
         viewModel.state.observe(this, Observer {
             when (it) {
-                SignInState.signInFailure -> showError(viewModel.error)
-                SignInState.signInSuccess -> showProfile()
+                SignInState.SIGN_IN_FAILURE -> showError(viewModel.error)
+                SignInState.SIGN_IN_SUCCESS -> showProfile()
             }
         })
 
         viewModel.networkState.observe(this, Observer {
             when (it) {
-                NetworkState.loading -> showProgress()
-                NetworkState.idle -> hideProgress()
+                NetworkState.LOADING -> showProgress()
+                NetworkState.IDLE -> hideProgress()
                 else -> showError(viewModel.error ?: getString(R.string.default_error))
             }
         })

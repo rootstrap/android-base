@@ -1,24 +1,24 @@
 package com.rootstrap.android.ui.activity.main
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivityProfileBinding
 import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_PROFILE
-import com.rootstrap.data.managers.session.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.NetworkState
-import javax.inject.Inject
+import com.rootstrap.data.managers.session.SessionManager
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileActivity : BaseActivity(), ProfileView {
 
-    @Inject lateinit var sessionManager: SessionManager
+    private val sessionManager: SessionManager by inject()
 
-    private val viewModel: ProfileActivityViewModel by viewModels()
+    private val viewModel: ProfileActivityViewModel by viewModel()
     private val binding by lazy { ActivityProfileBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,15 +43,15 @@ class ProfileActivity : BaseActivity(), ProfileView {
     private fun setObservers() {
         viewModel.state.observe(this, Observer {
             when (it) {
-                ProfileState.signOutFailure -> showError(viewModel.error)
-                ProfileState.signOutSuccess -> goToFirstScreen()
+                ProfileState.SIGN_OUT_FAILURE -> showError(viewModel.error)
+                ProfileState.SIGN_OUT_SUCCESS -> goToFirstScreen()
             }
         })
 
         viewModel.networkState.observe(this, Observer {
             when (it) {
-                NetworkState.loading -> showProgress()
-                NetworkState.idle -> hideProgress()
+                NetworkState.LOADING -> showProgress()
+                NetworkState.IDLE -> hideProgress()
                 else -> showError(viewModel.error ?: getString(R.string.default_error))
             }
         })

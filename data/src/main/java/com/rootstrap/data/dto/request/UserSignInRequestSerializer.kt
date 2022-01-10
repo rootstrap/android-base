@@ -5,4 +5,4 @@ data class UserSignInRequest(
     val password: String = ""
 )
 
-data class UserSignInRequestSerializer(val userSignInRequest: UserSignInRequest)
+data class UserSignInRequestSerializer(val user: UserSignInRequest)

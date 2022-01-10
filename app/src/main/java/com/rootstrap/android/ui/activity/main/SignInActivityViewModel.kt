@@ -11,19 +11,21 @@ import com.rootstrap.data.dto.request.UserSignInRequestSerializer
 import com.rootstrap.data.dto.response.DataResult
 import com.rootstrap.data.managers.session.SessionManager
 import com.rootstrap.usecases.SignIn
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 open class SignInActivityViewModel(
     private val signIn: SignIn,
     private val sessionManager: SessionManager,
-) : BaseViewModel() {
+    uiDispatcher: CoroutineDispatcher
+) : BaseViewModel(uiDispatcher) {
 
     private val _state = MutableLiveData<SignInState>()
     val state: LiveData<SignInState>
         get() = _state
 
     fun signIn(user: UserSignInRequest) {
-        _networkState.value = NetworkState.loading
+        _networkState.value = NetworkState.LOADING
         viewModelScope.launch {
             when (val result = signIn.invoke(UserSignInRequestSerializer(user))) {
                 is DataResult.Success -> {
@@ -31,23 +33,29 @@ open class SignInActivityViewModel(
                         sessionManager.signIn(user)
                     }
 
-                    _networkState.value = NetworkState.idle
-                    _state.value = SignInState.signInSuccess
+                    restoreNetworkState()
+                    _state.value = SignInState.SIGN_IN_SUCCESS
                 }
-                is DataResult.Error ->
+                is DataResult.Error -> {
                     handleError(result.exception)
+                    restoreNetworkState()
+                }
             }
         }
     }
 
     private fun handleError(exception: ApiException?) {
         error = exception?.message
-        _networkState.value = NetworkState.error
-        _state.value = SignInState.signInFailure
+        _networkState.value = NetworkState.ERROR
+        _state.value = SignInState.SIGN_IN_FAILURE
+    }
+
+    private fun restoreNetworkState() {
+        _networkState.value = NetworkState.IDLE
     }
 }
 
 enum class SignInState {
-    signInFailure,
-    signInSuccess
+    SIGN_IN_FAILURE,
+    SIGN_IN_SUCCESS
 }
