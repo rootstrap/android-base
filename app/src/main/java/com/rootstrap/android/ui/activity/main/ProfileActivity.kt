@@ -12,11 +12,10 @@ import com.rootstrap.data.managers.session.SessionManager
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.view.ProfileView
 import com.rootstrap.android.util.NetworkState
-import javax.inject.Inject
 
 class ProfileActivity : BaseActivity(), ProfileView {
 
-    @Inject lateinit var sessionManager: SessionManager
+    lateinit var sessionManager: SessionManager
 
     private val viewModel: ProfileActivityViewModel by viewModels()
     private val binding by lazy { ActivityProfileBinding.inflate(layoutInflater) }
