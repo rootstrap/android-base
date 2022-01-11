@@ -11,7 +11,6 @@ import com.rootstrap.data.dto.request.UserSignInRequestSerializer
 import com.rootstrap.data.dto.response.DataResult
 import com.rootstrap.data.dto.response.UserResponseSerializer
 import com.rootstrap.data.managers.session.SessionManager
-import com.rootstrap.domain.User
 import com.rootstrap.usecases.SignIn
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -36,9 +35,6 @@ class SignInActivityViewModelTest : UnitTestBase() {
     lateinit var signIn: SignIn
 
     @MockK
-    lateinit var user: User
-
-    @MockK
     lateinit var userSignInRequestSerializer: UserSignInRequestSerializer
 
     @MockK
@@ -56,7 +52,11 @@ class SignInActivityViewModelTest : UnitTestBase() {
         super.setup()
         every { userSignInRequestSerializer.user } returns userSignInRequest
         every { userSignInResponseSerializer.user } returns userDTO
-        viewModel = SignInActivityViewModel(signIn, sessionManager, TestDispatcherProvider()) // ver q hacer con los dispatchers
+        viewModel = SignInActivityViewModel(
+            signIn,
+            sessionManager,
+            TestDispatcherProvider()
+        ) // ver q hacer con los dispatchers
     }
 
     // reading: naming standards for unit testing https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html
