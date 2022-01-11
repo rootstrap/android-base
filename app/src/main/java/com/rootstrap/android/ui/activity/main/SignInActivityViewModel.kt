@@ -8,6 +8,7 @@ import com.rootstrap.android.network.managers.user.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
+import com.rootstrap.android.util.dispatcher.DispatcherProvider
 import com.rootstrap.android.util.extensions.ApiErrorType
 import com.rootstrap.android.util.extensions.ApiException
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 open class SignInActivityViewModel @Inject constructor(
     private val sessionManager: SessionManager,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val dispatcher: DispatcherProvider
 ) : BaseViewModel() {
 
     private val _state = MutableLiveData<SignInState>()
@@ -26,7 +28,8 @@ open class SignInActivityViewModel @Inject constructor(
 
     fun signIn(user: User) {
         _networkState.value = NetworkState.loading
-        viewModelScope.launch {
+        // Avoid using hardcoded dispatcher this way can be mocked later
+        viewModelScope.launch(dispatcher.io) {
             val result = userManager.signIn(user = user)
             if (result.isSuccess) {
                 result.getOrNull()?.value?.user?.let { user ->
@@ -46,7 +49,6 @@ open class SignInActivityViewModel @Inject constructor(
             exception.message
         } else null
 
-        _networkState.value = NetworkState.idle
         _networkState.value = NetworkState.error
         _state.value = SignInState.signInFailure
     }
