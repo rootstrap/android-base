@@ -1,6 +1,6 @@
 package com.rootstrap.data.managers.session
 
-import com.rootstrap.data.dto.response.User
+import com.rootstrap.domain.User
 
 interface SessionManager {
     var user: User?

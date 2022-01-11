@@ -2,7 +2,7 @@ object Versions {
     const val appCompat = "1.3.1"
     const val constraintLayout = "2.1.1"
     const val core = "1.6.0"
-    const val coroutines = "1.5.2-native-mt"
+    const val coroutines = "1.5.1"
     const val legacySupportV4 = "1.0.0"
     const val preference = "1.1.1"
     const val recyclerview = "1.1.0"
@@ -35,17 +35,20 @@ object Versions {
     const val mockwebserver = "4.9.0"
     const val testRunner = "1.4.0"
     const val mixPanel = "5.6.1"
+    const val coreTesting = "1.1.1"
 }
 
 object Libs {
     // Kotlin
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val coroutinesAndroid =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
 
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val core = "androidx.core:core-ktx:${Versions.core}"
-    const val constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+    const val constraintlayout =
+        "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val legacySupportV4 = "androidx.legacy:legacy-support-v4:${Versions.legacySupportV4}"
     const val preference = "androidx.preference:preference-ktx:${Versions.preference}"
     const val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
@@ -62,11 +65,14 @@ object Libs {
     const val lifecycleKapt = "android.arch.lifecycle:compiler:${Versions.lifecycleCommon}"
     const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val lifecycleLivedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
-    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleExtension}"
-    const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    const val lifecycleExtensions =
+        "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleExtension}"
+    const val lifecycleViewModel =
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
 
     // Navigation
-    const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    const val navigationFragment =
+        "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 
     // Google JSON serializer/deserializer
@@ -124,4 +130,6 @@ object Libs {
     const val uiautomator = "androidx.test.uiautomator:uiautomator:${Versions.uiautomator}"
     const val rules = "androidx.test:rules:${Versions.rules}"
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.mockwebserver}"
+    const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+    const val coreTesting = "android.arch.core:core-testing:${Versions.coreTesting}"
 }

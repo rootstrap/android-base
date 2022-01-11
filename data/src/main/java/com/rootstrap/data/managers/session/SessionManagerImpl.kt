@@ -1,9 +1,9 @@
 package com.rootstrap.data.managers.session
 
-import com.rootstrap.data.dto.response.User
 import com.rootstrap.data.util.Prefs
+import com.rootstrap.domain.User
 
-class SessionManagerImpl (private val prefs: Prefs) : SessionManager {
+class SessionManagerImpl(private val prefs: Prefs) : SessionManager {
 
     override var user: User? = prefs.user
         set(value) {

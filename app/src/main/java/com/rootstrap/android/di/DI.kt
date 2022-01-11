@@ -10,6 +10,8 @@ import com.rootstrap.android.ui.login.SignUpActivity
 import com.rootstrap.android.ui.login.SignUpActivityViewModel
 import com.rootstrap.android.ui.profile.ProfileActivity
 import com.rootstrap.android.ui.profile.ProfileActivityViewModel
+import com.rootstrap.android.util.dispatcher.AppDispatcherProvider
+import com.rootstrap.android.util.dispatcher.DispatcherProvider
 import com.rootstrap.data.api.ApiProvider
 import com.rootstrap.data.api.ApiServiceFactory
 import com.rootstrap.data.api.interceptors.AuthenticationInterceptor
@@ -69,7 +71,7 @@ val dataModule = module {
             Context.MODE_PRIVATE
         )
     }
-
+    single<DispatcherProvider> { AppDispatcherProvider() }
     factory { Prefs(get()) }
     factory { UserRepository(get()) }
     single<SessionManager> { SessionManagerImpl(get()) }

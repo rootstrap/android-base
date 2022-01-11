@@ -95,9 +95,11 @@ allprojects {
         ]
 
         testLibs = [
-                junit      : Libs.junit,
-                mockitoCore: Libs.mockitoCore,
-                mockk      : Libs.mockk
+                junit         : Libs.junit,
+                mockitoCore   : Libs.mockitoCore,
+                mockk         : Libs.mockk,
+                coroutinesTest: Libs.coroutinesTest,
+                coreTest      : Libs.coreTesting
         ]
 
         androidTestLibs = [

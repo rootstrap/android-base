@@ -3,7 +3,7 @@ package com.rootstrap.data.util
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.rootstrap.data.util.extensions.fromJson
-import com.rootstrap.data.dto.response.User
+import com.rootstrap.domain.User
 
 class Prefs(private val prefs: SharedPreferences) {
 

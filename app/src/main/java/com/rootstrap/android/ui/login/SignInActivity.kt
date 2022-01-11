@@ -30,8 +30,6 @@ class SignInActivity : PermissionActivity(), AuthView {
 
         binding.signInButton.setOnClickListener { signIn() }
 
-        lifecycle.addObserver(viewModel)
-
         setObservers()
         sampleAskForPermission()
     }

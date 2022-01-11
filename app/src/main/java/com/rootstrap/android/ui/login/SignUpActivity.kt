@@ -32,7 +32,7 @@ class SignUpActivity : BaseActivity(), AuthView {
             signUpButton.setOnClickListener { signUp() }
             signInTextView.setOnClickListener { signIn() }
         }
-        lifecycle.addObserver(viewModel)
+
         setObservers()
     }
 

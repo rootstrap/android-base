@@ -73,8 +73,13 @@ Lanes for each deployment target example are provided with some basic behavior:
 
 Check `fastlane/Appfile` and `fastlane/Fastfile` for more information.
 
+## CI/CD configuration with Bitrise (updated on Dec 12th 2021)
 
-## Continuous Integration with GitHub Actions
+We are going to start using a tool called Bitrise to configure de CI/CD pipelines for mobiles apps.
+
+--> For Android apps you can find how to do it in this link: https://www.notion.so/rootstrap/Android-CI-CD-26d4abd4f2454224be8f617110147366
+
+## Continuous Integration with GitHub Actions (DEPRECATED)
 
 We provide an example workflow [cicd.yml](.github/workflows/cicd.yml) including two jobs for running under [GitHub Actions](https://docs.github.com/en/actions), which can be modified according to the specifics of each project:
 

@@ -33,7 +33,6 @@ class ProfileActivity : BaseActivity(), ProfileView {
             signOutButton.setOnClickListener { viewModel.signOut() }
         }
 
-        lifecycle.addObserver(viewModel)
         setObservers()
     }
 

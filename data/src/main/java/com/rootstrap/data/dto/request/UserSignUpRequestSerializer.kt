@@ -10,4 +10,4 @@ data class UserSignUpRequest(
     val password: String = ""
 )
 
-data class UserSignUpRequestSerializer(val UserSignUpRequest: UserSignUpRequest)
+data class UserSignUpRequestSerializer(val user: UserSignUpRequest)

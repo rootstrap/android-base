@@ -1,9 +1,9 @@
 package com.rootstrap.data.dto.response
 
 import com.google.gson.annotations.SerializedName
+import com.rootstrap.domain.User
 
-// TODO Discuss class name on Android Roundtable (UserDTO - DTO = Data Transfer Object as suffix)
-data class User(
+data class UserDTO(
     val id: String = "",
     var email: String = "",
     @SerializedName("first_name") var firstName: String = "",
@@ -14,4 +14,14 @@ data class User(
     val uid: String?
 )
 
-data class UserResponseSerializer(val user: User)
+fun UserDTO.toDomainUser() = User(
+    id = id,
+    email = email,
+    firstName = firstName,
+    lastName = lastName,
+    phoneNumber = phoneNumber,
+    password = password,
+    username = username
+)
+
+data class UserResponseSerializer(val user: UserDTO)

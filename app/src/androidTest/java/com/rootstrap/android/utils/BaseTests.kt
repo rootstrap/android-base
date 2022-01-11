@@ -14,7 +14,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
 import com.rootstrap.data.managers.session.SessionManager
-import com.rootstrap.data.dto.response.User
+import com.rootstrap.data.dto.response.UserDTO
 import com.rootstrap.data.api.ApiServiceFactory
 import dagger.hilt.android.testing.HiltAndroidRule
 import okhttp3.mockwebserver.Dispatcher
@@ -46,7 +46,7 @@ open class BaseTests {
         mockServer.stopServer()
     }
 
-    open fun testUser() = User(
+    open fun testUser() = UserDTO(
         "9032",
         "user123@mail.com",
         "Richard",
