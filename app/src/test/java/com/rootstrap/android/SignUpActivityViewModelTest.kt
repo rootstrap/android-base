@@ -7,18 +7,16 @@ import com.rootstrap.android.ui.login.SignUpState
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.data.api.ApiException
 import com.rootstrap.data.dto.request.UserSignUpRequest
-import com.rootstrap.data.dto.request.UserSignUpRequestSerializer
 import com.rootstrap.data.dto.response.DataResult
-import com.rootstrap.data.dto.response.UserDTO
 import com.rootstrap.data.dto.response.UserResponseSerializer
 import com.rootstrap.data.managers.session.SessionManager
-import com.rootstrap.domain.User
 import com.rootstrap.usecases.SignUp
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -36,15 +34,6 @@ class SignUpActivityViewModelTest : UnitTestBase() {
     lateinit var signUp: SignUp
 
     @MockK
-    lateinit var userDTO: UserDTO
-
-    @MockK
-    lateinit var user: User
-
-    @MockK
-    lateinit var userSignUpRequestSerializer: UserSignUpRequestSerializer
-
-    @MockK
     lateinit var userResponseSerializer: UserResponseSerializer
 
     @MockK
@@ -58,14 +47,13 @@ class SignUpActivityViewModelTest : UnitTestBase() {
     override fun setup() {
         super.setup()
         every { userResponseSerializer.user } returns userDTO
-        // every { userDTO.toDomainUser() } returns user
         viewModel = SignUpActivityViewModel(signUp, sessionManager, TestDispatcherProvider())
     }
 
     @Test
     fun `signUp success assert signUpSuccess and network idle`() {
         var state: SignUpState? = null
-        coEvery { signUp.invoke(userSignUpRequestSerializer) } returns DataResult.Success(
+        coEvery { signUp.invoke(any()) } returns DataResult.Success(
             userResponseSerializer
         )
 
@@ -74,16 +62,16 @@ class SignUpActivityViewModelTest : UnitTestBase() {
             state = it
         }
 
-       assertEquals(state, SignUpState.SIGN_UP_SUCCESS)
-//        assertEquals(viewModel.networkState.value, NetworkState.IDLE)
-        // verify { sessionManager.signIn(userDTO.toDomainUser()) }
-        coVerify { signUp.invoke(userSignUpRequestSerializer) }
+        assertEquals(state, SignUpState.SIGN_UP_SUCCESS)
+        assertEquals(viewModel.networkState.value, NetworkState.IDLE)
+        verify { sessionManager.signIn(any()) }
+        coVerify { signUp.invoke(any()) }
     }
 
     @Test
     fun `signUp fail assert signUpFailure and network error`() {
         var state: SignUpState? = null
-        coEvery { signUp.invoke(userSignUpRequestSerializer) } returns DataResult.Error(
+        coEvery { signUp.invoke(any()) } returns DataResult.Error(
             ApiException(
                 ERROR_EXAMPLE_TEXT
             )
@@ -94,9 +82,9 @@ class SignUpActivityViewModelTest : UnitTestBase() {
             state = it
         }
 
-//        assertEquals(state, SignUpState.SIGN_UP_FAILURE)
+        assertEquals(state, SignUpState.SIGN_UP_FAILURE)
         assertEquals(viewModel.networkState.value, NetworkState.ERROR)
         assertEquals(viewModel.error, ERROR_EXAMPLE_TEXT)
-        coVerify { signUp.invoke(userSignUpRequestSerializer) }
+        coVerify { signUp.invoke(any()) }
     }
 }

@@ -55,6 +55,7 @@ class SignInActivityViewModelTest : UnitTestBase() {
     override fun setup() {
         super.setup()
         every { userSignInRequestSerializer.user } returns userSignInRequest
+        every { userSignInResponseSerializer.user } returns userDTO
         viewModel = SignInActivityViewModel(signIn, sessionManager, TestDispatcherProvider()) // ver q hacer con los dispatchers
     }
 
@@ -62,7 +63,7 @@ class SignInActivityViewModelTest : UnitTestBase() {
     @Test
     fun `signIn success assert signInSuccess and network idle`() {
         var state: SignInState? = null
-        coEvery { signIn.invoke(userSignInRequestSerializer) } returns DataResult.Success(
+        coEvery { signIn.invoke(any()) } returns DataResult.Success(
             userSignInResponseSerializer
         )
 
@@ -73,14 +74,14 @@ class SignInActivityViewModelTest : UnitTestBase() {
 
         assertEquals(state, SignInState.SIGN_IN_SUCCESS)
         assertEquals(viewModel.networkState.value, NetworkState.IDLE)
-        verify { sessionManager.signIn(user) }
-        coVerify { signIn.invoke(userSignInRequestSerializer) }
+        verify { sessionManager.signIn(any()) }
+        coVerify { signIn.invoke(any()) }
     }
 
     @Test
     fun `signIn fail assert signInFailure and network error`() {
         var state: SignInState? = null
-        coEvery { signIn.invoke(userSignInRequestSerializer) } returns DataResult.Error(
+        coEvery { signIn.invoke(any()) } returns DataResult.Error(
             ApiException(
                 ERROR_EXAMPLE_TEXT
             )
@@ -94,6 +95,6 @@ class SignInActivityViewModelTest : UnitTestBase() {
         assertEquals(state, SignInState.SIGN_IN_FAILURE)
         assertEquals(viewModel.networkState.value, NetworkState.ERROR)
         assertEquals(viewModel.error, ERROR_EXAMPLE_TEXT)
-        coVerify { signIn.invoke(userSignInRequestSerializer) }
+        coVerify { signIn.invoke(any()) }
     }
 }

@@ -5,15 +5,15 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
-import com.rootstrap.data.metrics.Analytics
-import com.rootstrap.data.metrics.PageEvents
-import com.rootstrap.data.metrics.VISIT_SIGN_UP
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.profile.ProfileActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.data.dto.request.UserSignUpRequest
+import com.rootstrap.data.metrics.Analytics
+import com.rootstrap.data.metrics.PageEvents
+import com.rootstrap.data.metrics.VISIT_SIGN_UP
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignUpActivity : BaseActivity(), AuthView {
@@ -68,7 +68,10 @@ class SignUpActivity : BaseActivity(), AuthView {
             when (it) {
                 NetworkState.LOADING -> showProgress()
                 NetworkState.IDLE -> hideProgress()
-                else -> showError(viewModel.error ?: getString(R.string.default_error))
+                else -> {
+                    hideProgress()
+                    showError(viewModel.error ?: getString(R.string.default_error))
+                }
             }
         })
     }

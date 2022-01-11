@@ -39,7 +39,6 @@ open class SignInActivityViewModel(
                 }
                 is DataResult.Error -> {
                     handleError(result.exception)
-                    restoreNetworkState()
                 }
             }
         }

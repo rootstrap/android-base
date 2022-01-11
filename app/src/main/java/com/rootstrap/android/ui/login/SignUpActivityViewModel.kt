@@ -28,8 +28,8 @@ open class SignUpActivityViewModel(
     fun signUp(userSignUpRequest: UserSignUpRequest) {
         _networkState.value = NetworkState.LOADING
         viewModelScope.launch(dispatcherProvider.io) {
-
-            when (val result = signUp.invoke(UserSignUpRequestSerializer(userSignUpRequest))) {
+            val result = signUp.invoke(UserSignUpRequestSerializer(userSignUpRequest))
+            when (result) {
                 is DataResult.Success -> {
                     result.data?.user?.let { user ->
                         sessionManager.signIn(user.toDomainUser())
@@ -40,7 +40,6 @@ open class SignUpActivityViewModel(
                 }
                 is DataResult.Error -> {
                     handleError(result.exception)
-                    restoreNetworkState()
                 }
             }
         }

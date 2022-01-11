@@ -5,9 +5,6 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignInBinding
-import com.rootstrap.data.metrics.Analytics
-import com.rootstrap.data.metrics.PageEvents
-import com.rootstrap.data.metrics.VISIT_SIGN_IN
 import com.rootstrap.android.ui.profile.ProfileActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
@@ -15,6 +12,9 @@ import com.rootstrap.android.util.extensions.value
 import com.rootstrap.android.util.permissions.PermissionActivity
 import com.rootstrap.android.util.permissions.PermissionResponse
 import com.rootstrap.data.dto.request.UserSignInRequest
+import com.rootstrap.data.metrics.Analytics
+import com.rootstrap.data.metrics.PageEvents
+import com.rootstrap.data.metrics.VISIT_SIGN_IN
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInActivity : PermissionActivity(), AuthView {
@@ -60,7 +60,10 @@ class SignInActivity : PermissionActivity(), AuthView {
             when (it) {
                 NetworkState.LOADING -> showProgress()
                 NetworkState.IDLE -> hideProgress()
-                else -> showError(viewModel.error ?: getString(R.string.default_error))
+                else -> {
+                    hideProgress()
+                    showError(viewModel.error ?: getString(R.string.default_error))
+                }
             }
         })
     }
