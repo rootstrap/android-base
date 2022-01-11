@@ -1,4 +1,4 @@
-package com.rootstrap.android.metrics.base
+package com.rootstrap.data.metrics.base
 
 import android.os.Bundle
 import com.google.gson.Gson

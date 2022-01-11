@@ -1,11 +1,11 @@
-package com.rootstrap.android.metrics
+package com.rootstrap.data.metrics
 
 import android.content.Context
 import com.mixpanel.android.mpmetrics.MixpanelAPI
-import com.rootstrap.android.R
-import com.rootstrap.android.metrics.base.Provider
-import com.rootstrap.android.metrics.base.TrackEvent
-import com.rootstrap.android.metrics.base.UserProperty
+import com.rootstrap.data.BuildConfig
+import com.rootstrap.data.metrics.base.Provider
+import com.rootstrap.data.metrics.base.TrackEvent
+import com.rootstrap.data.metrics.base.UserProperty
 import org.json.JSONException
 
 /**
@@ -13,7 +13,7 @@ import org.json.JSONException
  * */
 class MixPanelAnalytics(context: Context) : Provider {
     var analytic: MixpanelAPI =
-        MixpanelAPI.getInstance(context, context.getString(R.string.mixpanel_api_key))
+        MixpanelAPI.getInstance(context, BuildConfig.MIX_PANEL_KEY)
 
     /**
      * Track any event in the app

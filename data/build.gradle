@@ -19,17 +19,20 @@ android {
         getByName("debug") {
             minifyEnabled false
             buildConfigField("String", "API_URL", "\"https://rails5-api-base.herokuapp.com/api/v1/\"")
+            buildConfigField("String", "MIX_PANEL_KEY", "\"mixpanel_api_key\"")
         }
 
         create("staging") {
             initWith(getByName("debug"))
             buildConfigField("String", "API_URL", "\"https://proj-staging.herokuapp.com/api/\"")
+            buildConfigField("String", "MIX_PANEL_KEY", "\"mixpanel_api_key\"")
         }
 
         getByName("release") {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "API_URL", "\"https://proj-production.herokuapp.com/api/\"")
+            buildConfigField("String", "MIX_PANEL_KEY", "\"mixpanel_api_key\"")
         }
     }
     compileOptions {

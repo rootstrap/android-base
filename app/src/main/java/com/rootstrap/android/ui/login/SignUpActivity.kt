@@ -1,14 +1,15 @@
-package com.rootstrap.android.ui.activity.main
+package com.rootstrap.android.ui.login
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
-import com.rootstrap.android.metrics.Analytics
-import com.rootstrap.android.metrics.PageEvents
-import com.rootstrap.android.metrics.VISIT_SIGN_UP
+import com.rootstrap.data.metrics.Analytics
+import com.rootstrap.data.metrics.PageEvents
+import com.rootstrap.data.metrics.VISIT_SIGN_UP
 import com.rootstrap.android.ui.base.BaseActivity
+import com.rootstrap.android.ui.profile.ProfileActivity
 import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value

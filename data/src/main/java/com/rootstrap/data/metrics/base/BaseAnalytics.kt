@@ -1,4 +1,4 @@
-package com.rootstrap.android.metrics.base
+package com.rootstrap.data.metrics.base
 
 /**
  * Add custom metrics

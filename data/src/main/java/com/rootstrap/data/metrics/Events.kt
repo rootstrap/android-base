@@ -1,6 +1,6 @@
-package com.rootstrap.android.metrics
+package com.rootstrap.data.metrics
 
-import com.rootstrap.android.metrics.base.TrackEvent
+import com.rootstrap.data.metrics.base.TrackEvent
 
 class UserEvents {
     companion object {

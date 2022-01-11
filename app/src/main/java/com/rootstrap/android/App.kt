@@ -2,8 +2,8 @@ package com.rootstrap.android
 
 import android.app.Application
 import com.rootstrap.android.di.initDI
-import com.rootstrap.android.metrics.Analytics
-import com.rootstrap.android.metrics.GoogleAnalytics
+import com.rootstrap.data.metrics.Analytics
+import com.rootstrap.data.metrics.GoogleAnalytics
 import com.rootstrap.data.api.interceptors.WifiService
 import org.koin.core.KoinExperimentalAPI
 

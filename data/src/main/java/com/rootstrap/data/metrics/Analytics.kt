@@ -1,9 +1,9 @@
-package com.rootstrap.android.metrics
+package com.rootstrap.data.metrics
 
-import com.rootstrap.android.metrics.base.BaseAnalytics
-import com.rootstrap.android.metrics.base.Provider
-import com.rootstrap.android.metrics.base.TrackEvent
-import com.rootstrap.android.metrics.base.UserProperty
+import com.rootstrap.data.metrics.base.BaseAnalytics
+import com.rootstrap.data.metrics.base.Provider
+import com.rootstrap.data.metrics.base.TrackEvent
+import com.rootstrap.data.metrics.base.UserProperty
 
 object Analytics : BaseAnalytics {
     var providers: ArrayList<Provider> = ArrayList()

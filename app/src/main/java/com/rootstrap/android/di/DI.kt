@@ -4,7 +4,12 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.rootstrap.android.BuildConfig
-import com.rootstrap.android.ui.activity.main.*
+import com.rootstrap.android.ui.login.SignInActivity
+import com.rootstrap.android.ui.login.SignInActivityViewModel
+import com.rootstrap.android.ui.login.SignUpActivity
+import com.rootstrap.android.ui.login.SignUpActivityViewModel
+import com.rootstrap.android.ui.profile.ProfileActivity
+import com.rootstrap.android.ui.profile.ProfileActivityViewModel
 import com.rootstrap.data.api.ApiProvider
 import com.rootstrap.data.api.ApiServiceFactory
 import com.rootstrap.data.api.interceptors.AuthenticationInterceptor

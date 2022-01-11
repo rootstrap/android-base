@@ -1,4 +1,4 @@
-package com.rootstrap.android.metrics
+package com.rootstrap.data.metrics
 
 // sample events
 const val LOGIN = "logIn"

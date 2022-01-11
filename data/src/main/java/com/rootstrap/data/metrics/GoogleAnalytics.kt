@@ -1,10 +1,10 @@
-package com.rootstrap.android.metrics
+package com.rootstrap.data.metrics
 
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.rootstrap.android.metrics.base.Provider
-import com.rootstrap.android.metrics.base.TrackEvent
-import com.rootstrap.android.metrics.base.UserProperty
+import com.rootstrap.data.metrics.base.Provider
+import com.rootstrap.data.metrics.base.TrackEvent
+import com.rootstrap.data.metrics.base.UserProperty
 import org.json.JSONException
 
 /**
