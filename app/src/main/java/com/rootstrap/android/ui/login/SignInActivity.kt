@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignInBinding
 import com.rootstrap.android.ui.profile.ProfileActivity
-import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.android.util.permissions.PermissionActivity
@@ -17,7 +16,7 @@ import com.rootstrap.data.metrics.PageEvents
 import com.rootstrap.data.metrics.VISIT_SIGN_IN
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignInActivity : PermissionActivity(), AuthView {
+class SignInActivity : PermissionActivity() {
 
     private val viewModel: SignInActivityViewModel by viewModel()
     private lateinit var binding: ActivitySignInBinding
@@ -34,7 +33,7 @@ class SignInActivity : PermissionActivity(), AuthView {
         sampleAskForPermission()
     }
 
-    override fun showProfile() {
+    private fun showProfile() {
         startActivityClearTask(ProfileActivity())
     }
 

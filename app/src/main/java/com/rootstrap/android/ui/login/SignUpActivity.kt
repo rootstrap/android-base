@@ -7,7 +7,6 @@ import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
 import com.rootstrap.android.ui.base.BaseActivity
 import com.rootstrap.android.ui.profile.ProfileActivity
-import com.rootstrap.android.ui.view.AuthView
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.value
 import com.rootstrap.data.dto.request.UserSignUpRequest
@@ -16,7 +15,7 @@ import com.rootstrap.data.metrics.PageEvents
 import com.rootstrap.data.metrics.VISIT_SIGN_UP
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignUpActivity : BaseActivity(), AuthView {
+class SignUpActivity : BaseActivity() {
 
     private val viewModel: SignUpActivityViewModel by viewModel()
     private val binding: ActivitySignUpBinding by lazy {
@@ -36,7 +35,7 @@ class SignUpActivity : BaseActivity(), AuthView {
         setObservers()
     }
 
-    override fun showProfile() {
+    private fun showProfile() {
         startActivityClearTask(ProfileActivity())
     }
 

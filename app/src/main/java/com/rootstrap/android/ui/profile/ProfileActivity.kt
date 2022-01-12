@@ -4,18 +4,17 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivityProfileBinding
+import com.rootstrap.android.ui.base.BaseActivity
+import com.rootstrap.android.ui.login.SignUpActivity
+import com.rootstrap.android.util.NetworkState
+import com.rootstrap.data.managers.session.SessionManager
 import com.rootstrap.data.metrics.Analytics
 import com.rootstrap.data.metrics.PageEvents
 import com.rootstrap.data.metrics.VISIT_PROFILE
-import com.rootstrap.android.ui.login.SignUpActivity
-import com.rootstrap.android.ui.base.BaseActivity
-import com.rootstrap.android.ui.view.ProfileView
-import com.rootstrap.android.util.NetworkState
-import com.rootstrap.data.managers.session.SessionManager
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileActivity : BaseActivity(), ProfileView {
+class ProfileActivity : BaseActivity() {
 
     private val sessionManager: SessionManager by inject()
 
@@ -29,14 +28,15 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
         with(binding) {
             setContentView(root)
-            welcomeTextView.text = getString(R.string.welcome_message, sessionManager.user?.firstName)
+            welcomeTextView.text =
+                getString(R.string.welcome_message, sessionManager.user?.firstName)
             signOutButton.setOnClickListener { viewModel.signOut() }
         }
 
         setObservers()
     }
 
-    override fun goToFirstScreen() {
+    private fun goToFirstScreen() {
         startActivityClearTask(SignUpActivity())
     }
 
