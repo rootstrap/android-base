@@ -56,7 +56,7 @@ class SignInActivityViewModelTest : UnitTestBase() {
             signIn,
             sessionManager,
             TestDispatcherProvider()
-        ) // ver q hacer con los dispatchers
+        )
     }
 
     // reading: naming standards for unit testing https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html
