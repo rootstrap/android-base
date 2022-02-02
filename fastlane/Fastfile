@@ -6,30 +6,6 @@ default_platform(:android)
 skip_docs
 
 platform :android do
-  lane :deploy_production do
-    release(flavor: 'Prod', track: 'internal')
-  end
-
-  lane :deploy_dev do
-    release(flavor: 'Dev', track: 'internal')
-  end
-
-  lane :deploy_staging do
-    release(flavor: 'Staging', track: 'internal')
-  end
-
-  lane :debug_production do
-      debug(flavor: 'Prod')
-  end
-
-  lane :debug_dev do
-    debug(flavor: 'Dev')
-  end
-
-  lane :debug_staging do
-    debug(flavor: 'Staging')
-  end
-
   lane :release do |options|
     increment_version_code(
       gradle_file_path: “app/build.gradle”
