@@ -3,10 +3,10 @@ package com.rootstrap.android.tests
 import androidx.test.core.app.ActivityScenario
 import com.google.gson.Gson
 import com.rootstrap.android.R
-import com.rootstrap.android.network.models.UserSerializer
-import com.rootstrap.android.ui.activity.main.ProfileActivity
-import com.rootstrap.android.ui.activity.main.SignInActivity
-import com.rootstrap.android.ui.activity.main.SignUpActivity
+import com.rootstrap.data.dto.response.UserSerializer
+import com.rootstrap.android.ui.profile.ProfileActivity
+import com.rootstrap.android.ui.login.SignInActivity
+import com.rootstrap.android.ui.login.SignUpActivity
 import com.rootstrap.android.utils.BaseTests
 import dagger.hilt.android.testing.HiltAndroidTest
 import okhttp3.mockwebserver.Dispatcher

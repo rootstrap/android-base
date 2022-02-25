@@ -1,22 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.5.31'
-    ext.hilt_version = '2.39.1'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url 'https://maven.fabric.io/public'
         }
-        
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.10'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.0'
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
+        classpath "com.google.gms:google-services:4.3.10"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:2.8.1"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -33,8 +30,89 @@ detekt {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
+    }
+
+    ext {
+        androidLibs = [
+                appcompat          : Libs.appCompat,
+                legacySupportV4    : Libs.legacySupportV4,
+                recyclerview       : Libs.recyclerview,
+                constraintlayout   : Libs.constraintlayout,
+                androidxCore       : Libs.core,
+                lifecycleCommon    : Libs.lifecycleCommon,
+                lifecycleRuntime   : Libs.lifecycleRuntime,
+                lifecycleLivedata  : Libs.lifecycleLivedata,
+                lifecycleExtensions: Libs.lifecycleExtensions,
+                lifecycleViewModel : Libs.lifecycleViewModel,
+                material           : Libs.material,
+                roomRuntime        : Libs.roomRuntime,
+                glide              : Libs.glide,
+                navigationFragment : Libs.navigationFragment,
+                navigationUi       : Libs.navigationUi
+        ]
+
+        androidDataLibs = [
+                preference: Libs.preference
+        ]
+
+        androidKaptLibs = [
+                roomCompiler : Libs.roomKapt,
+                lifecycleKapt: Libs.lifecycleKapt,
+                glideCompiler: Libs.glideKapt
+        ]
+
+        ktlintLibs = [
+                ktlint: Libs.ktlint
+        ]
+
+        kotlinLibs = [
+                kotlinStdLib: Libs.kotlinStdLib,
+                reflect     : Libs.reflect,
+                coroutines  : Libs.coroutinesAndroid
+        ]
+
+        libs = [
+                okhttpLoginInterceptor: Libs.loggingInterceptor,
+                retrofit              : Libs.retrofit,
+                retrofitGsonConverter : Libs.retrofitGsonConverter,
+                koinCore              : Libs.koinCore,
+                koinAndroid           : Libs.koinAndroid,
+                koinAndroidCompat     : Libs.koinAndroidCompat,
+                koinWorkManager       : Libs.koinWorkManager,
+                koinCompose           : Libs.koinCompose,
+                otto                  : Libs.otto,
+                gson                  : Libs.gson,
+                okhttp                : Libs.okhttp,
+                moshi                 : Libs.moshi,
+                converterMoshi        : Libs.converterMoshi,
+                securityCrypto        : Libs.securityCrypto,
+                firebaseCore          : Libs.firebaseCore,
+                firebaseAnalytics     : Libs.firebaseAnalytics,
+                firebaseCrashlytics   : Libs.firebaseCrashlytics,
+                mixPanel              : Libs.mixPanel
+        ]
+
+        testLibs = [
+                junit         : Libs.junit,
+                mockitoCore   : Libs.mockitoCore,
+                mockk         : Libs.mockk,
+                coroutinesTest: Libs.coroutinesTest,
+                coreTest      : Libs.coreTesting
+        ]
+
+        androidTestLibs = [
+                testRunner     : Libs.testRunner,
+                espressoCore   : Libs.espressoCore,
+                espressoIntents: Libs.espressoIntents,
+                rules          : Libs.rules,
+                extJunit       : Libs.extJunit,
+                koinTest       : Libs.koinTest,
+                mockWebServer  : Libs.mockwebserver,
+                mockkAndroid   : Libs.mockkAndroid,
+                uiautomator    : Libs.uiautomator
+        ]
     }
 }
 
