@@ -1,6 +1,5 @@
 package com.rootstrap.android.ui.activity.main
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,13 +8,18 @@ import com.rootstrap.android.network.managers.user.UserManager
 import com.rootstrap.android.network.models.User
 import com.rootstrap.android.ui.base.BaseViewModel
 import com.rootstrap.android.util.NetworkState
+import com.rootstrap.android.util.dispatcher.DispatcherProvider
 import com.rootstrap.android.util.extensions.ApiErrorType
 import com.rootstrap.android.util.extensions.ApiException
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-open class SignUpActivityViewModel @ViewModelInject constructor(
+@HiltViewModel
+open class SignUpActivityViewModel @Inject constructor(
     private val sessionManager: SessionManager,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val dispatcher: DispatcherProvider
 ) : BaseViewModel() {
 
     private val _state = MutableLiveData<SignUpState>()
@@ -24,7 +28,8 @@ open class SignUpActivityViewModel @ViewModelInject constructor(
 
     fun signUp(user: User) {
         _networkState.value = NetworkState.loading
-        viewModelScope.launch {
+        // Avoid using hardcoded dispatcher this way can be mocked later
+        viewModelScope.launch(dispatcher.io) {
             val result = userManager.signUp(user = user)
 
             if (result.isSuccess) {
@@ -45,7 +50,6 @@ open class SignUpActivityViewModel @ViewModelInject constructor(
             exception.message
         } else null
 
-        _networkState.value = NetworkState.idle
         _networkState.value = NetworkState.error
         _state.value = SignUpState.signUpFailure
     }

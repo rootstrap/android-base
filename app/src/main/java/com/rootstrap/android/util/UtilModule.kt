@@ -7,16 +7,18 @@ import android.security.keystore.KeyProperties
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.rootstrap.android.BuildConfig
+import com.rootstrap.android.util.dispatcher.AppDispatcherProvider
+import com.rootstrap.android.util.dispatcher.DispatcherProvider
 import com.squareup.otto.Bus
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 class UtilModule {
 
     @Provides
@@ -48,4 +50,8 @@ class UtilModule {
     @Provides
     @Singleton
     fun provideBus(): Bus = Bus()
+
+    @Provides
+    @Singleton
+    fun provideDispatcher(): DispatcherProvider = AppDispatcherProvider()
 }
