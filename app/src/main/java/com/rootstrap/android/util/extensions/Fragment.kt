@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
  * Allows the collection of an unlimited amount of flows in an inline style without needing to
  * add boilerplate indentations.
  *
- * The flows are all collected inside the same lifecycleState but it can customized. By default
+ * The flows are all collected inside the same lifecycleState but it can be customized. By default
  * it is Lifecycle.State.STARTED.
  *
  * This extension can be called as many times as needed without problems,
@@ -24,7 +24,8 @@ import kotlinx.coroutines.launch
  * - Single flow collection :
  *      > `collectOnLifeCycle(Pair(viewModel.eventsFlow) { it.collect { event -> onEvents(event) } })`
  * - Multi flow collection :
- *      > Just appending a trailing "," and adding a new Pair allows you to collect additional flows
+ *      > Just appending a trailing "," and adding a new Pair allows you to collect an additional
+ *          flow per pair
  */
 fun <T> Fragment.collectOnLifeCycle(
     vararg flowPairs: Pair<Flow<T>, suspend (Flow<T>) -> Unit>,
