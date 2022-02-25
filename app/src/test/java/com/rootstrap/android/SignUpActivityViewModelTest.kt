@@ -1,16 +1,16 @@
 package com.rootstrap.android
 
-import com.rootstrap.android.network.managers.session.SessionManager
-import com.rootstrap.android.network.managers.user.UserManager
-import com.rootstrap.android.network.models.User
-import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.test.TestDispatcherProvider
 import com.rootstrap.android.test.UnitTestBase
-import com.rootstrap.android.ui.activity.main.SignUpActivityViewModel
-import com.rootstrap.android.ui.activity.main.SignUpState
+import com.rootstrap.android.ui.login.SignUpActivityViewModel
+import com.rootstrap.android.ui.login.SignUpState
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.extensions.ApiException
-import com.rootstrap.android.util.extensions.Data
+import com.rootstrap.data.api.ApiException
+import com.rootstrap.data.dto.request.UserSignUpRequest
+import com.rootstrap.data.dto.response.DataResult
+import com.rootstrap.data.dto.response.UserResponseSerializer
+import com.rootstrap.data.managers.session.SessionManager
+import com.rootstrap.usecases.SignUp
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -31,13 +31,13 @@ class SignUpActivityViewModelTest : UnitTestBase() {
     lateinit var sessionManager: SessionManager
 
     @RelaxedMockK
-    lateinit var userManager: UserManager
+    lateinit var signUp: SignUp
 
     @MockK
-    lateinit var user: User
+    lateinit var userResponseSerializer: UserResponseSerializer
 
     @MockK
-    lateinit var userSerializer: UserSerializer
+    lateinit var userSignUpRequest: UserSignUpRequest
 
     companion object {
         const val ERROR_EXAMPLE_TEXT = "Time out example"
@@ -46,43 +46,45 @@ class SignUpActivityViewModelTest : UnitTestBase() {
     @Before
     override fun setup() {
         super.setup()
-        every { userSerializer.user } returns user
-        viewModel = SignUpActivityViewModel(sessionManager, userManager, TestDispatcherProvider())
+        every { userResponseSerializer.user } returns userDTO
+        viewModel = SignUpActivityViewModel(signUp, sessionManager, TestDispatcherProvider())
     }
 
     @Test
     fun `signUp success assert signUpSuccess and network idle`() {
         var state: SignUpState? = null
-        coEvery { userManager.signUp(user = user) } returns Result.success(Data(userSerializer))
+        coEvery { signUp.invoke(any()) } returns DataResult.Success(
+            userResponseSerializer
+        )
 
-        viewModel.signUp(user)
+        viewModel.signUp(userSignUpRequest)
         viewModel.state.observeForever {
             state = it
         }
 
-        assertEquals(state, SignUpState.signUpSuccess)
-        assertEquals(viewModel.networkState.value, NetworkState.idle)
-        verify { sessionManager.signIn(user) }
-        coVerify { userManager.signUp(user = user) }
+        assertEquals(state, SignUpState.SIGN_UP_SUCCESS)
+        assertEquals(viewModel.networkState.value, NetworkState.IDLE)
+        verify { sessionManager.signIn(any()) }
+        coVerify { signUp.invoke(any()) }
     }
 
     @Test
     fun `signUp fail assert signUpFailure and network error`() {
         var state: SignUpState? = null
-        coEvery { userManager.signUp(user = user) } returns Result.failure(
+        coEvery { signUp.invoke(any()) } returns DataResult.Error(
             ApiException(
                 ERROR_EXAMPLE_TEXT
             )
         )
 
-        viewModel.signUp(user)
+        viewModel.signUp(userSignUpRequest)
         viewModel.state.observeForever {
             state = it
         }
 
-        assertEquals(state, SignUpState.signUpFailure)
-        assertEquals(viewModel.networkState.value, NetworkState.error)
+        assertEquals(state, SignUpState.SIGN_UP_FAILURE)
+        assertEquals(viewModel.networkState.value, NetworkState.ERROR)
         assertEquals(viewModel.error, ERROR_EXAMPLE_TEXT)
-        coVerify { userManager.signUp(user = user) }
+        coVerify { signUp.invoke(any()) }
     }
 }

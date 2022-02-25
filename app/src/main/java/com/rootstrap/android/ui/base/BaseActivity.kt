@@ -3,11 +3,11 @@ package com.rootstrap.android.ui.base
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import com.rootstrap.android.util.LoadingDialogUtil
+import org.koin.androidx.scope.ScopeActivity
 
 @SuppressLint("Registered")
-open class BaseActivity : AppCompatActivity(), BaseView {
+open class BaseActivity : ScopeActivity(), BaseView {
 
     override fun showProgress() {
         LoadingDialogUtil.showProgress(this)

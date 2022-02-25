@@ -13,9 +13,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import com.rootstrap.android.network.managers.session.SessionManager
-import com.rootstrap.android.network.models.User
-import com.rootstrap.android.network.providers.ServiceProviderModule
+import com.rootstrap.data.managers.session.SessionManager
+import com.rootstrap.data.dto.response.UserDTO
+import com.rootstrap.data.api.ApiServiceFactory
 import dagger.hilt.android.testing.HiltAndroidRule
 import okhttp3.mockwebserver.Dispatcher
 import org.junit.Rule
@@ -38,7 +38,7 @@ open class BaseTests {
 
     open fun before() {
         mockServer.startServer()
-        ServiceProviderModule.URL_API = mockServer.server().url("/").toString()
+        ApiServiceFactory.URL_API = mockServer.server().url("/").toString()
         hiltRule.inject()
     }
 
@@ -46,7 +46,7 @@ open class BaseTests {
         mockServer.stopServer()
     }
 
-    open fun testUser() = User(
+    open fun testUser() = UserDTO(
         "9032",
         "user123@mail.com",
         "Richard",

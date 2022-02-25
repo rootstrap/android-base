@@ -24,7 +24,7 @@ jobs:
         bundle install --path vendor/bundle    
     # Runs build with Gradle
     - name: Build with Fastlane
-      run: bundle exec fastlane debug_dev
+      run: bundle exec fastlane debug
     - name: Send notification of build result
       uses: 8398a7/action-slack@v3
       with:

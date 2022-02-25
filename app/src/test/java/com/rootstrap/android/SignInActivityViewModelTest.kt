@@ -1,16 +1,17 @@
 package com.rootstrap.android
 
-import com.rootstrap.android.network.managers.session.SessionManager
-import com.rootstrap.android.network.managers.user.UserManager
-import com.rootstrap.android.network.models.User
-import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.test.TestDispatcherProvider
 import com.rootstrap.android.test.UnitTestBase
-import com.rootstrap.android.ui.activity.main.SignInActivityViewModel
-import com.rootstrap.android.ui.activity.main.SignInState
+import com.rootstrap.android.ui.login.SignInActivityViewModel
+import com.rootstrap.android.ui.login.SignInState
 import com.rootstrap.android.util.NetworkState
-import com.rootstrap.android.util.extensions.ApiException
-import com.rootstrap.android.util.extensions.Data
+import com.rootstrap.data.api.ApiException
+import com.rootstrap.data.dto.request.UserSignInRequest
+import com.rootstrap.data.dto.request.UserSignInRequestSerializer
+import com.rootstrap.data.dto.response.DataResult
+import com.rootstrap.data.dto.response.UserResponseSerializer
+import com.rootstrap.data.managers.session.SessionManager
+import com.rootstrap.usecases.SignIn
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -31,13 +32,16 @@ class SignInActivityViewModelTest : UnitTestBase() {
     lateinit var sessionManager: SessionManager
 
     @RelaxedMockK
-    lateinit var userManager: UserManager
+    lateinit var signIn: SignIn
 
     @MockK
-    lateinit var user: User
+    lateinit var userSignInRequestSerializer: UserSignInRequestSerializer
 
     @MockK
-    lateinit var userSerializer: UserSerializer
+    lateinit var userSignInResponseSerializer: UserResponseSerializer
+
+    @MockK
+    lateinit var userSignInRequest: UserSignInRequest
 
     companion object {
         const val ERROR_EXAMPLE_TEXT = "Time out example"
@@ -46,44 +50,51 @@ class SignInActivityViewModelTest : UnitTestBase() {
     @Before
     override fun setup() {
         super.setup()
-        every { userSerializer.user } returns user
-        viewModel = SignInActivityViewModel(sessionManager, userManager, TestDispatcherProvider())
+        every { userSignInRequestSerializer.user } returns userSignInRequest
+        every { userSignInResponseSerializer.user } returns userDTO
+        viewModel = SignInActivityViewModel(
+            signIn,
+            sessionManager,
+            TestDispatcherProvider()
+        )
     }
 
     // reading: naming standards for unit testing https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html
     @Test
     fun `signIn success assert signInSuccess and network idle`() {
         var state: SignInState? = null
-        coEvery { userManager.signIn(user = user) } returns Result.success(Data(userSerializer))
+        coEvery { signIn.invoke(any()) } returns DataResult.Success(
+            userSignInResponseSerializer
+        )
 
-        viewModel.signIn(user)
+        viewModel.signIn(userSignInRequest)
         viewModel.state.observeForever {
             state = it
         }
 
-        assertEquals(state, SignInState.signInSuccess)
-        assertEquals(viewModel.networkState.value, NetworkState.idle)
-        verify { sessionManager.signIn(user) }
-        coVerify { userManager.signIn(user = user) }
+        assertEquals(state, SignInState.SIGN_IN_SUCCESS)
+        assertEquals(viewModel.networkState.value, NetworkState.IDLE)
+        verify { sessionManager.signIn(any()) }
+        coVerify { signIn.invoke(any()) }
     }
 
     @Test
     fun `signIn fail assert signInFailure and network error`() {
         var state: SignInState? = null
-        coEvery { userManager.signIn(user = user) } returns Result.failure(
+        coEvery { signIn.invoke(any()) } returns DataResult.Error(
             ApiException(
                 ERROR_EXAMPLE_TEXT
             )
         )
 
-        viewModel.signIn(user)
+        viewModel.signIn(userSignInRequest)
         viewModel.state.observeForever {
             state = it
         }
 
-        assertEquals(state, SignInState.signInFailure)
-        assertEquals(viewModel.networkState.value, NetworkState.error)
+        assertEquals(state, SignInState.SIGN_IN_FAILURE)
+        assertEquals(viewModel.networkState.value, NetworkState.ERROR)
         assertEquals(viewModel.error, ERROR_EXAMPLE_TEXT)
-        coVerify { userManager.signIn(user = user) }
+        coVerify { signIn.invoke(any()) }
     }
 }

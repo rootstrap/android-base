@@ -5,10 +5,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.rootstrap.android.R
-import com.rootstrap.android.ui.activity.main.ProfileActivity
-import com.rootstrap.android.ui.activity.main.SignUpActivity
+import com.rootstrap.android.ui.profile.ProfileActivity
+import com.rootstrap.android.ui.login.SignUpActivity
 import com.rootstrap.android.utils.BaseTests
-import dagger.hilt.android.testing.HiltAndroidTest
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
@@ -17,7 +16,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@HiltAndroidTest
 class ProfileActivityTest : BaseTests() {
 
     private lateinit var activity: ProfileActivity

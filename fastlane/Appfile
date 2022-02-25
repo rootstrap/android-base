@@ -10,14 +10,6 @@ for_platform :android do
     package_name("com.rootstrap.android")
   end
 
-  for_lane :deploy_dev do
-   package_name("com.rootstrap.android.dev")
-  end
-
-  for_lane :debug_dev do
-    package_name("com.rootstrap.android.dev")
-  end
-
   for_lane :deploy_staging do
     package_name("com.rootstrap.android.staging")
   end
