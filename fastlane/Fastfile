@@ -7,10 +7,6 @@ skip_docs
 
 platform :android do
   lane :release do |options|
-    increment_version_code(
-      gradle_file_path: “app/build.gradle”
-    )
-
     gradle(
       task: "clean"
     )
