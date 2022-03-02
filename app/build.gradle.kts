@@ -22,7 +22,7 @@ android {
             applicationId = "com.rootstrap.android"
             minSdk = MIN_SDK_VERSION
             targetSdk = TARGET_SDK_VERSION
-            versionCode = VERSION_CODE
+            versionCode = 43
             versionName = VERSION_NAME
             testInstrumentationRunner = "com.rootstrap.android.CustomTestRunner"
         }
