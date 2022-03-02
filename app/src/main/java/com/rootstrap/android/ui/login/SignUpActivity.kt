@@ -2,7 +2,6 @@ package com.rootstrap.android.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignUpBinding
 import com.rootstrap.android.ui.base.BaseActivity
@@ -56,14 +55,14 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun setObservers() {
-        viewModel.state.observe(this, Observer {
+        viewModel.state.observe(this) {
             when (it) {
                 SignUpState.SIGN_UP_FAILURE -> showError(viewModel.error)
                 SignUpState.SIGN_UP_SUCCESS -> showProfile()
             }
-        })
+        }
 
-        viewModel.networkState.observe(this, Observer {
+        viewModel.networkState.observe(this) {
             when (it) {
                 NetworkState.LOADING -> showProgress()
                 NetworkState.IDLE -> hideProgress()
@@ -72,6 +71,6 @@ class SignUpActivity : BaseActivity() {
                     showError(viewModel.error ?: getString(R.string.default_error))
                 }
             }
-        })
+        }
     }
 }

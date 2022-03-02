@@ -41,19 +41,25 @@ class ProfileActivity : BaseActivity() {
     }
 
     private fun setObservers() {
-        viewModel.state.observe(this, Observer {
-            when (it) {
-                ProfileState.SIGN_OUT_FAILURE -> showError(viewModel.error)
-                ProfileState.SIGN_OUT_SUCCESS -> goToFirstScreen()
+        viewModel.state.observe(
+            this,
+            Observer {
+                when (it) {
+                    ProfileState.SIGN_OUT_FAILURE -> showError(viewModel.error)
+                    ProfileState.SIGN_OUT_SUCCESS -> goToFirstScreen()
+                }
             }
-        })
+        )
 
-        viewModel.networkState.observe(this, Observer {
-            when (it) {
-                NetworkState.LOADING -> showProgress()
-                NetworkState.IDLE -> hideProgress()
-                else -> showError(viewModel.error ?: getString(R.string.default_error))
+        viewModel.networkState.observe(
+            this,
+            Observer {
+                when (it) {
+                    NetworkState.LOADING -> showProgress()
+                    NetworkState.IDLE -> hideProgress()
+                    else -> showError(viewModel.error ?: getString(R.string.default_error))
+                }
             }
-        })
+        )
     }
 }

@@ -2,10 +2,10 @@ package com.rootstrap.android
 
 import android.app.Application
 import com.rootstrap.android.di.initDI
+import com.rootstrap.data.api.interceptors.WifiService
 import com.rootstrap.data.metrics.Analytics
 import com.rootstrap.data.metrics.GoogleAnalytics
-import com.rootstrap.data.api.interceptors.WifiService
-import org.koin.core.KoinExperimentalAPI
+import org.koin.core.annotation.KoinExperimentalAPI
 
 @KoinExperimentalAPI
 class App : Application() {
