@@ -30,7 +30,7 @@ platform :android do
 
   lane :debug do |options|
     increment_version_code(
-      gradle_file_path: “app/build.gradle”
+      gradle_file_path: “app/build.gradle.kts”
     )
 
     gradle(
