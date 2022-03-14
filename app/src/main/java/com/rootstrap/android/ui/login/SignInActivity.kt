@@ -60,8 +60,8 @@ class SignInActivity : PermissionActivity() {
 
         viewModel.networkState.observe(
             this
-        ) {
-            when (it) {
+        ) { networkState ->
+            when (networkState) {
                 NetworkState.LOADING -> showProgress()
                 NetworkState.IDLE -> hideProgress()
                 else -> {
