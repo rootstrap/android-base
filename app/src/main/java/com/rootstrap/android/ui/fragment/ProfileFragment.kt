@@ -12,8 +12,8 @@ import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_PROFILE
 import com.rootstrap.android.network.managers.session.SessionManager
 import com.rootstrap.android.ui.activity.OnBoardingActivity
-import com.rootstrap.android.ui.activity.main.ProfileActivityViewModel
-import com.rootstrap.android.ui.activity.main.ProfileState
+import com.rootstrap.android.ui.viewmodel.ProfileViewModel
+import com.rootstrap.android.ui.viewmodel.ProfileState
 import com.rootstrap.android.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class ProfileFragment : BaseFragment() {
     @Inject
     lateinit var sessionManager: SessionManager
 
-    private val viewModel: ProfileActivityViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
 
     private val binding by lazy { FragmentProfileBinding.inflate(layoutInflater) }
 

@@ -11,8 +11,8 @@ import com.rootstrap.android.metrics.Analytics
 import com.rootstrap.android.metrics.PageEvents
 import com.rootstrap.android.metrics.VISIT_SIGN_UP
 import com.rootstrap.android.network.models.User
-import com.rootstrap.android.ui.activity.main.SignUpActivityViewModel
-import com.rootstrap.android.ui.activity.main.SignUpState
+import com.rootstrap.android.ui.viewmodel.SignUpViewModel
+import com.rootstrap.android.ui.viewmodel.SignUpState
 import com.rootstrap.android.ui.base.BaseFragment
 import com.rootstrap.android.util.extensions.value
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
 
-    private val viewModel: SignUpActivityViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
 
     private val binding: FragmentSignUpBinding by lazy {
         FragmentSignUpBinding.inflate(layoutInflater)

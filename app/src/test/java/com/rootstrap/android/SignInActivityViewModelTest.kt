@@ -6,8 +6,8 @@ import com.rootstrap.android.network.models.User
 import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.test.TestDispatcherProvider
 import com.rootstrap.android.test.UnitTestBase
-import com.rootstrap.android.ui.activity.main.SignInActivityViewModel
-import com.rootstrap.android.ui.activity.main.SignInState
+import com.rootstrap.android.ui.viewmodel.SignInViewModel
+import com.rootstrap.android.ui.viewmodel.SignInState
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.ApiException
 import com.rootstrap.android.util.extensions.Data
@@ -25,7 +25,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class SignInActivityViewModelTest : UnitTestBase() {
 
-    private lateinit var viewModel: SignInActivityViewModel
+    private lateinit var viewModel: SignInViewModel
 
     @RelaxedMockK
     lateinit var sessionManager: SessionManager
@@ -47,7 +47,7 @@ class SignInActivityViewModelTest : UnitTestBase() {
     override fun setup() {
         super.setup()
         every { userSerializer.user } returns user
-        viewModel = SignInActivityViewModel(sessionManager, userManager, TestDispatcherProvider())
+        viewModel = SignInViewModel(sessionManager, userManager, TestDispatcherProvider())
     }
 
     // reading: naming standards for unit testing https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html
