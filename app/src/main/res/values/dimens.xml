@@ -8,4 +8,30 @@
     <dimen name="text_input_margin_top">20dp</dimen>
     <dimen name="sign_up_margin_horizontal">45dp</dimen>
     <dimen name="sign_up_button_height">48dp</dimen>
+
+    <!-- Spacing: define margin and padding, always *4 -->
+    <!--
+        Don't use names like padding_xs or margin_l
+        Replace with the data from the design
+    -->
+    <dimen name="space_4">4dp</dimen>
+    <dimen name="space_8">8dp</dimen>
+    <dimen name="space_12">12dp</dimen>
+    <dimen name="space_16">16dp</dimen>
+    <dimen name="space_20">20dp</dimen>
+    <dimen name="space_24">24dp</dimen>
+    <dimen name="space_28">28dp</dimen>
+    <dimen name="space_32">32dp</dimen>
+    <dimen name="space_36">36dp</dimen>
+    <dimen name="space_40">40dp</dimen>
+    
+    <!-- Text Sizes: always in sp
+        Replace with the data from the design
+    -->
+    <dimen name="title">28sp</dimen>
+    <dimen name="subtitle">24sp</dimen>
+    <dimen name="body1">18sp</dimen>
+    <dimen name="body2">16sp</dimen>
+    <dimen name="button">12sp</dimen>
+
 </resources>

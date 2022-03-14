@@ -3,4 +3,15 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- Colors-->
+    <!-- wrong: to ambiguous and is not good
+    when support multiple themes example: Dark/Light -->
+    <color name="black50">#A0000000</color>
+    <!-- good: use the exactly name what it's for -->
+    <color name="body1">#000000</color>
+    <color name="body2">#222222</color>
+    <color name="title">#A0000000</color>
+    <color name="toolBarTitle">@color/title</color>
+    <color name="subtitle">@color/title</color>
 </resources>
