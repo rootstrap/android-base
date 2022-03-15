@@ -2,7 +2,6 @@ package com.rootstrap.android.ui.login
 
 import android.Manifest
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.rootstrap.android.R
 import com.rootstrap.android.databinding.ActivitySignInBinding
 import com.rootstrap.android.ui.profile.ProfileActivity
@@ -48,15 +47,21 @@ class SignInActivity : PermissionActivity() {
     }
 
     private fun setObservers() {
-        viewModel.state.observe(this, Observer {
-            when (it) {
-                SignInState.SIGN_IN_FAILURE -> showError(viewModel.error)
-                SignInState.SIGN_IN_SUCCESS -> showProfile()
+        viewModel.state.observe(
+            this
+        ) {
+            it?.run {
+                when (this) {
+                    SignInState.SIGN_IN_FAILURE -> showError(viewModel.error)
+                    SignInState.SIGN_IN_SUCCESS -> showProfile()
+                }
             }
-        })
+        }
 
-        viewModel.networkState.observe(this, Observer {
-            when (it) {
+        viewModel.networkState.observe(
+            this
+        ) { networkState ->
+            when (networkState) {
                 NetworkState.LOADING -> showProgress()
                 NetworkState.IDLE -> hideProgress()
                 else -> {
@@ -64,22 +69,25 @@ class SignInActivity : PermissionActivity() {
                     showError(viewModel.error ?: getString(R.string.default_error))
                 }
             }
-        })
+        }
     }
 
     private fun sampleAskForPermission() {
-        requestPermission(arrayOf(Manifest.permission.CAMERA), object : PermissionResponse {
-            override fun granted() {
-                // TODO..
-            }
+        requestPermission(
+            arrayOf(Manifest.permission.CAMERA),
+            object : PermissionResponse {
+                override fun granted() {
+                    // TODO..
+                }
 
-            override fun denied() {
-                // TODO..
-            }
+                override fun denied() {
+                    // TODO..
+                }
 
-            override fun foreverDenied() {
-                // TODO..
+                override fun foreverDenied() {
+                    // TODO..
+                }
             }
-        })
+        )
     }
 }
