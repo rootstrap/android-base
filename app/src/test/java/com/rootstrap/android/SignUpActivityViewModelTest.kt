@@ -6,8 +6,8 @@ import com.rootstrap.android.network.models.User
 import com.rootstrap.android.network.models.UserSerializer
 import com.rootstrap.android.test.TestDispatcherProvider
 import com.rootstrap.android.test.UnitTestBase
-import com.rootstrap.android.ui.activity.main.SignUpActivityViewModel
-import com.rootstrap.android.ui.activity.main.SignUpState
+import com.rootstrap.android.ui.viewmodel.SignUpViewModel
+import com.rootstrap.android.ui.viewmodel.SignUpState
 import com.rootstrap.android.util.NetworkState
 import com.rootstrap.android.util.extensions.ApiException
 import com.rootstrap.android.util.extensions.Data
@@ -25,7 +25,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi // This annotation is required to use TestDispatcherProvider is still an experiment
 class SignUpActivityViewModelTest : UnitTestBase() {
 
-    private lateinit var viewModel: SignUpActivityViewModel
+    private lateinit var viewModel: SignUpViewModel
 
     @RelaxedMockK
     lateinit var sessionManager: SessionManager
@@ -47,7 +47,7 @@ class SignUpActivityViewModelTest : UnitTestBase() {
     override fun setup() {
         super.setup()
         every { userSerializer.user } returns user
-        viewModel = SignUpActivityViewModel(sessionManager, userManager, TestDispatcherProvider())
+        viewModel = SignUpViewModel(sessionManager, userManager, TestDispatcherProvider())
     }
 
     @Test

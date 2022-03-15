@@ -1,4 +1,4 @@
-package com.rootstrap.android.ui.activity.main
+package com.rootstrap.android.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,29 +16,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-open class SignUpActivityViewModel @Inject constructor(
+open class SignInViewModel @Inject constructor(
     private val sessionManager: SessionManager,
     private val userManager: UserManager,
     private val dispatcher: DispatcherProvider
 ) : BaseViewModel() {
 
-    private val _state = MutableLiveData<SignUpState>()
-    val state: LiveData<SignUpState>
+    private val _state = MutableLiveData<SignInState>()
+    val state: LiveData<SignInState>
         get() = _state
 
-    fun signUp(user: User) {
+    fun signIn(user: User) {
         _networkState.value = NetworkState.loading
         // Avoid using hardcoded dispatcher this way can be mocked later
         viewModelScope.launch(dispatcher.io) {
-            val result = userManager.signUp(user = user)
-
+            val result = userManager.signIn(user = user)
             if (result.isSuccess) {
                 result.getOrNull()?.value?.user?.let { user ->
                     sessionManager.signIn(user)
                 }
 
                 _networkState.value = NetworkState.idle
-                _state.value = SignUpState.signUpSuccess
+                _state.value = SignInState.signInSuccess
             } else {
                 handleError(result.exceptionOrNull())
             }
@@ -51,11 +50,11 @@ open class SignUpActivityViewModel @Inject constructor(
         } else null
 
         _networkState.value = NetworkState.error
-        _state.value = SignUpState.signUpFailure
+        _state.value = SignInState.signInFailure
     }
 }
 
-enum class SignUpState {
-    signUpFailure,
-    signUpSuccess
+enum class SignInState {
+    signInFailure,
+    signInSuccess
 }

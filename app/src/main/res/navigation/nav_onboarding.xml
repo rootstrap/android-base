@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_onboarding"
+        app:startDestination="@id/nav_sign_up_fragment">
+
+
+    <fragment
+            android:id="@+id/nav_sign_up_fragment"
+            android:name="com.rootstrap.android.ui.fragment.SignUpFragment"
+            android:label="@string/sign_up"
+            tools:layout="@layout/fragment_sign_up">
+
+        <action
+                android:id="@+id/action_nav_to_sign_in"
+                app:destination="@id/nav_sign_in_fragment"
+                app:launchSingleTop="false" />
+
+    </fragment>
+
+    <fragment
+            android:id="@+id/nav_sign_in_fragment"
+            android:name="com.rootstrap.android.ui.fragment.SignInFragment"
+            android:label="@string/sign_in"
+            tools:layout="@layout/fragment_sign_in" />
+
+    <action
+            android:id="@+id/nav_onboarding_to_main"
+            app:destination="@id/nav_activity_main"
+            app:launchSingleTop="true"
+            tools:layout="@layout/fragment_profile" />
+
+    <activity
+            android:id="@+id/nav_activity_main"
+            android:name="com.rootstrap.android.ui.activity.MainActivity" />
+
+</navigation>
