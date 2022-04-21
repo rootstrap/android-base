@@ -75,7 +75,7 @@ Check `fastlane/Appfile` and `fastlane/Fastfile` for more information.
 
 ## CI/CD configuration with Bitrise (updated on Dec 12th 2021)
 
-We are going to start using a tool called Bitrise to configure de CI/CD pipelines for mobiles apps.
+We are going to start using a tool called Bitrise to configure the CI/CD pipelines for mobiles apps.
 
 --> For Android apps you can find how to do it in this link: https://www.notion.so/rootstrap/Android-CI-CD-26d4abd4f2454224be8f617110147366
 
@@ -114,6 +114,20 @@ in order to track the login event.
 - For firebase replace the file: google-services.json with the once for your App and follow the Firebase instructions.
 - For MixPanel, you have to replace the API key: 
 `<string name="mixpanel_api_key">mixpanel_api_key</string>`
+
+
+## Utility extensions
+We have a bunch of pre-made extensions usually used on every project to accelerate feature development.
+you can access them in the util.extensions package. They include but are not limited to :
+
+- `Fragment.collectOnLifeCycle(...)` extension to reduce the boiler plate code and indentation when
+  collecting flows from a fragment.
+- `ProgressBar.progressTo(...)` extension to animate progress updates in one line with ease 
+  and with good support for older android versions.
+- `TextView.setClickableKeyword(...)` extension to add clickable functions to words or prhases inside a 
+  Textview, allowing to also change their color, font (for example, to bold the keyword), and underline
+- `TextView.setColoredKeyword(...) ` extension to change the color of a word or prhase in a Textview.
+
 
 ## Code Quality Standards
 In order to meet the required code quality standards, this project uses [Ktlint](https://github.com/pinterest/ktlint) and [Detekt](https://github.com/arturbosch/detekt)
