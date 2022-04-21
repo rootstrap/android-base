@@ -22,6 +22,9 @@ class CustomTypefaceSpan(private val newType: Typeface) : TypefaceSpan("") {
     }
 
     companion object {
+
+        private const val ITALIC_SKEW_FACTOR = -0.25F
+
         private fun applyCustomTypeFace(paint: Paint, tf: Typeface) {
             val oldStyle: Int
             val old = paint.typeface
@@ -31,7 +34,7 @@ class CustomTypefaceSpan(private val newType: Typeface) : TypefaceSpan("") {
                 paint.isFakeBoldText = true
             }
             if (fake and Typeface.ITALIC != 0) {
-                paint.textSkewX = -0.25f
+                paint.textSkewX = ITALIC_SKEW_FACTOR
             }
             paint.typeface = tf
         }

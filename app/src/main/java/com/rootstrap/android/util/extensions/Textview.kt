@@ -14,6 +14,28 @@ import androidx.core.content.ContextCompat
 import com.rootstrap.android.R
 import com.rootstrap.android.ui.custom.CustomTypefaceSpan
 
+/**
+ * Sets the first occurrence of the keyword string in this TextView's text as clickable and attach the
+ * given OnClickListener function to it.
+ *
+ * Additionally, it tints the keyword using the app's colorPrimary color and adds an underline to it
+ * so it looks and behaves like an Hyperlink.
+ *
+ * This behavior can be customized with the keywordColor and underline params and you can also change
+ * the keyword's typeFace with the typeFace param, allowing you to make it bold or apply
+ * other kinds of effects.
+ *
+ * You can add multiple clickable keywords by just calling this method as many times as you need in
+ * the same textview.
+ *
+ * The next example illustrates how to add a link to open a web browser:
+ *```
+ * mySuggestionText.text = "For more information go to the admin web"
+ * mySuggestionText.setClickableKeyword("admin web") {
+ *   // Get admin url and open the admin web via an intent
+ * }
+ *```
+ */
 fun TextView.setClickableKeyword(
     keyword: String,
     onClickListener: () -> Unit,
@@ -45,6 +67,11 @@ fun TextView.setClickableKeyword(
     text = span
 }
 
+/**
+ * changes the color of the first occurrence of the keyword string in this TextView's text.
+ *
+ * It accept a color resource as a second parameter and by default it uses the app's colorPrimary color.
+ */
 fun TextView.setColoredKeyword(
     keyword: String,
     @ColorRes keywordColor: Int = R.color.colorPrimary
