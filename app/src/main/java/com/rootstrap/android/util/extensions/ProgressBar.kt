@@ -16,15 +16,12 @@ fun ProgressBar.progressTo(
     timeInMillis: Long = DEFAULT_ANIMATION_TIME,
     onEndListener: ((Animator) -> Unit)? = null
 ) {
-    val animation: ObjectAnimator = ObjectAnimator
-        .ofInt(this, "progress", progress, newlyProgress)
-    animation.duration = timeInMillis
-    animation.interpolator = DecelerateInterpolator()
-    animation.setAutoCancel(true)
-
-    onEndListener?.let {
-        animation.addListener(onEnd = onEndListener)
-    }
-
-    animation.start()
+    ObjectAnimator.ofInt(this, "progress", progress, newlyProgress).apply {
+        duration = timeInMillis
+        interpolator = DecelerateInterpolator()
+        setAutoCancel(true)
+        onEndListener?.let {
+            addListener(onEnd = it)
+        }
+    }.start()
 }
