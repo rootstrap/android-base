@@ -1,64 +1,40 @@
-fastlane documentation
-================
-# Installation
+# Android Fastlane configuration
+============================
 
-Make sure you have the latest version of the Xcode command line tools installed:
+## Installation and requirements
 
-```
-xcode-select --install
-```
+* Ensure JDK 1.8 is installed
 
-Install _fastlane_ using
+* Ensure proper version of Android SDK command line tools is installed
+
+* Install _fastlane_ using
 ```
 [sudo] gem install fastlane -NV
 ```
 or alternatively using `brew cask install fastlane`
 
-# Available Actions
-## Android
-### android deploy_production
+
+## General workflow
+
+* Fastlane for Android basically executes Gradle commands for cleaning, installing Android dependencies and assembling the project into a .apk
+* Application file is published to Google Play Store - keystore file needs to be present under `./app` and json API key file present in the root folder.
+
+
+## Actions breakdown
+
+Modify the Fastfile as appropiate for your project.
+
+Execute with
 ```
-fastlane android deploy_production
+fastlane lane_name
 ```
 
-### android deploy_dev
-```
-fastlane android deploy_dev
-```
+### debug_*
+Builds and archive corresponding flavor for local use
 
-### android deploy_staging
-```
-fastlane android deploy_staging
-```
-
-### android debug_production
-```
-fastlane android debug_production
-```
-
-### android debug_dev
-```
-fastlane android debug_dev
-```
-
-### android debug_staging
-```
-fastlane android debug_staging
-```
-
-### android release
-```
-fastlane android release
-```
-
-### android debug
-```
-fastlane android debug
-```
-
+### deploy_*
+Builds corresponding flavor and pushes to Play Store
 
 ----
-
-This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
 More information about fastlane can be found on [fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [docs.fastlane.tools](https://docs.fastlane.tools).

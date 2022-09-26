@@ -5,9 +5,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.rootstrap.android.R
-import com.rootstrap.android.network.managers.SessionManager
-import com.rootstrap.android.ui.activity.main.ProfileActivity
-import com.rootstrap.android.ui.activity.main.SignUpActivity
+import com.rootstrap.android.ui.profile.ProfileActivity
+import com.rootstrap.android.ui.login.SignUpActivity
 import com.rootstrap.android.utils.BaseTests
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -26,7 +25,7 @@ class ProfileActivityTest : BaseTests() {
     override fun before() {
         super.before()
         setServerDispatch(logoutDispatcher())
-        setupSession()
+        sessionManager.user = testUser()
         scenario = ActivityScenario.launch(ProfileActivity::class.java)
         scenario.onActivity { activity -> this.activity = activity }
     }
@@ -35,10 +34,10 @@ class ProfileActivityTest : BaseTests() {
     fun profileUiTest() {
         stringMatches(
             R.id.welcome_text_view,
-            activity.getString(R.string.welcome_message, SessionManager.user?.firstName)
+            activity.getString(R.string.welcome_message, sessionManager.user?.firstName)
         )
         onView(withId(R.id.sign_out_button)).perform(click())
-        assertEquals(null, SessionManager.user)
+        assertEquals(null, sessionManager.user)
 
         // Check if this activity was successful launched
         activity.runOnUiThread {

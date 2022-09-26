@@ -1,6 +1,6 @@
 <resources>
     <!-- General -->
-    <string name="app_name">RootstrapAndroidBase</string>
+    <string name="app_name">Rootstrap Android Base</string>
     <string name="ok">OK</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -25,4 +25,5 @@
     <!-- Profile -->
     <string name="welcome_message">Hi %1$s!</string>
     <string name="sign_out">Sign Out</string>
+    <string name="default_error">Oops! Network error</string>
 </resources>

@@ -1,34 +1,25 @@
 package com.rootstrap.android
 
 import android.app.Application
-import com.rootstrap.android.metrics.Analytics
-import com.rootstrap.android.metrics.GoogleAnalytics
-import com.rootstrap.android.util.Prefs
-import com.squareup.otto.Bus
+import com.rootstrap.android.di.initDI
+import com.rootstrap.data.api.interceptors.WifiService
+import com.rootstrap.data.metrics.Analytics
+import com.rootstrap.data.metrics.GoogleAnalytics
+import org.koin.core.annotation.KoinExperimentalAPI
 
-val prefs: Prefs by lazy {
-    App.prefs!!
-}
-
-val bus: Bus by lazy {
-    App.bus!!
-}
-
+@KoinExperimentalAPI
 class App : Application() {
-
-    companion object {
-        var prefs: Prefs? = null
-        var bus: Bus? = null
-    }
 
     override fun onCreate() {
         super.onCreate()
-
-        prefs = Prefs(applicationContext)
-        bus = Bus()
-
+        initDI()
+        setupServices()
         Analytics.addProvider(GoogleAnalytics(this))
         // You need the api key in order to use MixPanel
         // Analytics.addProvider(MixPanelAnalytics(this))
+    }
+
+    private fun setupServices() {
+        WifiService.instance.initializeWithApplicationContext(applicationContext)
     }
 }
